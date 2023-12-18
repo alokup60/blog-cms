@@ -20,12 +20,6 @@
   }
 </script>
 
-<!-- <section>
-  {#if form?.success}
-    <h1>Success</h1>
-  {/if}
-</section> -->
-
 <div class="w-10/12 flex justify-center mx-auto bg-white mt-[2rem]">
   <form
     class="w-8/12 flex flex-col gap-3 py-4 bx px-4"
@@ -97,7 +91,6 @@
             <div
               class="bg-green-200 px-2 py-2 rounded-md text-green-600 cursor-pointer flex justify-center text-center items-center mx-auto"
             >
-              <!-- <label for="image" class="cursor-pointer">+ Upload new</label> -->
               <div class="flex flex-col">
                 <input type="file" name="file" accept="image/jpg,image/png" />
               </div>
