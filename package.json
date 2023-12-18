@@ -25,6 +25,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"dotenv": "^16.3.1",
+		"fs": "^0.0.1-security",
 		"mongodb": "^6.3.0"
 	}
 }
