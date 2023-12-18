@@ -11,10 +11,11 @@
     coverImg: "",
     // authorAvtar:
   };
-  // let myHTML = "<div><h1>Jimbo.</h1>\n<p>That's what she said</p></div>";
-
-  let strippedContent = formData.content.replace(/<[^>]+>/g, "");
-  console.log(strippedContent);
+  let x;
+  function removeTags() {
+    x = formData.content.replace(/(<([^>]+)>)/gi, "");
+    console.log(x);
+  }
 </script>
 
 <!-- <section>
@@ -67,6 +68,7 @@
         type="text"
         name="content"
         bind:value={formData.content}
+        on:change={removeTags}
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
@@ -91,9 +93,9 @@
 
           <div class="flex py-6 justify-center items-center mx-auto">
             <div
-              class="bg-green-200 px-2 py-2 rounded-md text-green-600 cursor-pointer flex flex-col justify-center items-center mx-auto"
+              class="bg-green-200 px-2 py-2 rounded-md text-green-600 cursor-pointer flex justify-center text-center items-center mx-auto"
             >
-              <label for="image" class="cursor-pointer">+ Upload new</label>
+              <!-- <label for="image" class="cursor-pointer">+ Upload new</label> -->
               <div class="flex flex-col"><input type="file" name="file" /></div>
             </div>
           </div>
