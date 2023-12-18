@@ -10,5 +10,5 @@
     <slot />
   </main>
 
-  <footer>This is a footer</footer>
+  <!-- <footer>This is a footer</footer> -->
 </div>
