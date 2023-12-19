@@ -17,7 +17,7 @@ async function connectToCluster() {
     process.exit();
   }
 }
-//sb created & collection created
+//DB created & collection created
 let dbConn = await connectToCluster();
 const db = dbConn.db("newBlogDb");
 console.log("dataBase Created");
@@ -46,8 +46,8 @@ export const actions = {
       tags: tags,
     });
     let blogData = await collection.find().toArray();
-    // let x = JSON.stringify(blogData);
+    let x = JSON.stringify(blogData);
 
-    return { success: true };
+    return { x, success: true };
   },
 };

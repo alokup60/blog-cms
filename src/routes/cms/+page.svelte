@@ -1,4 +1,5 @@
 <script>
+  import { browser } from "$app/environment";
   import imgUploader from "$lib/images/imgUploader.svg";
   export let data;
   export let form;
@@ -8,21 +9,86 @@
     title: "",
     desc: "",
     createdBy: "",
-    content: "",
+    content: ``,
     tags: [],
     coverImg: "",
     // authorAvtar:
   };
+  const tagOptions = [
+    {
+      id: 1,
+      option: "Furniture",
+    },
+    {
+      id: 2,
+      option: "Nature",
+    },
+    {
+      id: 3,
+      option: "Technology",
+    },
+    {
+      id: 4,
+      option: "Civil",
+    },
+    {
+      id: 5,
+      option: "Mechanical",
+    },
+  ];
   let x;
   function removeTags() {
     x = formData.content.replace(/(<([^>]+)>)/gi, "");
     console.log(x);
   }
+  const htmlElems = [
+    {
+      id: 1,
+      value: "h1",
+    },
+    {
+      id: 2,
+      value: "p",
+    },
+    {
+      id: 3,
+      value: "span",
+    },
+    {
+      id: 4,
+      value: "bold",
+    },
+    {
+      id: 5,
+      value: "italic",
+    },
+  ];
+
+  // let tagList = [];
+  function getTags(e) {
+    let val = e.target.value;
+    formData.tags = [...formData.tags, val];
+
+    console.log(formData.tags, "array");
+  }
+  // function fun() {
+  //   remove(formData.tags);
+  // }
 </script>
 
-<div class="w-10/12 flex justify-center mx-auto bg-white mt-[2rem]">
+<svelte:head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</svelte:head>
+
+<div class="w-11/12 flex justify-between mx-auto bg-white mt-[2rem]">
   <form
-    class="w-8/12 flex flex-col gap-3 py-4 bx px-4"
+    class="w-5/12 flex flex-col gap-3 py-4 bx px-4"
     method="POST"
     enctype="multipart/form-data"
   >
@@ -60,14 +126,21 @@
     <!-- create textbox -->
     <div class="flex flex-col justify-between">
       <label for="content" class="font-semibold text-md">Content</label>
-      <input
-        type="text"
-        name="content"
-        bind:value={formData.content}
-        on:change={removeTags}
-        placeholder="Enter title"
-        class="border w-full px-2 py-1 rounded-md outline-none"
-      />
+      <div class="w-full border rounded">
+        <select class="outline-none">
+          {#each htmlElems as htmlElem}
+            <option value={htmlElem.value}>{htmlElem.value}</option>
+          {/each}
+        </select>
+        <input
+          type="text"
+          name="content"
+          bind:value={formData.content}
+          on:change={removeTags}
+          placeholder="Enter Content"
+          class="border w-full px-2 py-1 rounded-md outline-none"
+        />
+      </div>
     </div>
     <!-- image for cover  -->
     <div class="flex flex-col w-full border bg-white rounded-md px-1">
@@ -100,23 +173,64 @@
       </div>
     </div>
     <!-- fix to option -->
-    <div class="flex flex-col justify-between">
+    <div class="flex flex-col justify-between relative">
       <label for="tags" class="font-semibold text-md">Tags</label>
       <select
-        value={formData.tags}
+        value=""
+        on:change={getTags}
         name="tags"
-        multiple
-        class="border w-full px-2 py-1 rounded-md outline-none"
+        class="border w-full px-2 py-1 rounded-md outline-none tag-select"
       >
-        <option value="furniture">Furniture</option>
+        <option value="" selected>---Select an option---</option>
+        {#each tagOptions as { id, option }}
+          <option {id}>{option}</option>
+        {/each}
+        <!-- <option value="furniture">Furniture</option>
         <option value="nature">Nature</option>
         <option value="mechanical">Mechanical</option>
-        <option value="software"> Software </option>
+        <option value="software"> Software </option> -->
       </select>
+      <!-- <input
+        type="text"
+        id="input-text"
+        on:change={getTags}
+        placeholder="Enter your tags"
+        autocomplete="off"
+        bind:value={input_val}
+        class="border w-full px-2 py-1 rounded-md outline-none"
+      /><button
+        ><i class="fa-solid fa-magnifying-glass absolute top-8 right-2"
+        ></i></button
+      > -->
+    </div>
+    <div class="tag-list">
+      <ul class="flex gap-2 flex-wrap items-center">
+        {#each formData.tags as bts}
+          <li class="bg-gray-500 px-3 py-2 rounded-md text-white">
+            {bts}
+            <button type="button">
+              <i class="fa-solid fa-xmark cursor-pointer"> </i>
+            </button>
+          </li>
+        {/each}
+      </ul>
     </div>
 
     <button class="bg-blue-400 py-2 text-white rounded-md">Submit</button>
   </form>
+
+  <div class="w-6/12 justify-center items-center mx-auto bx py-4">
+    <h1 class="text-center font-semibold text-2xl">Preview</h1>
+    <div>
+      <h1 class="font-bold text-2xl text-center">{formData.title}</h1>
+    </div>
+    <div class="w-4/12 justify-center mx-auto px-4">
+      <p class="px-4">{formData.desc}</p>
+    </div>
+    <div>
+      <p>{@html formData.content}</p>
+    </div>
+  </div>
 </div>
 
 <style>
