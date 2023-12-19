@@ -1,10 +1,22 @@
 <script>
   import { browser } from "$app/environment";
+  import { onMount } from "svelte";
+  import { v4 as uuidv4 } from "uuid";
   import imgUploader from "$lib/images/imgUploader.svg";
   export let data;
   export let form;
-  // export let blogData;
 
+  //extract every object
+  if (form) {
+    let blogData = JSON.parse(form.x);
+    for (let item = 0; item < blogData.length; item++) {
+      let element = blogData[item];
+      console.log(element._id);
+    }
+  }
+
+  // export let blogData;
+  // console.log(form?.x);
   const formData = {
     title: "",
     desc: "",
@@ -41,39 +53,41 @@
     x = formData.content.replace(/(<([^>]+)>)/gi, "");
     console.log(x);
   }
-  const htmlElems = [
-    {
-      id: 1,
-      value: "h1",
-    },
-    {
-      id: 2,
-      value: "p",
-    },
-    {
-      id: 3,
-      value: "span",
-    },
-    {
-      id: 4,
-      value: "bold",
-    },
-    {
-      id: 5,
-      value: "italic",
-    },
-  ];
+  // const htmlElems = [
+  //   {
+  //     id: 1,
+  //     value: "h1",
+  //   },
+  //   {
+  //     id: 2,
+  //     value: "p",
+  //   },
+  //   {
+  //     id: 3,
+  //     value: "span",
+  //   },
+  //   {
+  //     id: 4,
+  //     value: "bold",
+  //   },
+  //   {
+  //     id: 5,
+  //     value: "italic",
+  //   },
+  // ];
 
   // let tagList = [];
   function getTags(e) {
     let val = e.target.value;
-    formData.tags = [...formData.tags, val];
-
+    let id = uuidv4();
+    formData.tags = [...formData.tags, { id, val }];
     console.log(formData.tags, "array");
   }
-  // function fun() {
-  //   remove(formData.tags);
-  // }
+
+  function removeElem(item) {
+    formData.tags = formData.tags.filter((tag) => tag !== item);
+    console.log(formData.tags, "array after removal");
+  }
 </script>
 
 <svelte:head>
@@ -86,7 +100,7 @@
   />
 </svelte:head>
 
-<div class="w-11/12 flex justify-between mx-auto bg-white mt-[2rem]">
+<div class="w-11/12 flex flex-wrap justify-between mx-auto bg-white mt-[2rem]">
   <form
     class="w-5/12 flex flex-col gap-3 py-4 bx px-4"
     method="POST"
@@ -127,11 +141,11 @@
     <div class="flex flex-col justify-between">
       <label for="content" class="font-semibold text-md">Content</label>
       <div class="w-full border rounded">
-        <select class="outline-none">
+        <!-- <select class="outline-none">
           {#each htmlElems as htmlElem}
             <option value={htmlElem.value}>{htmlElem.value}</option>
           {/each}
-        </select>
+        </select> -->
         <input
           type="text"
           name="content"
@@ -205,10 +219,10 @@
     </div>
     <div class="tag-list">
       <ul class="flex gap-2 flex-wrap items-center">
-        {#each formData.tags as bts}
+        {#each formData.tags as { id, val } (id)}
           <li class="bg-gray-500 px-3 py-2 rounded-md text-white">
-            {bts}
-            <button type="button">
+            {val}
+            <button type="button" on:click={removeElem({ id, val })}>
               <i class="fa-solid fa-xmark cursor-pointer"> </i>
             </button>
           </li>
@@ -230,6 +244,19 @@
     <div>
       <p>{@html formData.content}</p>
     </div>
+  </div>
+
+  <div>
+    <!-- <h2>Title</h2> -->
+    <!-- {#if blogData}
+      {#each blogData as val}
+        {val} -->
+    <!-- {#each val as tss}
+          {tss}
+        {/each} -->
+    <!-- {/each}
+    {/if} -->
+    <p></p>
   </div>
 </div>
 

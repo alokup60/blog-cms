@@ -45,7 +45,8 @@ export const actions = {
       content: content,
       tags: tags,
     });
-    let blogData = await collection.find().toArray();
+    //get Data
+    let blogData = await collection.find({}).toArray();
     let x = JSON.stringify(blogData);
 
     return { x, success: true };
