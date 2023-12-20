@@ -1,8 +1,13 @@
 <script>
-  import { browser } from "$app/environment";
-  import { onMount } from "svelte";
   import imgUploader from "$lib/images/imgUploader.svg";
   import Header from "../Header.svelte";
+  import {
+    toasts,
+    ToastContainer,
+    FlatToast,
+    BootstrapToast,
+  } from "svelte-toasts";
+
   export let data;
   export let form;
 
@@ -32,7 +37,7 @@
   let selectedTags = formData.selectedTags;
 
   let x;
-  let tagVal;
+  let tagVal = "";
   function removeTags() {
     x = formData.content.replace(/(<([^>]+)>)/gi, "");
     console.log(x);
@@ -44,17 +49,22 @@
     console.log(selectedTags);
   }
 
-  function addTag(e) {
-    // let val = e.target.value;
-    // console.log(val);
-    console.log(tagVal);
-    tags.push(tagVal);
-    console.log(tags);
+  function addTag() {
+    tags = new Set([...tags, tagVal]);
+    // toasts.success("Tag added successfuly!");
+
+    tagVal = "";
   }
 
   function removeElem(selectedTag) {
     selectedTags = selectedTags.filter((item) => item !== selectedTag);
     console.log(selectedTag);
+  }
+  function handleInput(tag) {
+    // alert("hi");
+    // let x = e.target;
+    // console.log(x);
+    console.log(tag);
   }
 </script>
 
@@ -150,19 +160,18 @@
       </div>
     </div>
     <!-- option -->
-    <div class="flex flex-col justify-between relative">
+    <div class="flex gap-2 relative flex-wrap">
       <label for="tags" class="font-semibold text-md">Tags</label>
-      <select
-        value=""
-        on:change={getTag}
-        name="tags"
-        class="border w-full px-2 py-1 rounded-md outline-none tag-select"
-      >
-        <option value="" selected>---Select an option---</option>
-        {#each tags as tag}
-          <option key={tag.index}>{tag}</option>
-        {/each}
-      </select>
+
+      {#each tags as tag}
+        <input type="checkbox" id={tag} />
+        <label
+          on:click={(e) => handleInput(tag)}
+          for={tag}
+          class="bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer hover:bg-gray-500"
+          >{tag}</label
+        >
+      {/each}
     </div>
     <div class="tag-list">
       <ul class="flex gap-2 flex-wrap items-center">
@@ -219,5 +228,8 @@
 <style>
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  input[type="checkbox"] {
+    appearance: none;
   }
 </style>

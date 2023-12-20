@@ -22,6 +22,7 @@ let dbConn = await connectToCluster();
 const db = dbConn.db("newBlogDb");
 console.log("dataBase Created");
 const collection = db.collection("blog");
+const tagColl = db.collection("tagColl");
 
 export const actions = {
   default: async ({ cookies, request }) => {
@@ -33,6 +34,7 @@ export const actions = {
     const content = formData.get("content");
     const tags = formData.getAll("tags");
 
+    //for storing file in local storage
     writeFileSync(
       `static/upload/${selected.name}`,
       Buffer.from(await selected.arrayBuffer())
@@ -45,6 +47,11 @@ export const actions = {
       content: content,
       tags: tags,
     });
+
+    await tagColl.insertOne({
+      tags: [],
+    });
+
     //get Data
     let blogData = await collection.find({}).toArray();
     let x = JSON.stringify(blogData);
