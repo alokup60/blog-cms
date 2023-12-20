@@ -1,6 +1,26 @@
 import { writeFile, writeFileSync } from "fs";
-
+import { formtest } from "$lib/store/store.js";
 import { MongoClient } from "mongodb";
+// import { tags } from "../cms/+page.svelte";
+
+// let ttd = tags;
+
+// setTimeout(() => {
+//   console.log(tags, "server");
+// }, 5000);
+
+// let tags;
+// formtest.subscribe((value) => {
+//   tags = value.selectedTags;
+//   console.log(tags, "hiiiiiii");
+// });
+
+let tags = {};
+export const load = () => {
+  return {
+    tags,
+  };
+};
 async function connectToCluster() {
   let mongoClient;
   try {
@@ -18,6 +38,7 @@ async function connectToCluster() {
   }
 }
 //DB created & collection created
+// console.log(JSON.stringify($formtest), "server");
 let dbConn = await connectToCluster();
 const db = dbConn.db("newBlogDb");
 console.log("dataBase Created");
@@ -33,6 +54,8 @@ export const actions = {
     const auth = formData.get("auth");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
+    const tagData = formData.getAll("tagData");
+    console.log(tagData, "hasdyasda");
 
     //for storing file in local storage
     writeFileSync(
@@ -47,11 +70,23 @@ export const actions = {
       content: content,
       tags: tags,
     });
+    let user = await tagColl.updateOne(
+      { name: "Anshu" },
+      // { _id: new Object("6582ee66092b407f13d89449") },
+      { $push: { newdata: tagData } }
+      // { _id: Object("62caa34849e3d70aa618d9f2") },
+      // { $set: { xyz: { a: "yweyfwewe" } } }
+    );
+    // let user = await tagColl.updateOne(
+    //   {"_id": new Object('6582bf90092b407f13d89400')},
+    //   $set:{
+    //     tags: {}
+    //   }
 
-    await tagColl.insertOne({
-      tags: [],
-    });
-
+    // );
+    if (user) {
+      console.log("ho gya kaam");
+    }
     //get Data
     let blogData = await collection.find({}).toArray();
     let x = JSON.stringify(blogData);

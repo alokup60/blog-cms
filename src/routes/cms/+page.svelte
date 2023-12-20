@@ -1,12 +1,6 @@
 <script>
+  import { formtest } from "$lib/store/store";
   import imgUploader from "$lib/images/imgUploader.svg";
-  import Header from "../Header.svelte";
-  import {
-    toasts,
-    ToastContainer,
-    FlatToast,
-    BootstrapToast,
-  } from "svelte-toasts";
 
   export let data;
   export let form;
@@ -16,13 +10,13 @@
     let blogData = JSON.parse(form.x);
     for (let item = 0; item < blogData.length; item++) {
       let element = blogData[item];
-      console.log(element._id);
+      // console.log(element._id);
     }
   }
 
   // export let blogData;
   // console.log(form?.x);
-  const formData = {
+  let formData = {
     title: "",
     desc: "",
     createdBy: "",
@@ -32,15 +26,17 @@
     coverImg: "",
     // authorAvtar:
   };
+  // $: formtest.set(formData);
+  // $: console.log($formtest);
 
-  let tags = formData.tags; //tags
+  export let tags = formData.tags; //tags
   let selectedTags = formData.selectedTags;
 
   let x;
   let tagVal = "";
   function removeTags() {
     x = formData.content.replace(/(<([^>]+)>)/gi, "");
-    console.log(x);
+    // console.log(x);
   }
 
   function getTag(e) {
@@ -60,11 +56,17 @@
     selectedTags = selectedTags.filter((item) => item !== selectedTag);
     console.log(selectedTag);
   }
+  let color = "gray";
   function handleInput(tag) {
-    // alert("hi");
-    // let x = e.target;
-    // console.log(x);
-    console.log(tag);
+    // selectedTags = [...selectedTags, tag];
+    if (!selectedTags.includes(tag)) {
+      selectedTags = [...selectedTags, tag];
+      color = "green";
+    } else {
+      selectedTags = selectedTags.filter((t) => t !== tag);
+      color = "gray";
+    }
+    console.log(selectedTags);
   }
 </script>
 
@@ -164,16 +166,19 @@
       <label for="tags" class="font-semibold text-md">Tags</label>
 
       {#each tags as tag}
-        <input type="checkbox" id={tag} />
-        <label
+        <button
           on:click={(e) => handleInput(tag)}
-          for={tag}
-          class="bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer hover:bg-gray-500"
-          >{tag}</label
+          value={tag}
+          type="button"
+          class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer ${
+            selectedTags.includes(tag) ? "selected-button" : ""
+          }`}
         >
+          {tag}
+        </button>
       {/each}
     </div>
-    <div class="tag-list">
+    <!-- <div class="tag-list">
       <ul class="flex gap-2 flex-wrap items-center">
         {#each selectedTags as selectedTag}
           <li
@@ -187,7 +192,7 @@
           </li>
         {/each}
       </ul>
-    </div>
+    </div> -->
 
     <div class="flex justify-between w-full mx-auto items-center">
       <input
@@ -200,9 +205,16 @@
       <button
         type="button"
         on:click={addTag}
-        class="bg-blue-400 py-2 px-2 text-white rounded-md">Add Tag</button
+        class="bg-green-700 py-2 px-2 text-white rounded-md">Add Tag</button
       >
     </div>
+    <input
+      class="opacity-0"
+      type="text"
+      name="tagData"
+      bind:value={tags}
+      id="tagData"
+    />
 
     <button class="bg-blue-400 py-2 text-white rounded-md">Submit</button>
   </form>
@@ -229,7 +241,13 @@
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
-  input[type="checkbox"] {
+  #tags {
     appearance: none;
   }
+  .selected-button {
+    background-color: green;
+  }
+  /* .selected-button:hover {
+    display: none;
+  } */
 </style>
