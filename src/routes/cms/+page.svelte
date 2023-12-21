@@ -1,5 +1,6 @@
 <script>
   import imgUploader from "$lib/images/imgUploader.svg";
+  import { ModuleGraph } from "vite";
   import EditModal from "../components/EditModal.svelte";
   export let data;
   export let form;
@@ -68,6 +69,10 @@
     }
     console.log(selectedTags);
   }
+  // function openModal() {
+  //   modal.classList.remove("hidden");
+  //   overlay.classList.remove("hidden");
+  // }
 </script>
 
 <svelte:head>
@@ -80,32 +85,27 @@
   />
 </svelte:head>
 
-<EditModal bind:showModal>
-  <h2 class="text-center font-semibold text-xl">Edit Tag</h2>
-  <div class="flex justify-between">
-    <label>Tag</label>
-    <input
-      type="text"
-      value={selectedTags}
-      class="border outline-none rounded-md px-2"
-    />
+<section class="modal hidden">
+  <h2>Edit Tag</h2>
+  <div class="flex justify-between mx-auto items-center">
+    <label for="tag">Tag</label>
+    <input type="text" value="" name="tag" />
   </div>
-</EditModal>
+  <div class="flex justify-center items-center gap-4 mx-auto">
+    <button
+      type="button"
+      class="bg-green-400 text-white rounded-md px-2 py-1 hover:bg-green-500 transition-all delay-200"
+      >Update</button
+    >
+    <button
+      type="button"
+      class="bg-red-400 text-white rounded-md px-2 py-1 hover:bg-red-500 transition-all delay-200"
+      >Close</button
+    >
+  </div>
+</section>
 
-<!-- {#if selectedTags}
-  && (<EditModal bind:showModal>
-    <h2 class="text-center font-semibold text-xl">Edit Tag</h2>
-    <div class="flex justify-between">
-      <label>Tag</label>
-      <input
-        type="text"
-        value={selectedTags}
-        class="border outline-none rounded-md px-2"
-      />
-    </div>
-  </EditModal>
-  )
-{/if} -->
+<div class="overlay hidden"></div>
 
 <div class="w-11/12 flex flex-wrap justify-between mx-auto bg-white mt-[2rem]">
   <form
@@ -265,6 +265,7 @@
 <style>
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
   }
   #tags {
     appearance: none;
@@ -275,4 +276,19 @@
   /* .selected-button:hover {
     display: none;
   } */
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+  }
+  .modal {
+    z-index: 2;
+  }
 </style>

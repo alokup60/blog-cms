@@ -1,84 +1,43 @@
 <script>
-  export let showModal; // boolean
-
-  let dialog; // HTMLDialogElement
-
-  $: if (dialog && showModal) dialog.showModal();
-
-  function updateTag() {
-    console.log("hii");
-  }
+  //   let modal = true;
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-<dialog
-  bind:this={dialog}
-  on:close={() => (showModal = false)}
-  on:click|self={() => dialog.close()}
->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div
-    on:click|stopPropagation
-    class="w-[20rem] h-[10rem] flex flex-col justify-between"
-  >
-    <slot name="header" />
-
-    <slot />
-    <hr />
-    <!-- svelte-ignore a11y-autofocus -->
-    <div class="flex justify-center items-center gap-4">
-      <button
-        autofocus
-        on:click={() => dialog.close()}
-        class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-400 transition-all delay-200"
-        >Close</button
-      >
-      <button
-        on:click={() => updateTag}
-        class="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-400 transition-all delay-200"
-      >
-        Update
-      </button>
-    </div>
+<section class="modal hidden">
+  <h2>Edit Tag</h2>
+  <div class="flex justify-between mx-auto items-center">
+    <label for="tag">Tag</label>
+    <input type="text" value="" name="tag" />
   </div>
-</dialog>
+  <div class="flex justify-center items-center gap-4 mx-auto">
+    <button
+      type="button"
+      class="bg-green-400 text-white rounded-md px-2 py-1 hover:bg-green-500 transition-all delay-200"
+      >Update</button
+    >
+    <button
+      type="button"
+      class="bg-red-400 text-white rounded-md px-2 py-1 hover:bg-red-500 transition-all delay-200"
+      >Close</button
+    >
+  </div>
+</section>
+
+<div class="overlay hidden"></div>
 
 <style>
-  dialog {
-    max-width: 32em;
-    border-radius: 0.2em;
-    border: none;
-    padding: 0;
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1;
   }
-  dialog::backdrop {
-    background: rgba(0, 0, 0, 0.3);
-  }
-  dialog > div {
-    padding: 1em;
-  }
-  dialog[open] {
-    animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  @keyframes zoom {
-    from {
-      transform: scale(0.95);
-    }
-    to {
-      transform: scale(1);
-    }
-  }
-  dialog[open]::backdrop {
-    animation: fade 0.2s ease-out;
-  }
-  @keyframes fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  button {
-    display: block;
+  .modal {
+    z-index: 2;
   }
 </style>
