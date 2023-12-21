@@ -1,10 +1,9 @@
 <script>
   import imgUploader from "$lib/images/imgUploader.svg";
-  import EditModal from "../components/EditModal.svelte";
   export let data;
   export let form;
+  console.log(data.tagData);
 
-  let showModal = false;
   // let dialog;
   if (form) {
     let blogData = JSON.parse(form.x);
@@ -21,17 +20,17 @@
     desc: "",
     createdBy: "",
     content: ``,
-    tags: ["Mechanical", "Nature", "Civil", "PMKY"],
+    // tags: ["Mechanical", "Nature", "Civil", "PMKY"],
     selectedTags: [],
     coverImg: "",
     // authorAvtar:
   };
 
-  export let tags = formData.tags; //tags
+  let tags = JSON.parse(data.tagData); //tags
   let selectedTags = formData.selectedTags;
 
   let x;
-  let tagVal = "";
+
   function removeTags() {
     x = formData.content.replace(/(<([^>]+)>)/gi, "");
     // console.log(x);
@@ -48,15 +47,16 @@
     tags = tags.filter((tag) => !selectedTags.includes(tag));
     console.log(tags);
   }
+  let tagVal = "";
   function addTag() {
     tags = new Set([...tags, tagVal]);
     tagVal = "";
   }
 
-  function editElem(selectedTags) {
-    // tags =
-    showModal = true;
-  }
+  // function editElem(selectedTags) {
+  //   // tags =
+  //   showModal = true;
+  // }
   let color = "gray";
   function handleInput(tag) {
     if (!selectedTags.includes(tag)) {
@@ -68,10 +68,20 @@
     }
     console.log(selectedTags);
   }
-
-  const handleClose = () => {
-    showModal = false;
-  };
+  function updatedTag(tag) {
+    tags = [...tags];
+    console.log(tags);
+  }
+  function editTag(tag) {
+    var element = document.getElementById(tag);
+    if (element) {
+      element.setAttribute("type", "text");
+      selectedTags = [...tags, element];
+      console.log(tags);
+    } else {
+      console.error("Element with id '" + tag + "' not found");
+    }
+  }
 </script>
 
 <svelte:head>
@@ -83,8 +93,6 @@
     referrerpolicy="no-referrer"
   />
 </svelte:head>
-
-<EditModal show={showModal} on:close={handleClose} />
 
 <div class="w-11/12 flex flex-wrap justify-between mx-auto bg-white mt-[2rem]">
   <form
@@ -172,16 +180,17 @@
       <label for="tags" class="font-semibold text-md">Tags</label>
 
       {#each tags as tag}
-        <button
+        <input
+          on:dblclick={() => editTag(tag)}
           on:click={(e) => handleInput(tag)}
-          value={tag}
+          on:change={() => updatedTag(tag)}
+          bind:value={tag}
+          id={tag}
           type="button"
-          class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer ${
+          class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none ${
             selectedTags.includes(tag) ? "selected-button" : ""
           }`}
-        >
-          {tag}
-        </button>
+        />
       {/each}
     </div>
     <div class="flex justify-end gap-4">
@@ -201,6 +210,7 @@
       >
     </div>
 
+    <!-- //add value **need some changes -->
     <div class="flex justify-between w-full mx-auto items-center">
       <input
         type="text"

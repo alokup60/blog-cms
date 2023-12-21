@@ -1,13 +1,7 @@
 import { writeFile, writeFileSync } from "fs";
 import { MongoClient } from "mongodb";
-// import { tags } from "../cms/+page.svelte";
+import { json } from "stream/consumers";
 
-let tags = {};
-export const load = () => {
-  return {
-    tags,
-  };
-};
 async function connectToCluster() {
   let mongoClient;
   try {
@@ -25,12 +19,18 @@ async function connectToCluster() {
   }
 }
 //DB created & collection created
-// console.log(JSON.stringify($formtest), "server");
 let dbConn = await connectToCluster();
 const db = dbConn.db("newBlogDb");
 console.log("dataBase Created");
 const collection = db.collection("blog");
 const tagColl = db.collection("tagColl");
+export const load = async () => {
+  let tags = await tagColl.findOne({ name: "Anshu" });
+  let tagData = JSON.stringify(tags.newdata);
+  return {
+    tagData,
+  };
+};
 
 export const actions = {
   default: async ({ cookies, request }) => {
@@ -57,23 +57,19 @@ export const actions = {
       content: content,
       tags: tags,
     });
+
+    //tagColl created
+    // let user = await tagColl.updateOne(
+    //   { name: "Anshu" },
+
+    //   { $push: { newdata: tagData } }
+    // );
     let user = await tagColl.updateOne(
       { name: "Anshu" },
-      // { _id: new Object("6582ee66092b407f13d89449") },
-      { $push: { newdata: tagData } }
-      // { _id: Object("62caa34849e3d70aa618d9f2") },
-      // { $set: { xyz: { a: "yweyfwewe" } } }
-    );
-    // let user = await tagColl.updateOne(
-    //   {"_id": new Object('6582bf90092b407f13d89400')},
-    //   $set:{
-    //     tags: {}
-    //   }
 
-    // );
-    if (user) {
-      console.log("ho gya kaam");
-    }
+      { $set: { newdata: tagData } }
+    );
+
     //get Data
     let blogData = await collection.find({}).toArray();
     let x = JSON.stringify(blogData);
