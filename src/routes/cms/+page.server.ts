@@ -1,19 +1,6 @@
 import { writeFile, writeFileSync } from "fs";
-import { formtest } from "$lib/store/store.js";
 import { MongoClient } from "mongodb";
 // import { tags } from "../cms/+page.svelte";
-
-// let ttd = tags;
-
-// setTimeout(() => {
-//   console.log(tags, "server");
-// }, 5000);
-
-// let tags;
-// formtest.subscribe((value) => {
-//   tags = value.selectedTags;
-//   console.log(tags, "hiiiiiii");
-// });
 
 let tags = {};
 export const load = () => {

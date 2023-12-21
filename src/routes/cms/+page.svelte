@@ -1,11 +1,11 @@
 <script>
-  import { formtest } from "$lib/store/store";
   import imgUploader from "$lib/images/imgUploader.svg";
-
+  import EditModal from "../components/EditModal.svelte";
   export let data;
   export let form;
 
-  //extract every object
+  let showModal = false;
+  // let dialog;
   if (form) {
     let blogData = JSON.parse(form.x);
     for (let item = 0; item < blogData.length; item++) {
@@ -26,8 +26,6 @@
     coverImg: "",
     // authorAvtar:
   };
-  // $: formtest.set(formData);
-  // $: console.log($formtest);
 
   export let tags = formData.tags; //tags
   let selectedTags = formData.selectedTags;
@@ -45,20 +43,22 @@
     console.log(selectedTags);
   }
 
+  //remove element and show updated tags
+  function removeElem(selectedTags) {
+    tags = tags.filter((tag) => !selectedTags.includes(tag));
+    console.log(tags);
+  }
   function addTag() {
     tags = new Set([...tags, tagVal]);
-    // toasts.success("Tag added successfuly!");
-
     tagVal = "";
   }
 
-  function removeElem(selectedTag) {
-    selectedTags = selectedTags.filter((item) => item !== selectedTag);
-    console.log(selectedTag);
+  function editElem(selectedTags) {
+    // tags =
+    showModal = true;
   }
   let color = "gray";
   function handleInput(tag) {
-    // selectedTags = [...selectedTags, tag];
     if (!selectedTags.includes(tag)) {
       selectedTags = [...selectedTags, tag];
       color = "green";
@@ -79,6 +79,33 @@
     referrerpolicy="no-referrer"
   />
 </svelte:head>
+
+<EditModal bind:showModal>
+  <h2 class="text-center font-semibold text-xl">Edit Tag</h2>
+  <div class="flex justify-between">
+    <label>Tag</label>
+    <input
+      type="text"
+      value={selectedTags}
+      class="border outline-none rounded-md px-2"
+    />
+  </div>
+</EditModal>
+
+<!-- {#if selectedTags}
+  && (<EditModal bind:showModal>
+    <h2 class="text-center font-semibold text-xl">Edit Tag</h2>
+    <div class="flex justify-between">
+      <label>Tag</label>
+      <input
+        type="text"
+        value={selectedTags}
+        class="border outline-none rounded-md px-2"
+      />
+    </div>
+  </EditModal>
+  )
+{/if} -->
 
 <div class="w-11/12 flex flex-wrap justify-between mx-auto bg-white mt-[2rem]">
   <form
@@ -178,21 +205,22 @@
         </button>
       {/each}
     </div>
-    <!-- <div class="tag-list">
-      <ul class="flex gap-2 flex-wrap items-center">
-        {#each selectedTags as selectedTag}
-          <li
-            class="bg-gray-500 px-3 py-2 rounded-md text-white"
-            key={selectedTag.index}
-          >
-            {selectedTag}
-            <button type="button" on:click={() => removeElem(selectedTag)}>
-              <i class="fa-solid fa-xmark cursor-pointer"> </i>
-            </button>
-          </li>
-        {/each}
-      </ul>
-    </div> -->
+    <div class="flex justify-end gap-4">
+      <button
+        type="button"
+        on:click={() => editElem(selectedTags)}
+        class="text-yellow-400 hover:text-yellow-300 transition-none delay-200"
+      >
+        Edit
+      </button>
+      <!-- on:click={() => (showModal = true)} -->
+      <button
+        on:click={() => removeElem(selectedTags)}
+        type="button"
+        class="text-red-400 hover:text-red-500 transition-none delay-200"
+        >Delete</button
+      >
+    </div>
 
     <div class="flex justify-between w-full mx-auto items-center">
       <input
@@ -208,6 +236,7 @@
         class="bg-green-700 py-2 px-2 text-white rounded-md">Add Tag</button
       >
     </div>
+
     <input
       class="opacity-0"
       type="text"
@@ -230,10 +259,6 @@
     <div>
       <p>{@html formData.content}</p>
     </div>
-  </div>
-
-  <div>
-    <p></p>
   </div>
 </div>
 
