@@ -21,17 +21,18 @@
       </li>
     {/each}
   </ul>
-  <div class="flex justify-between mt-4 w-6/12 items-center">
+  <form class="flex justify-between mt-4 w-6/12 items-center" method="POST">
     <input
       type="text"
       name="newTag"
+      value=""
       placeholder="Enter New Tag Name"
       class="border px-2 py-1 outline-none rounded-md"
     />
     <button
-      type="button"
+      type="submit"
       class="bg-green-400 px-3 py-1 text-white rounded-md hover:bg-green-500 transition-all delay-100"
       >Add Tag</button
     >
-  </div>
+  </form>
 </section>

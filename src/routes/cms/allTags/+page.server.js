@@ -28,3 +28,20 @@ export const load = async () => {
     tagData,
   };
 };
+
+//add
+export const actions = {
+  default: async ({ request }) => {
+    const formData = await request.formData();
+    const newTags = formData.get("newTag");
+    console.log(newTags);
+
+    let user = await tagColl.updateOne(
+      {
+        name: "Anshu",
+      },
+      { $push: { newdata: newTags } }
+    );
+    return { success: true };
+  },
+};
