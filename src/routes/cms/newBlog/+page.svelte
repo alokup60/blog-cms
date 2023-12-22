@@ -2,72 +2,68 @@
   import imgUploader from "$lib/images/imgUploader.svg";
   export let data;
   export let form;
-  console.log(data.tagData);
+  // console.log(data.tagData);
 
   // let dialog;
-  if (form) {
-    let blogData = JSON.parse(form.x);
-    for (let item = 0; item < blogData.length; item++) {
-      let element = blogData[item];
-      // console.log(element._id);
-    }
+  if (form?.success) {
+    console.log("ho gya kaam");
   }
 
   // export let blogData;
   // console.log(form?.x);
-  let formData = {
-    title: "",
-    desc: "",
-    createdBy: "",
-    content: ``,
-    // tags: ["Mechanical", "Nature", "Civil", "PMKY"],
-    selectedTags: [],
-    coverImg: "",
-    // authorAvtar:
-  };
+  // let formData = {
+  //   title: "",
+  //   desc: "",
+  //   createdBy: "",
+  //   content: ``,
+  //   // tags: ["Mechanical", "Nature", "Civil", "PMKY"],
+  //   selectedTags: [],
+  //   coverImg: "",
+  //   // authorAvtar:
+  // };
 
   let tags = JSON.parse(data.tagData); //tags
-  let selectedTags = formData.selectedTags;
+  // let selectedTags = formData.selectedTags;
 
-  let x;
+  // let x;
 
-  function removeTags() {
-    x = formData.content.replace(/(<([^>]+)>)/gi, "");
-    // console.log(x);
-  }
+  // function removeTags() {
+  //   x = formData.content.replace(/(<([^>]+)>)/gi, "");
+  //   // console.log(x);
+  // }
 
-  function getTag(e) {
-    let val = e.target.value;
-    selectedTags = [...selectedTags, val];
-    console.log(selectedTags);
-  }
+  // function getTag(e) {
+  //   let val = e.target.value;
+  //   selectedTags = [...selectedTags, val];
+  //   console.log(selectedTags);
+  // }
 
   //remove element and show updated tags
-  function removeElem(selectedTags) {
-    tags = tags.filter((tag) => !selectedTags.includes(tag));
-    console.log(tags);
-  }
-  let tagVal = "";
-  function addTag() {
-    tags = new Set([...tags, tagVal]);
-    tagVal = "";
-  }
+  // function removeElem(selectedTags) {
+  //   tags = tags.filter((tag) => !selectedTags.includes(tag));
+  //   console.log(tags);
+  // }
+  // let tagVal = "";
+  // function addTag() {
+  //   tags = new Set([...tags, tagVal]);
+  //   tagVal = "";
+  // }
 
   // function editElem(selectedTags) {
   //   // tags =
   //   showModal = true;
   // }
-  let color = "gray";
-  function handleInput(tag) {
-    if (!selectedTags.includes(tag)) {
-      selectedTags = [...selectedTags, tag];
-      color = "green";
-    } else {
-      selectedTags = selectedTags.filter((t) => t !== tag);
-      color = "gray";
-    }
-    console.log(selectedTags);
-  }
+  // let color = "gray";
+  // function handleInput(tag) {
+  //   if (!selectedTags.includes(tag)) {
+  //     selectedTags = [...selectedTags, tag];
+  //     color = "green";
+  //   } else {
+  //     selectedTags = selectedTags.filter((t) => t !== tag);
+  //     color = "gray";
+  //   }
+  //   console.log(selectedTags);
+  // }
 </script>
 
 <svelte:head>
@@ -81,18 +77,14 @@
 </svelte:head>
 
 <div class="lg:ml-72 relative pt-5 min-w-full mx-auto">
-  <form
-    class="  py-4 bx px-4 rounded-md"
-    method="POST"
-    enctype="multipart/form-data"
-  >
+  <form class="  py-4 bx px-4 rounded-md" method="POST">
     <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>
       <input
         type="text"
         name="title"
-        bind:value={formData.title}
+        value=""
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
@@ -102,7 +94,7 @@
       <input
         type="text"
         name="desc"
-        bind:value={formData.desc}
+        value=""
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
@@ -112,7 +104,7 @@
       <input
         type="text"
         name="auth"
-        bind:value={formData.createdBy}
+        value=""
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
@@ -124,8 +116,7 @@
         <input
           type="text"
           name="content"
-          bind:value={formData.content}
-          on:change={removeTags}
+          value=""
           placeholder="Enter Content"
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
@@ -166,13 +157,13 @@
       <label for="tags" class="font-semibold text-md">Tags</label>
 
       {#each tags as tag}
+        <label for={tag}>{tag}</label>
         <input
-          on:click={(e) => handleInput(tag)}
-          bind:value={tag}
+          value={tag}
           id={tag}
-          type="button"
-          class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none ${
-            selectedTags.includes(tag) ? "selected-button" : ""
+          name="tags"
+          type="checkbox"
+          class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
           }`}
         />
       {/each}
@@ -210,22 +201,23 @@
       >
     </div> -->
 
-    <input
+    <!-- <input
       class="opacity-0"
       type="text"
       name="tagData"
       bind:value={tags}
       id="tagData"
-    />
+    /> -->
 
     <button
+      type="submit"
       class="bg-blue-400 py-2 px-2 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
       >Submit</button
     >
   </form>
 
   <!-- Preview  -->
-  <div class="w-6/12 hidden justify-center items-center mx-auto bx py-4">
+  <!-- <div class="w-6/12 hidden justify-center items-center mx-auto bx py-4">
     <h1 class="text-center font-semibold text-2xl">Preview</h1>
     <div>
       <h1 class="font-bold text-2xl text-center">{formData.title}</h1>
@@ -236,7 +228,7 @@
     <div>
       <p>{@html formData.content}</p>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <style>

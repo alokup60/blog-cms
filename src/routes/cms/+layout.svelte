@@ -6,7 +6,7 @@
 <div>
   <!-- <ToastContainer /> -->
   <!-- <Header /> -->
-  <SideBar />
+  <!-- <SideBar /> -->
   <main>
     <slot />
   </main>

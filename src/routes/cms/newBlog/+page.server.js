@@ -1,6 +1,5 @@
 import { writeFile, writeFileSync } from "fs";
 import { MongoClient } from "mongodb";
-import { json } from "stream/consumers";
 
 async function connectToCluster() {
   let mongoClient;
@@ -33,27 +32,26 @@ export const load = async () => {
 };
 
 export const actions = {
-  default: async ({ cookies, request }) => {
+  default: async ({ request }) => {
     const formData = await request.formData();
-    const selected = formData.get("file");
+    // const selected = formData.get("file");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
-    const tagData = formData.getAll("tagData");
-    console.log(tagData, "hasdyasda");
+    // const tagData = formData.getAll("tagData");
+    console.log(title, desc, auth, content, tags);
 
     //for storing file in local storage
-    writeFileSync(
-      `static/upload/${selected.name}`,
-      Buffer.from(await selected.arrayBuffer())
-    );
+    // writeFileSync(
+    //   `static/upload/${selected.name}`,
+    //   Buffer.from(await selected.arrayBuffer())
+    // );
     await collection.insertOne({
       title: title,
       desc: desc,
       auth: auth,
-      file: selected,
       content: content,
       tags: tags,
     });
@@ -64,16 +62,16 @@ export const actions = {
 
     //   { $push: { newdata: tagData } }
     // );
-    let user = await tagColl.updateOne(
-      { name: "Anshu" },
+    // let user = await tagColl.updateOne(
+    //   { name: "Anshu" },
 
-      { $set: { newdata: tagData } }
-    );
+    //   { $set: { newdata: tagData } }
+    // );
 
     //get Data
-    let blogData = await collection.find({}).toArray();
-    let x = JSON.stringify(blogData);
+    // let blogData = await collection.find({}).toArray();
+    // let x = JSON.stringify(blogData);
 
-    return { x, success: true };
+    return { success: true };
   },
 };
