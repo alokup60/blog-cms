@@ -26,17 +26,8 @@ export const load = async () => {
   try {
     let data = await blog.find().toArray();
     let allData = JSON.stringify(data);
-    // let title = JSON.stringify(data.title);
-    // let desc = JSON.stringify(data.desc);
-    // let auth = JSON.stringify(data.auth);
-    // let content = JSON.stringify(data.content);
-    // let tags = JSON.stringify(data.tags);
+
     return {
-      //   title,
-      //   desc,
-      //   auth,
-      //   content,
-      //   tags,
       allData,
     };
   } catch (error) {

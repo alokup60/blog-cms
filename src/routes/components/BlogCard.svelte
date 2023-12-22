@@ -2,11 +2,11 @@
   import { blogForm } from "$lib/store/stores.js";
   let blogData = $blogForm;
 
-  $: {
-    if (blogData) {
-      console.log(blogData);
-    }
-  }
+  // $: {
+  //   if (blogData) {
+  //     console.log(blogData);
+  //   }
+  // }
 </script>
 
 <section class="w-11/12 flex mx-auto flex-wrap flex-col">
