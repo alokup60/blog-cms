@@ -23,7 +23,7 @@
 </script>
 
 <!-- component -->
-<body class="bg-gray-100 absolute">
+<body class="bg-gray-100 absolute bottom-0 top-0 h-full">
   <!-- Headig -->
   <nav class="bg-blue-500 p-4 w-full flex items-center justify-between">
     <div>
@@ -32,7 +32,7 @@
   </nav>
 
   <!-- Nav -->
-  <aside class="bg-gray-800 text-white w-64 min-h-screen p-4">
+  <aside class="bg-gray-800 text-white w-64 h-full p-4">
     <nav>
       <ul class="space-y-2">
         <li class="opcion-con-desplegable">

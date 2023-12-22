@@ -9,23 +9,8 @@
     console.log("ho gya kaam");
   }
 
-  // export let blogData;
-  // console.log(form?.x);
-  // let formData = {
-  //   title: "",
-  //   desc: "",
-  //   createdBy: "",
-  //   content: ``,
-  //   // tags: ["Mechanical", "Nature", "Civil", "PMKY"],
-  //   selectedTags: [],
-  //   coverImg: "",
-  //   // authorAvtar:
-  // };
-
   let tags = JSON.parse(data.tagData); //tags
   // let selectedTags = formData.selectedTags;
-
-  // let x;
 
   // function removeTags() {
   //   x = formData.content.replace(/(<([^>]+)>)/gi, "");
@@ -113,13 +98,13 @@
     <div class="flex flex-col justify-between">
       <label for="content" class="font-semibold text-md">Content</label>
       <div class="w-full border rounded">
-        <input
-          type="text"
+        <textarea
           name="content"
           value=""
           placeholder="Enter Content"
-          class="border w-full px-2 py-1 rounded-md outline-none"
-        />
+          rows="8"
+          class="border w-full px-2 py-1 rounded-md outline-none resize-none"
+        ></textarea>
       </div>
     </div>
     <!-- image for cover  -->
@@ -153,19 +138,21 @@
       </div>
     </div>
     <!-- option -->
-    <div class="flex gap-2 relative flex-wrap mt-2">
+    <div class="flex gap-2 relative flex-wrap py-4">
       <label for="tags" class="font-semibold text-md">Tags</label>
 
       {#each tags as tag}
-        <label for={tag}>{tag}</label>
-        <input
-          value={tag}
-          id={tag}
-          name="tags"
-          type="checkbox"
-          class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
+        <div class="check">
+          <input
+            value={tag}
+            id={tag}
+            name="tags"
+            type="checkbox"
+            class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
           }`}
-        />
+          />
+          <label for={tag}>{tag}</label>
+        </div>
       {/each}
     </div>
     <!-- edit & delet Btn  -->
@@ -211,7 +198,7 @@
 
     <button
       type="submit"
-      class="bg-blue-400 py-2 px-2 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
+      class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
       >Submit</button
     >
   </form>
@@ -235,12 +222,25 @@
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
-  #tags {
-    appearance: none;
+  input[type="checkbox"] {
+    display: none;
   }
-  .selected-button {
+
+  .check label {
+    background-color: gray;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* //important to change bg color of label  */
+  .check input:checked + label {
     background-color: green;
   }
+  /* .selected-button {
+    background-color: green;
+  } */
   /* .selected-button:hover {
     display: none;
   } */

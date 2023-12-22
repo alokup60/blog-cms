@@ -31,6 +31,7 @@ export const load = async () => {
   };
 };
 
+//set into DB formData
 export const actions = {
   default: async ({ request }) => {
     const formData = await request.formData();
@@ -48,6 +49,7 @@ export const actions = {
     //   `static/upload/${selected.name}`,
     //   Buffer.from(await selected.arrayBuffer())
     // );
+    //Save Db
     await collection.insertOne({
       title: title,
       desc: desc,
