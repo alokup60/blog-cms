@@ -21,6 +21,7 @@ let dbConn = await connectToCluster();
 const db = dbConn.db("newBlogDb");
 console.log("Database connected");
 const tagColl = db.collection("tagColl");
+
 export const load = async () => {
   let tags = await tagColl.findOne({ name: "Anshu" });
   let tagData = JSON.stringify(tags.newdata);
