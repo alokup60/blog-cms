@@ -31,16 +31,29 @@ export const load = async () => {
 
 //add
 export const actions = {
-  default: async ({ request }) => {
+  addTag: async ({ request }) => {
     const formData = await request.formData();
     const newTags = formData.get("newTag");
-    console.log(newTags);
+    // console.log(newTags);
 
     let user = await tagColl.updateOne(
       {
         name: "Anshu",
       },
       { $push: { newdata: newTags } }
+    );
+    return { success: true };
+  },
+  removeTag: async ({ request }) => {
+    const formData = await request.formData();
+    const removeTags = formData.get("removetag");
+    console.log(removeTags);
+
+    let user = await tagColl.updateOne(
+      {
+        name: "Anshu",
+      },
+      { $pull: { newdata: removeTags } }
     );
     return { success: true };
   },

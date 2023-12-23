@@ -34,7 +34,4 @@ export const load = async () => {
     console.error("Error loading data:", error);
     throw error;
   }
-  //   } finally {
-  //     await mongoClient.close();
-  //   }
 };

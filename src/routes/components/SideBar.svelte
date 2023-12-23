@@ -23,16 +23,18 @@
 </script>
 
 <!-- component -->
-<body class="bg-gray-100 absolute bottom-0 top-0 h-full">
+<body class="bg-gray-100 bottom-0 top-0 h-full">
   <!-- Headig -->
-  <nav class="bg-blue-500 p-4 w-full flex items-center justify-between">
+  <nav
+    class="bg-gray-800 p-5 w-full fixed flex items-center justify-between z-10"
+  >
     <div>
       <h1 class="text-white text-xl font-semibold">CMS PANEL</h1>
     </div>
   </nav>
 
   <!-- Nav -->
-  <aside class="bg-gray-800 text-white w-64 h-full p-4">
+  <aside class="bg-gray-800 fixed text-white w-64 mt-16 h-full p-4 z-10">
     <nav>
       <ul class="space-y-2">
         <li class="opcion-con-desplegable">
