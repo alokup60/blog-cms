@@ -1,4 +1,4 @@
-import { blog } from "$lib/db/database";
+import { blog, tagColl } from "$lib/db/database";
 import { page } from "$app/stores";
 import { ObjectId } from "mongodb";
 let postId;
@@ -7,10 +7,13 @@ export const load = async ({ params }) => {
   postId = new ObjectId(updatePost);
   try {
     let data = await blog.find({ _id: postId }).toArray();
+    let tagData = await tagColl.find().toArray();
     let post = JSON.stringify(data);
+    let alltags = JSON.stringify(tagData);
 
     return {
       post,
+      alltags,
     };
   } catch (error) {
     console.error("Error loading data:", error);

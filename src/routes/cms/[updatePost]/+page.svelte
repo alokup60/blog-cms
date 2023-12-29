@@ -3,7 +3,31 @@
   export let data;
 
   let post = JSON.parse(data.post); //tags
-  console.log(post);
+  let tags = JSON.parse(data.alltags);
+  let blogTags;
+  let newtags;
+  let selectedTags = [];
+
+  post.map((item) => {
+    blogTags = item.tags;
+    // console.log(blogTags);
+  });
+  tags.forEach((element) => {
+    newtags = element.newdata;
+  });
+
+  //   selectedTags = [...blogTags, newtags];
+
+  //   let selectedTags = [];
+
+  const selectedFn = (tag) => {
+    const index = selectedTags.indexOf(tag);
+    if (index > 0) {
+      // Tag is not selected, so add it to the selectedTags array
+      selectedTags = [...selectedTags, tag];
+    }
+  };
+  $: console.log(blogTags);
 </script>
 
 <svelte:head>
@@ -95,21 +119,55 @@
       </div>
       <!-- option -->
       <div class="flex gap-2 relative flex-wrap py-4">
-        <label for="tags" class="font-semibold text-md">Tags</label>
+        <h2 class="font-semibold text-md">Tags</h2>
 
-        {#each item.tags as tag}
-          <div class="check">
-            <input
-              value={tag}
-              id={tag}
-              name="tags"
-              type="checkbox"
-              class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
+        {#if selectedTags && selectedTags.length > 0}
+          {#each selectedTags as tag}
+            <div class="check">
+              <input
+                value={tag}
+                id={tag}
+                name="tags"
+                type="checkbox"
+                class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none ${
+                  selectedTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
+                } 
           }`}
-            />
-            <label for={tag}>{tag}</label>
-          </div>
-        {/each}
+              />
+              <label for={tag}>{tag}</label>
+            </div>
+          {/each}
+        {:else}
+          <p><sup>*</sup>No Tags Selected</p>
+        {/if}
+      </div>
+
+      <!-- all option  -->
+      <div class="flex justify-between mx-auto w-full">
+        <div class="flex flex-wrap gap-2">
+          <h2 class="font-semibold">All Tags</h2>
+          {#if newtags}
+            {#each newtags as tag}
+              <div class="check">
+                <input
+                  value={tag}
+                  id={tag}
+                  name="tags"
+                  type="checkbox"
+                  class={`bg-gray-400  flex px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none  
+          }`}
+                />
+                <label for={tag} on:click={() => selectedFn(tag)}>{tag}</label>
+              </div>
+            {/each}
+          {/if}
+        </div>
+        <div>
+          <button
+            class="bg-green-400 px-3 py-1 rounded-md text-white cursor-pointer hover:bg-green-500 transition-all delay-100"
+            >Add Tag</button
+          >
+        </div>
       </div>
 
       <button

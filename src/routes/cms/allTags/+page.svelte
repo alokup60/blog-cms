@@ -10,13 +10,6 @@
     $allTags = tagsAll;
   }
 
-  // function deleteFn(val) {
-  //   selectedTags = selectedTags.filter(function (item) {
-  //     return item !== val;
-  //   });
-  //   console.log(selectedTags);
-  // }
-
   let selectedTags = [];
 
   function selectFn(tag) {
@@ -33,11 +26,6 @@
       console.log(selectedTags);
     }
   }
-
-  // function removeElem(selectedTag) {
-  //   selectedTags = selectedTags.filter((item) => item !== selectedTag);
-  //   console.log(selectedTag);
-  // }
 </script>
 
 <section class="lg:ml-72 pt-8 mx-auto">
