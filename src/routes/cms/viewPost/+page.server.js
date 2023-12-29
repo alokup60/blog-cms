@@ -37,13 +37,22 @@ export const load = async () => {
 };
 
 export const actions = {
-  editPost: async ({ request }) => {
+  deletePost: async ({ request }) => {
     const blogData = await request.formData();
-    const removePostId = blogData.get("remove");
-    console.log(removePostId);
+    const removePostId = blogData.get("postId");
+    const postId = new ObjectId(removePostId);
+    // console.log(typeof removePostId);
+    // console.log("tapped");
 
-    blog.deleteOne({ title: removePostId });
-    // console.log({ _id });
+    const deletedPost = await blog.deleteOne({ id: postId });
+
+    try {
+      const deletedPost = await blog.deleteOne({ _id: postId });
+      console.log("Post deleted successfully:", deletedPost);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      return { success: false, error: "Error deleting post" };
+    }
 
     return { success: true };
   },
