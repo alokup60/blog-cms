@@ -58,22 +58,6 @@ export const actions = {
       tags: tags,
     });
 
-    //tagColl created
-    // let user = await tagColl.updateOne(
-    //   { name: "Anshu" },
-
-    //   { $push: { newdata: tagData } }
-    // );
-    // let user = await tagColl.updateOne(
-    //   { name: "Anshu" },
-
-    //   { $set: { newdata: tagData } }
-    // );
-
-    //get Data
-    // let blogData = await collection.find({}).toArray();
-    // let x = JSON.stringify(blogData);
-
     return { success: true };
   },
 };
