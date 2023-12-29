@@ -44,7 +44,7 @@ export const actions = {
     // console.log(typeof removePostId);
     // console.log("tapped");
 
-    const deletedPost = await blog.deleteOne({ id: postId });
+    // const deletedPost = await blog.deleteOne({ id: postId });
 
     try {
       const deletedPost = await blog.deleteOne({ _id: postId });
