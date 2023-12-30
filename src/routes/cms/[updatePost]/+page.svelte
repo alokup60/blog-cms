@@ -1,31 +1,72 @@
 <script>
   import imgUploader from "$lib/images/imgUploader.svg";
+  import BlogCard from "../../components/BlogCard.svelte";
   export let data;
 
   let post = JSON.parse(data.post); //tags
   let tags = JSON.parse(data.alltags);
   let blogTags;
   let newtags;
-  // let selectedTags = [];
+  let selectedTags = [];
+  let allTags = [];
 
+  //blogTags
   post.map((item) => {
     blogTags = item.tags;
     // console.log(blogTags);
   });
+  //allTags
   tags.forEach((element) => {
     newtags = element.newdata;
     // console.log(newtags, "new");
   });
 
+  const getSelectedTags = async () => {
+    try {
+      const tags = await blogTags;
+      selectedTags = [...selectedTags, ...tags];
+      blogTags = [...blogTags, ...selectedTags];
+      selectedTags = selectedTags.filter((val) => !allTags.includes(val));
+      console.log(tags);
+      console.log(selectedTags, "selected");
+    } catch (error) {
+      console.error("Error fetching tags:", error);
+    }
+  };
+  getSelectedTags();
+
+  const getAllTags = async () => {
+    try {
+      const tags = await newtags;
+      allTags = [...allTags, ...tags];
+      allTags = allTags.filter((val) => !selectedTags.includes(val));
+
+      console.log(tags);
+      console.log(allTags, "all");
+    } catch (error) {
+      console.error("Error fetching tags:", error);
+    }
+  };
+  getAllTags();
+
   const selectedFn = (tg) => {
-    const index = blogTags.indexOf(tg);
+    const index = selectedTags.indexOf(tg);
     if (index === -1) {
       // Tag is not selected, so add it to the selectedTags array
-      blogTags = [...blogTags, tg];
-      // blogTags = blogTags.push(tg);
+      selectedTags = [...selectedTags, tg];
     } else {
-      // Tag is already selected, so remove it from the selectedTags array
-      blogTags = blogTags.filter((tag) => tag !== tg);
+      selectedTags = selectedTags.filter((tag) => tag !== tg);
+    }
+    allTags = allTags.filter((tag) => !selectedTags.includes(tag));
+  };
+
+  const unSelectedFn = (tag) => {
+    const index = selectedTags.indexOf(tag);
+    if (index === -1) {
+      selectedTags = [...selectedTags, tag];
+    } else {
+      selectedTags = selectedTags.filter((item) => item !== tag);
+      allTags = [...allTags, tag];
     }
   };
   $: console.log(blogTags);
@@ -123,10 +164,10 @@
       <div class="flex gap-2 relative flex-wrap py-4">
         <h2 class="font-semibold text-md">Tags</h2>
 
-        {#if blogTags && blogTags.length > 0}
-          {#each blogTags as tag}
+        {#if selectedTags && selectedTags.length > 0}
+          {#each selectedTags as tag}
             <div class="check">
-              <input
+              <!-- <input
                 value={tag}
                 id={tag}
                 name="tags"
@@ -136,8 +177,8 @@
                   blogTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
                 } 
           }`}
-              />
-              <label for={tag}>{tag}</label>
+              /> -->
+              <label for={tag} on:click={() => unSelectedFn(tag)}>{tag}</label>
             </div>
           {/each}
         {:else}
@@ -149,8 +190,8 @@
       <div class="flex justify-between mx-auto w-full">
         <div class="flex flex-wrap gap-2">
           <h2 class="font-semibold">All Tags</h2>
-          {#if newtags}
-            {#each newtags as tg}
+          {#if allTags}
+            {#each allTags as tg}
               <div class="check">
                 <input
                   value={tg}
@@ -193,13 +234,7 @@
   }
 
   /* //important to change bg color of label  */
-  .check input:checked + label {
+  /*.check input:checked + label {
     background-color: green;
-  }
-  /* .selected-button {
-    background-color: green;
-  } */
-  /* .selected-button:hover {
-    display: none;
-  } */
+  }*/
 </style>
