@@ -6,7 +6,7 @@
   let tags = JSON.parse(data.alltags);
   let blogTags;
   let newtags;
-  let selectedTags = [];
+  // let selectedTags = [];
 
   post.map((item) => {
     blogTags = item.tags;
@@ -14,17 +14,18 @@
   });
   tags.forEach((element) => {
     newtags = element.newdata;
+    // console.log(newtags, "new");
   });
 
-  //   selectedTags = [...blogTags, newtags];
-
-  //   let selectedTags = [];
-
-  const selectedFn = (tag) => {
-    const index = selectedTags.indexOf(tag);
-    if (index > 0) {
+  const selectedFn = (tg) => {
+    const index = blogTags.indexOf(tg);
+    if (index === -1) {
       // Tag is not selected, so add it to the selectedTags array
-      selectedTags = [...selectedTags, tag];
+      blogTags = [...blogTags, tg];
+      // blogTags = blogTags.push(tg);
+    } else {
+      // Tag is already selected, so remove it from the selectedTags array
+      blogTags = blogTags.filter((tag) => tag !== tg);
     }
   };
   $: console.log(blogTags);
@@ -117,20 +118,22 @@
           </div>
         </div>
       </div>
+      <!-- {item.tags} -->
       <!-- option -->
       <div class="flex gap-2 relative flex-wrap py-4">
         <h2 class="font-semibold text-md">Tags</h2>
 
-        {#if selectedTags && selectedTags.length > 0}
-          {#each selectedTags as tag}
+        {#if blogTags && blogTags.length > 0}
+          {#each blogTags as tag}
             <div class="check">
               <input
                 value={tag}
                 id={tag}
                 name="tags"
                 type="checkbox"
+                checked
                 class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none ${
-                  selectedTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
+                  blogTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
                 } 
           }`}
               />
@@ -147,26 +150,20 @@
         <div class="flex flex-wrap gap-2">
           <h2 class="font-semibold">All Tags</h2>
           {#if newtags}
-            {#each newtags as tag}
+            {#each newtags as tg}
               <div class="check">
                 <input
-                  value={tag}
-                  id={tag}
+                  value={tg}
+                  id={tg}
                   name="tags"
                   type="checkbox"
-                  class={`bg-gray-400  flex px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none  
+                  class={`bg-gray-400  flex px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none   
           }`}
                 />
-                <label for={tag} on:click={() => selectedFn(tag)}>{tag}</label>
+                <label for={tg} on:click={() => selectedFn(tg)}>{tg}</label>
               </div>
             {/each}
           {/if}
-        </div>
-        <div>
-          <button
-            class="bg-green-400 px-3 py-1 rounded-md text-white cursor-pointer hover:bg-green-500 transition-all delay-100"
-            >Add Tag</button
-          >
         </div>
       </div>
 
