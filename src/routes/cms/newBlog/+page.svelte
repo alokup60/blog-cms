@@ -4,51 +4,39 @@
   export let form;
   // console.log(data.tagData);
 
+  let input;
+  let container;
+  let image;
+  let placeholder;
+  let showImage = false;
+
+  function uploadImg() {
+    const file = input.files[0];
+
+    if (file) {
+      showImage = true;
+
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        image.setAttribute("src", reader.result);
+      });
+      reader.readAsDataURL(file);
+
+      return;
+    }
+    showImage = false;
+  }
+
   // let dialog;
   // if (form?.success) {
   //   console.log("ho gya kaam");
   // }
 
   let tags = JSON.parse(data.tagData); //tags
-  // let selectedTags = formData.selectedTags;
-
-  // function removeTags() {
-  //   x = formData.content.replace(/(<([^>]+)>)/gi, "");
-  //   // console.log(x);
-  // }
-
-  // function getTag(e) {
-  //   let val = e.target.value;
-  //   selectedTags = [...selectedTags, val];
-  //   console.log(selectedTags);
-  // }
-
-  //remove element and show updated tags
-  // function removeElem(selectedTags) {
-  //   tags = tags.filter((tag) => !selectedTags.includes(tag));
-  //   console.log(tags);
-  // }
-  // let tagVal = "";
-  // function addTag() {
-  //   tags = new Set([...tags, tagVal]);
-  //   tagVal = "";
-  // }
-
-  // function editElem(selectedTags) {
-  //   // tags =
-  //   showModal = true;
-  // }
-  // let color = "gray";
-  // function handleInput(tag) {
-  //   if (!selectedTags.includes(tag)) {
-  //     selectedTags = [...selectedTags, tag];
-  //     color = "green";
-  //   } else {
-  //     selectedTags = selectedTags.filter((t) => t !== tag);
-  //     color = "gray";
-  //   }
-  //   console.log(selectedTags);
-  // }
+  let files;
+  $: if (files) {
+    console.log(files);
+  }
 </script>
 
 <svelte:head>
@@ -62,7 +50,11 @@
 </svelte:head>
 
 <div class="lg:ml-72 relative pt-5 min-w-full mx-auto">
-  <form class="  py-4 bx px-4 rounded-md" method="POST">
+  <form
+    class="py-4 bx px-4 rounded-md"
+    method="POST"
+    enctype="multipart/form-data"
+  >
     <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>
@@ -108,99 +100,58 @@
       </div>
     </div>
     <!-- image for cover  -->
-    <div class="flex flex-col w-full border bg-white rounded-md px-1">
-      <div class="flex gap-2">
-        <img src={imgUploader} /><span class="text-xl font-semibold"
-          >Preview Card</span
-        >
-      </div>
-      <hr />
-      <div class="mt-4">
-        <p>Cover Image<sup>*</sup></p>
+
+    <div class="flex flex-col justify-between">
+      <label for="fileUpload" class="font-semibold text-md">Upload Image</label>
+      <div class="flex flex-col w-full border bg-white rounded-md px-1">
         <div
-          class="rounded border flex justify-center flex-col items-center mb-4"
+          bind:this={container}
+          class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"
         >
-          <div class="mt-4 flex flex-col justify-center items-center">
-            <p>Drag a file here</p>
-            <p class="opacity-50 text-sm">Max size 20 MB</p>
-          </div>
-
-          <div class="flex py-6 justify-center items-center mx-auto">
-            <div
-              class="bg-green-200 px-2 py-2 rounded-md text-green-600 cursor-pointer flex justify-center text-center items-center mx-auto"
-            >
-              <div class="flex flex-col">
-                <input type="file" name="file" accept="image/jpg,image/png" />
-              </div>
-            </div>
-          </div>
+          {#if showImage}
+            <img bind:this={image} src="" alt="Preview" class="w-full h-full" />
+          {:else}
+            <span bind:this={placeholder}>Image Preview</span>
+          {/if}
+        </div>
+        <div
+          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2"
+        >
+          <input
+            name="fileUpload"
+            accept="image/*"
+            bind:this={input}
+            on:change={uploadImg}
+            type="file"
+          />
         </div>
       </div>
-    </div>
-    <!-- option -->
-    <div class="flex gap-2 relative flex-wrap py-4">
-      <label for="tags" class="font-semibold text-md">Tags</label>
 
-      {#each tags as tag}
-        <div class="check">
-          <input
-            value={tag}
-            id={tag}
-            name="tags"
-            type="checkbox"
-            class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
+      <!-- option -->
+      <div class="flex gap-2 relative flex-wrap py-4">
+        <label for="tags" class="font-semibold text-md">Tags</label>
+
+        {#each tags as tag}
+          <div class="check">
+            <input
+              value={tag}
+              id={tag}
+              name="tags"
+              type="checkbox"
+              class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
           }`}
-          />
-          <label for={tag}>{tag}</label>
-        </div>
-      {/each}
+            />
+            <label for={tag}>{tag}</label>
+          </div>
+        {/each}
+      </div>
+
+      <button
+        type="submit"
+        class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
+        >Submit</button
+      >
     </div>
-    <!-- edit & delet Btn  -->
-    <!-- <div class="flex justify-end gap-4">
-      <button
-        type="button"
-        on:click={() => editElem(selectedTags)}
-        class="text-yellow-400 hover:text-yellow-300 transition-none delay-200"
-      >
-        Edit
-      </button>
-      <button
-        on:click={() => removeElem(selectedTags)}
-        type="button"
-        class="text-red-400 hover:text-red-500 transition-none delay-200"
-        >Delete</button
-      >
-    </div> -->
-
-    <!-- //add value **need some changes -->
-    <!-- <div class="flex justify-between w-full mx-auto items-center">
-      <input
-        type="text"
-        bind:value={tagVal}
-        name="addTag"
-        placeholder="Add Tag"
-        class="border px-2 py-1 rounded-md outline-none"
-      />
-      <button
-        type="button"
-        on:click={addTag}
-        class="bg-green-700 py-2 px-2 text-white rounded-md">Add Tag</button
-      >
-    </div> -->
-
-    <!-- <input
-      class="opacity-0"
-      type="text"
-      name="tagData"
-      bind:value={tags}
-      id="tagData"
-    /> -->
-
-    <button
-      type="submit"
-      class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
-      >Submit</button
-    >
   </form>
 
   <!-- Preview  -->

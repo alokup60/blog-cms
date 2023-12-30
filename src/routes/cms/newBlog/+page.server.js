@@ -35,20 +35,21 @@ export const load = async () => {
 export const actions = {
   default: async ({ request }) => {
     const formData = await request.formData();
-    // const selected = formData.get("file");
+    const file = formData.get("fileUpload");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
+    // const
     // const tagData = formData.getAll("tagData");
-    console.log(title, desc, auth, content, tags);
+    console.log(file);
 
     //for storing file in local storage
-    // writeFileSync(
-    //   `static/upload/${selected.name}`,
-    //   Buffer.from(await selected.arrayBuffer())
-    // );
+    writeFileSync(
+      `static/upload/${file.name}`,
+      Buffer.from(await file.arrayBuffer())
+    );
     //Save Db
     await collection.insertOne({
       title: title,

@@ -152,14 +152,14 @@
                 class="bg-green-200 px-2 py-2 rounded-md text-green-600 cursor-pointer flex justify-center text-center items-center mx-auto"
               >
                 <div class="flex flex-col">
-                  <input type="file" name="file" accept="image/jpg,image/png" />
+                  <input type="file" name="file" accept="image/*" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- {item.tags} -->
+
       <!-- option -->
       <div class="flex gap-2 relative flex-wrap py-4">
         <h2 class="font-semibold text-md">Tags</h2>
