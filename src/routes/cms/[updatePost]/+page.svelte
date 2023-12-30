@@ -1,7 +1,17 @@
 <script>
+  import { goto } from "$app/navigation";
   import imgUploader from "$lib/images/imgUploader.svg";
+  import { onMount } from "svelte";
   import BlogCard from "../../components/BlogCard.svelte";
   export let data;
+  export let form;
+
+  onMount(async () => {
+    if (form?.success) {
+      alert("Updated Successfully!");
+      goto("./viewPost");
+    }
+  });
 
   let post = JSON.parse(data.post); //tags
   let tags = JSON.parse(data.alltags);
@@ -131,31 +141,28 @@
       </div>
       <!-- image for cover  -->
       <div class="flex flex-col w-full border bg-white rounded-md px-1">
-        <div class="flex gap-2">
-          <img src={imgUploader} /><span class="text-xl font-semibold"
-            >Preview Card</span
-          >
-        </div>
-        <hr />
-        <div class="mt-4">
-          <p>Cover Image<sup>*</sup></p>
+        <label for="fileUpload" class="font-semibold text-md"
+          >Upload Image</label
+        >
+        <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <div
-            class="rounded border flex justify-center flex-col items-center mb-4"
+            class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"
           >
-            <div class="mt-4 flex flex-col justify-center items-center">
-              <p>Drag a file here</p>
-              <p class="opacity-50 text-sm">Max size 20 MB</p>
-            </div>
-
-            <div class="flex py-6 justify-center items-center mx-auto">
-              <div
-                class="bg-green-200 px-2 py-2 rounded-md text-green-600 cursor-pointer flex justify-center text-center items-center mx-auto"
-              >
-                <div class="flex flex-col">
-                  <input type="file" name="file" accept="image/*" />
-                </div>
-              </div>
-            </div>
+            <!-- {#if showImage}
+              <img
+                bind:this={image}
+                src=""
+                alt="Preview"
+                class="w-full h-full"
+              />
+            {:else}
+              <span bind:this={placeholder}>Image Preview</span>
+            {/if} -->
+          </div>
+          <div
+            class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 bg-green-200 px-2 my-2 rounded-md text-green-600"
+          >
+            <input name="fileUpload" accept="image/*" type="file" />
           </div>
         </div>
       </div>

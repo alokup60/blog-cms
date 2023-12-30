@@ -100,7 +100,6 @@
       </div>
     </div>
     <!-- image for cover  -->
-
     <div class="flex flex-col justify-between">
       <label for="fileUpload" class="font-semibold text-md">Upload Image</label>
       <div class="flex flex-col w-full border bg-white rounded-md px-1">
@@ -115,7 +114,7 @@
           {/if}
         </div>
         <div
-          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2"
+          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 bg-green-200 px-2 my-2 rounded-md text-green-600"
         >
           <input
             name="fileUpload"
