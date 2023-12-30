@@ -167,7 +167,7 @@
         {#if selectedTags && selectedTags.length > 0}
           {#each selectedTags as tag}
             <div class="check">
-              <!-- <input
+              <input
                 value={tag}
                 id={tag}
                 name="tags"
@@ -177,7 +177,7 @@
                   blogTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
                 } 
           }`}
-              /> -->
+              />
               <label for={tag} on:click={() => unSelectedFn(tag)}>{tag}</label>
             </div>
           {/each}
