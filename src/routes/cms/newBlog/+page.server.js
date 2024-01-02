@@ -1,6 +1,6 @@
 import { writeFile, writeFileSync } from "fs";
 import { MongoClient } from "mongodb";
-
+import { imagekit } from "$lib/imagekit/imagekit.js";
 async function connectToCluster() {
   let mongoClient;
   try {
@@ -44,12 +44,53 @@ export const actions = {
     // const
     // const tagData = formData.getAll("tagData");
     console.log(file);
+    // Using Callback Function
 
+    // imagekit.upload(
+    //   {
+    //     file: Buffer.from(await file.arrayBuffer()), //required
+    //     fileName: file.name, //required
+    //     extensions: [
+    //       {
+    //         name: "google-auto-tagging",
+    //         maxTags: 5,
+    //         minConfidence: 95,
+    //       },
+    //     ],
+    //   },
+    //   function (error, result) {
+    //     if (error) console.log(error);
+    //     else console.log(result);
+    //   }
+    // );
+
+    // Using Promises
+    let URL;
+    await imagekit
+      .upload({
+        file: Buffer.from(await file.arrayBuffer()), //required
+        fileName: file.name, //required
+        folder: "/newblog",
+        extensions: [
+          {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95,
+          },
+        ],
+      })
+      .then((response) => {
+        URL = response.url;
+        console.log(response.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     //for storing file in local storage
-    writeFileSync(
-      `static/upload/${file.name}`,
-      Buffer.from(await file.arrayBuffer())
-    );
+    // writeFileSync(
+    //   `static/upload/${file.name}`,
+    //   Buffer.from(await file.arrayBuffer())
+    // );
     //Save Db
     await collection.insertOne({
       title: title,
@@ -57,6 +98,7 @@ export const actions = {
       auth: auth,
       content: content,
       tags: tags,
+      img: await URL,
     });
 
     return { success: true };
