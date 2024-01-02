@@ -124,6 +124,14 @@
             type="file"
           />
         </div>
+        <div class="flex justify-center mx-auto mb-2">
+          <input
+            type="button"
+            value="Crop"
+            id="cropImg"
+            class="px-3 py-1 rounded-md bg-orange-400 text-white cursor-pointer hover:bg-orange-500 transition-all duration-100"
+          />
+        </div>
       </div>
 
       <!-- option -->

@@ -1,5 +1,6 @@
 import { blog, tagColl } from "$lib/db/database";
 import { page } from "$app/stores";
+import { imagekit } from "$lib/imagekit/imagekit.js";
 import { ObjectId } from "mongodb";
 let postId;
 export const load = async ({ params }) => {
@@ -24,7 +25,7 @@ export const load = async ({ params }) => {
 export const actions = {
   updatePost: async ({ request }) => {
     const formData = await request.formData();
-    // const selected = formData.get("file");
+    const file = formData.get("fileUpload");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -32,6 +33,28 @@ export const actions = {
     const tags = formData.getAll("tags");
     // const tagData = formData.getAll("tagData");
     console.log(title, desc, auth, content, tags);
+
+    let URL;
+    await imagekit
+      .upload({
+        file: Buffer.from(await file.arrayBuffer()), //required
+        fileName: file.name, //required
+        // folder: "/newblog",
+        extensions: [
+          {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95,
+          },
+        ],
+      })
+      .then((response) => {
+        URL = response.url;
+        console.log(response.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     //Save Db
     await blog.updateOne(
@@ -43,6 +66,7 @@ export const actions = {
           auth: auth,
           content: content,
           tags: tags,
+          img: await URL,
         },
       }
     );

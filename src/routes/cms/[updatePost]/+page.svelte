@@ -6,6 +6,30 @@
   export let data;
   export let form;
 
+  // start form here for showing image (Preview)
+  let input;
+  let container;
+  let image;
+  let placeholder;
+  let showImage = false;
+
+  function uploadImg() {
+    const file = input.files[0];
+
+    if (file) {
+      showImage = true;
+
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        image.setAttribute("src", reader.result);
+      });
+      reader.readAsDataURL(file);
+
+      return;
+    }
+    showImage = false;
+  }
+  //End here........
   onMount(async () => {
     if (form?.success) {
       alert("Updated Successfully!");
@@ -93,7 +117,12 @@
 </svelte:head>
 {#each post as item}
   <div class="lg:ml-72 relative pt-5 min-w-full mx-auto">
-    <form class="  py-4 bx px-4 rounded-md" method="POST" action="?/updatePost">
+    <form
+      class="  py-4 bx px-4 rounded-md"
+      method="POST"
+      action="?/updatePost"
+      enctype="multipart/form-data"
+    >
       <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
       <div class="flex flex-col justify-between">
         <label for="title" class="font-semibold text-md">Title</label>
@@ -146,9 +175,10 @@
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <div
+            bind:this={container}
             class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"
           >
-            <!-- {#if showImage}
+            {#if showImage}
               <img
                 bind:this={image}
                 src=""
@@ -157,12 +187,18 @@
               />
             {:else}
               <span bind:this={placeholder}>Image Preview</span>
-            {/if} -->
+            {/if}
           </div>
           <div
             class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 bg-green-200 px-2 my-2 rounded-md text-green-600"
           >
-            <input name="fileUpload" accept="image/*" type="file" />
+            <input
+              name="fileUpload"
+              accept="image/*"
+              bind:this={input}
+              on:change={uploadImg}
+              type="file"
+            />
           </div>
         </div>
       </div>

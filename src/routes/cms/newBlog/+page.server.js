@@ -44,25 +44,6 @@ export const actions = {
     // const
     // const tagData = formData.getAll("tagData");
     console.log(file);
-    // Using Callback Function
-
-    // imagekit.upload(
-    //   {
-    //     file: Buffer.from(await file.arrayBuffer()), //required
-    //     fileName: file.name, //required
-    //     extensions: [
-    //       {
-    //         name: "google-auto-tagging",
-    //         maxTags: 5,
-    //         minConfidence: 95,
-    //       },
-    //     ],
-    //   },
-    //   function (error, result) {
-    //     if (error) console.log(error);
-    //     else console.log(result);
-    //   }
-    // );
 
     // Using Promises
     let URL;
@@ -70,7 +51,7 @@ export const actions = {
       .upload({
         file: Buffer.from(await file.arrayBuffer()), //required
         fileName: file.name, //required
-        folder: "/newblog",
+        // folder: "/newblog",
         extensions: [
           {
             name: "google-auto-tagging",
