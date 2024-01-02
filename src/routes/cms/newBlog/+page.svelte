@@ -1,31 +1,36 @@
 <script>
-  import imgUploader from "$lib/images/imgUploader.svg";
+  import { onMount } from "svelte";
+  import Cropper from "cropperjs";
   export let data;
   export let form;
+  let canvas;
+  let result = [];
   // console.log(data.tagData);
 
+  //image preview start from here
   let input;
   let container;
   let image;
   let placeholder;
   let showImage = false;
 
-  function uploadImg() {
-    const file = input.files[0];
+  // function uploadImg() {
+  //   const file = input.files[0];
 
-    if (file) {
-      showImage = true;
+  //   if (file) {
+  //     showImage = true;
 
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        image.setAttribute("src", reader.result);
-      });
-      reader.readAsDataURL(file);
+  //     const reader = new FileReader();
+  //     reader.addEventListener("load", function () {
+  //       image.setAttribute("src", reader.result);
+  //     });
+  //     reader.readAsDataURL(file);
 
-      return;
-    }
-    showImage = false;
-  }
+  //     return;
+  //   }
+  //   showImage = false;
+  // }
+  //end here.......
 
   // let dialog;
   // if (form?.success) {
@@ -33,10 +38,58 @@
   // }
 
   let tags = JSON.parse(data.tagData); //tags
-  let files;
-  $: if (files) {
-    console.log(files);
-  }
+  // let files;
+  // $: if (files) {
+  //   console.log(files);
+  // }
+
+  onMount(() => {
+    const fileInput = document.getElementById("fileUpload");
+    const context = canvas.getContext("2d");
+    let cropper;
+
+    fileInput.addEventListener("change", function () {
+      if (this.files && this.files[0]) {
+        if (this.files[0].type.match(/^image\//)) {
+          const reader = new FileReader();
+
+          reader.onload = function (evt) {
+            const img = new Image();
+
+            img.onload = function () {
+              canvas.height = img.height;
+              canvas.width = img.width;
+              context.drawImage(img, 0, 0);
+
+              cropper = new Cropper(canvas, {
+                aspectRatio: 22 / 9,
+                highlight: true, // Enable highlight
+                // borderColor: "red",
+              });
+
+              document
+                .getElementById("btnCrop")
+                .addEventListener("click", function () {
+                  const croppedImageDataURL = cropper
+                    .getCroppedCanvas()
+                    .toDataURL("image/png");
+                  console.log("hii");
+                  result = [...result, croppedImageDataURL];
+                });
+            };
+
+            img.src = evt.target.result;
+          };
+
+          reader.readAsDataURL(this.files[0]);
+        } else {
+          alert("Invalid file type! Please select an image file.");
+        }
+      } else {
+        alert("No file(s) selected.");
+      }
+    });
+  });
 </script>
 
 <svelte:head>
@@ -47,6 +100,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
+  <link href="/path/to/cropper.css" rel="stylesheet" />
 </svelte:head>
 
 <div class="lg:ml-72 relative pt-5 min-w-full mx-auto">
@@ -103,8 +157,8 @@
     <div class="flex flex-col justify-between">
       <label for="fileUpload" class="font-semibold text-md">Upload Image</label>
       <div class="flex flex-col w-full border bg-white rounded-md px-1">
-        <div
-          bind:this={container}
+        <!-- <canvas
+          bind:this={canvas}
           class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"
         >
           {#if showImage}
@@ -112,23 +166,34 @@
           {:else}
             <span bind:this={placeholder}>Image Preview</span>
           {/if}
-        </div>
+        </canvas> -->
         <div
-          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 bg-green-200 px-2 my-2 rounded-md text-green-600"
+          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
         >
-          <input
+          <canvas bind:this={canvas} class="w-full" id="canvas"></canvas>
+
+          <input type="file" id="fileUpload" name="fileUpload" />
+          <!-- <div class="preview"></div> -->
+          <!-- <input type="button" id="btnCrop" value="Crop" /> -->
+          <!-- <input
             name="fileUpload"
             accept="image/*"
             bind:this={input}
             on:change={uploadImg}
             type="file"
-          />
+          /> -->
+        </div>
+
+        <div id="result" class="flex gap-4 flex-wrap">
+          {#each result as imgSrc (imgSrc)}
+            <img src={imgSrc} />
+          {/each}
         </div>
         <div class="flex justify-center mx-auto mb-2">
           <input
             type="button"
             value="Crop"
-            id="cropImg"
+            id="btnCrop"
             class="px-3 py-1 rounded-md bg-orange-400 text-white cursor-pointer hover:bg-orange-500 transition-all duration-100"
           />
         </div>
@@ -196,6 +261,12 @@
   .check input:checked + label {
     background-color: green;
   }
+
+  /* .preview {
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+  } */
   /* .selected-button {
     background-color: green;
   } */

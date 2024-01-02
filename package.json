@@ -25,6 +25,7 @@
   },
   "type": "module",
   "dependencies": {
+    "cropperjs": "^1.6.1",
     "dotenv": "^16.3.1",
     "fs": "^0.0.1-security",
     "imagekit": "^4.1.4",
