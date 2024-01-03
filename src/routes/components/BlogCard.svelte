@@ -1,7 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
   import { blogForm } from "$lib/store/stores.js";
-  let blogData = $blogForm;
+  // let blogData = $blogForm;
 
   const date = new Date();
   let day = date.getDate();
@@ -11,18 +11,10 @@
   let currentDate = `${monthName} ${formattedDay}, ${year}`;
 
   const detailView = (title) => {
-    // console.log(tilte);
-    // let fref = title.replace(/^\s+|\s+$/gm,"");
     let str = title.replace(/\s/g, "-");
     console.log(str);
     goto(str);
   };
-
-  // $: {
-  //   if (blogData) {
-  //     console.log(blogData);
-  //   }
-  // }
 </script>
 
 <section class="w-11/12 flex mx-auto flex-wrap flex-col">

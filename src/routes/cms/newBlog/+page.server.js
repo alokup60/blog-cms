@@ -37,6 +37,7 @@ export const actions = {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
     const mobileImg = formData.get("mobileUpload");
+    const authImg = formData.get("authorUpload");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -49,6 +50,8 @@ export const actions = {
     // Using Promises
     let URL;
     let mobURL;
+    let authURL;
+    //web image
     await imagekit
       .upload({
         file: Buffer.from(await file.arrayBuffer()), //required
@@ -92,6 +95,28 @@ export const actions = {
         console.log(error);
       });
 
+    // author image
+    await imagekit
+      .upload({
+        file: Buffer.from(await authImg.arrayBuffer()),
+        fileName: file.name,
+        // folder: "/newblog",
+        extensions: [
+          {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95,
+          },
+        ],
+      })
+      .then((response) => {
+        authURL = response.url;
+        console.log(response.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     //Save Db
     await collection.insertOne({
       title: title,
@@ -101,6 +126,7 @@ export const actions = {
       tags: tags,
       mobImg: await mobURL,
       img: await URL,
+      authImg: await authURL,
     });
 
     return { success: true };

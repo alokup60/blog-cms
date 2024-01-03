@@ -1,52 +1,88 @@
 <script>
+  import { parse } from "cookie";
+
   export let data;
   export let form;
-
+  const formData = {
+    heading: "",
+    desc: "",
+    content: "",
+    author: "",
+    // mobImg:
+    tag: [],
+  };
   // console.log(data.tagData);
 
   //image preview start from here
-  let input;
-  let input2;
-  let container;
-  let container2;
-  let image;
-  let mobImage;
-  let placeholder;
-  let placeholder2;
-  let showImage = false;
-
-  function uploadImg() {
-    const file = input.files[0];
+  let mobInput;
+  let webInput;
+  let mobContainer;
+  let webContainer;
+  let mobImg;
+  let webImg;
+  let mobPlaceholder;
+  let webPlaceholder;
+  let mobImage = false;
+  let webImage = false;
+  let inpAuth;
+  let authContainer;
+  let authImg;
+  let authPlaceholder;
+  let authImage = false;
+  // let heading;
+  // let desc;
+  // let content;
+  // let author;
+  // let tag;
+  function uploadWebImg() {
+    const file = webInput.files[0];
 
     if (file) {
-      showImage = true;
+      webImage = true;
 
       const reader = new FileReader();
       reader.addEventListener("load", function () {
-        image.setAttribute("src", reader.result);
+        webImg.setAttribute("src", reader.result);
       });
       reader.readAsDataURL(file);
 
       return;
     }
-    showImage = false;
+    webImage = false;
   }
 
   function uploadMobImg() {
-    const file = input2.files[0];
+    const file = mobInput.files[0];
 
     if (file) {
-      showImage = true;
+      mobImage = true;
 
       const reader = new FileReader();
       reader.addEventListener("load", function () {
-        mobImage.setAttribute("src", reader.result);
+        mobImg.setAttribute("src", reader.result);
       });
       reader.readAsDataURL(file);
 
       return;
     }
-    showImage = false;
+    mobImage = false;
+  }
+
+  function uploadAuthImg() {
+    const file = inpAuth.files[0];
+
+    if (file) {
+      authImage = true;
+
+      const reader = new FileReader();
+      reader.addEventListener("load", function () {
+        authImg.setAttribute("src", reader.result);
+      });
+      reader.readAsDataURL(file);
+
+      return;
+    }
+    authImage = false;
   }
   // end here.......
 
@@ -54,6 +90,10 @@
   let files;
   $: if (files) {
     console.log(files);
+  }
+  function fun() {
+    document.getElementById("prev").style.display = "block";
+    // document.getElementById("prev").style.color = "red";
   }
 </script>
 
@@ -74,12 +114,17 @@
     enctype="multipart/form-data"
   >
     <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
+    <div class="flex gap-4">
+      <a href="">Edit</a>
+      <!-- <a href="../preview">Preview</a> -->
+      <button type="button" on:click={fun}>Preview</button>
+    </div>
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>
       <input
         type="text"
         name="title"
-        value=""
+        bind:value={formData.heading}
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
@@ -89,7 +134,7 @@
       <input
         type="text"
         name="desc"
-        value=""
+        bind:value={formData.desc}
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
@@ -99,131 +144,177 @@
       <input
         type="text"
         name="auth"
-        value=""
+        bind:value={formData.author}
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
-    <!-- create textbox -->
-    <div class="flex flex-col justify-between">
-      <label for="content" class="font-semibold text-md">Content</label>
-      <div class="w-full border rounded">
-        <textarea
-          name="content"
-          value=""
-          placeholder="Enter Content"
-          rows="8"
-          class="border w-full px-2 py-1 rounded-md outline-none resize-none"
-        ></textarea>
-      </div>
-    </div>
-    <!-- image for cover  -->
-    <div class="flex flex-col justify-between">
-      <label for="fileUpload" class="font-semibold text-md">Upload Image</label>
+    <!-- author image  -->
+    <div>
+      <label class="font-semibold text-md" for="authImg">Autor Image</label>
       <div class="flex flex-col w-full border bg-white rounded-md px-1">
-        <!-- //mobile preview  -->
-        <div class="flex justify-between w-10/12 mx-auto">
-          <div class="flex flex-col w-full justify-between mx-auto">
-            <div
-              bind:this={container}
-              class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
-            >
-              {#if showImage}
-                <img
-                  bind:this={mobImage}
-                  src=""
-                  alt="Preview"
-                  class="w-full h-full"
+        <div
+          bind:this={authContainer}
+          class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
+        >
+          {#if authImage}
+            <img
+              bind:this={authImg}
+              src=""
+              alt="Preview"
+              class="w-full h-full"
+            />
+          {:else}
+            <span bind:this={authPlaceholder}>Author image</span>
+          {/if}
+          <!-- <span></span> -->
+        </div>
+        <div
+          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
+        >
+          <input
+            name="authorUpload"
+            accept="image/*"
+            bind:this={inpAuth}
+            on:change={uploadAuthImg}
+            type="file"
+          />
+        </div>
+      </div>
+      <!-- create textbox -->
+      <div class="flex flex-col justify-between">
+        <label for="content" class="font-semibold text-md">Content</label>
+        <div class="w-full border rounded">
+          <textarea
+            name="content"
+            bind:value={formData.content}
+            placeholder="Enter Content"
+            rows="8"
+            class="border w-full px-2 py-1 rounded-md outline-none resize-none"
+          ></textarea>
+        </div>
+      </div>
+      <!-- image for cover  -->
+      <div class="flex flex-col justify-between">
+        <label for="fileUpload" class="font-semibold text-md"
+          >Upload Image</label
+        >
+        <div class="flex flex-col w-full border bg-white rounded-md px-1">
+          <!-- //mobile preview  -->
+          <div class="flex justify-between w-10/12 mx-auto">
+            <div class="flex flex-col w-full justify-between mx-auto">
+              <div
+                bind:this={mobContainer}
+                class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
+              >
+                {#if mobImage}
+                  <img
+                    bind:this={mobImg}
+                    src=""
+                    alt="Preview"
+                    class="w-full h-full"
+                  />
+                {:else}
+                  <span bind:this={mobPlaceholder}>Mobile Preview</span>
+                {/if}
+              </div>
+              <div
+                class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
+              >
+                <input
+                  name="mobileUpload"
+                  accept="image/*"
+                  bind:this={mobInput}
+                  on:change={uploadMobImg}
+                  type="file"
                 />
-              {:else}
-                <span bind:this={placeholder2}>Mobile Preview</span>
-              {/if}
+              </div>
             </div>
-            <div
-              class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
-            >
-              <input
-                name="mobileUpload"
-                accept="image/*"
-                bind:this={input2}
-                on:change={uploadMobImg}
-                type="file"
-              />
-            </div>
-          </div>
 
-          <!-- web preview  -->
-          <div class="flex flex-col w-full justify-between mx-auto">
-            <div
-              bind:this={container}
-              class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
-            >
-              {#if showImage}
-                <img
-                  bind:this={image}
-                  src=""
-                  alt="Preview"
-                  class="w-full h-full"
+            <!-- web preview  -->
+            <div class="flex flex-col w-full justify-between mx-auto">
+              <div
+                bind:this={webContainer}
+                class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
+              >
+                {#if webImage}
+                  <img
+                    bind:this={webImg}
+                    src=""
+                    alt="Preview"
+                    class="w-full h-full"
+                  />
+                {:else}
+                  <span bind:this={webPlaceholder}>Web Preview</span>
+                {/if}
+              </div>
+              <div
+                class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
+              >
+                <input
+                  name="fileUpload"
+                  accept="image/*"
+                  bind:this={webInput}
+                  on:change={uploadWebImg}
+                  type="file"
                 />
-              {:else}
-                <span bind:this={placeholder}>Web Preview</span>
-              {/if}
-            </div>
-            <div
-              class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
-            >
-              <input
-                name="fileUpload"
-                accept="image/*"
-                bind:this={input}
-                on:change={uploadImg}
-                type="file"
-              />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- option -->
-      <div class="flex gap-2 relative flex-wrap py-4">
-        <label for="tags" class="font-semibold text-md">Tags</label>
+        <!-- option -->
+        <div class="flex gap-2 relative flex-wrap py-4">
+          <label for="tags" class="font-semibold text-md">Tags</label>
 
-        {#each tags as tag}
-          <div class="check">
-            <input
-              value={tag}
-              id={tag}
-              name="tags"
-              type="checkbox"
-              class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
+          {#each tags as tag}
+            <div class="check">
+              <input
+                bind:value={formData.tag}
+                id={tag}
+                name="tags"
+                type="checkbox"
+                class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
           }`}
-            />
-            <label for={tag}>{tag}</label>
-          </div>
-        {/each}
-      </div>
+              />
+              <label for={tag}>{tag}</label>
+            </div>
+          {/each}
+        </div>
 
-      <button
-        type="submit"
-        class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
-        >Submit</button
-      >
+        <button
+          type="submit"
+          class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
+          >Submit</button
+        >
+      </div>
     </div>
   </form>
 
   <!-- Preview  -->
-  <!-- <div class="w-6/12 hidden justify-center items-center mx-auto bx py-4">
+  <div
+    class="w-8/12 hidden justify-center items-center mx-auto bx py-4"
+    id="prev"
+  >
     <h1 class="text-center font-semibold text-2xl">Preview</h1>
-    <div>
-      <h1 class="font-bold text-2xl text-center">{formData.title}</h1>
+    <div class="w-10/12 flex flex-col justify-center mx-auto">
+      <div>
+        <h1 class="font-bold text-2xl text-center">{formData.heading}</h1>
+      </div>
+      <div class="w-4/12 justify-center mx-auto px-4">
+        <p class="px-4">{formData.desc}</p>
+      </div>
+      <div>
+        <p>By {formData.author}</p>
+      </div>
+      <div>
+        <p>{@html formData.content}</p>
+      </div>
+      <div>
+        {formData.tag}
+      </div>
     </div>
-    <div class="w-4/12 justify-center mx-auto px-4">
-      <p class="px-4">{formData.desc}</p>
-    </div>
-    <div>
-      <p>{@html formData.content}</p>
-    </div>
-  </div> -->
+  </div>
 </div>
 
 <style>
@@ -258,4 +349,7 @@
   /* .selected-button:hover {
     display: none;
   } */
+  #tss {
+    display: none;
+  }
 </style>
