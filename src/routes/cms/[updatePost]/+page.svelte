@@ -174,6 +174,9 @@
           >Upload Image</label
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
+          <div>
+            <img src={item.img} class="" />
+          </div>
           <div
             bind:this={container}
             class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"

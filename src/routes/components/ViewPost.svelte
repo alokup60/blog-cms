@@ -1,7 +1,5 @@
 <script>
   import { blogForm } from "$lib/store/stores.js";
-  import { json } from "@sveltejs/kit";
-  import Modal from "../components/modle.svelte";
 </script>
 
 <!-- <Modal bind:showModal>
@@ -94,7 +92,12 @@
 
             <div><p class="opacity-80">{data.desc}</p></div>
             <div class="flex justify-between">
-              <p class="cursor-pointer tracking-wider">Read More...</p>
+              <form method="POST" action="?/readMore">
+                <a href={`${data._id}`} class="cursor-pointer tracking-wider"
+                  >Read More...</a
+                >
+              </form>
+
               <p class="font-semibold tracking-wider">by {data.auth}</p>
             </div>
           </div>

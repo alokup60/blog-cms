@@ -36,6 +36,7 @@ export const actions = {
   default: async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
+    const mobileImg = formData.get("mobileUpload");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -47,6 +48,7 @@ export const actions = {
 
     // Using Promises
     let URL;
+    let mobURL;
     await imagekit
       .upload({
         file: Buffer.from(await file.arrayBuffer()), //required
@@ -67,11 +69,29 @@ export const actions = {
       .catch((error) => {
         console.log(error);
       });
-    //for storing file in local storage
-    // writeFileSync(
-    //   `static/upload/${file.name}`,
-    //   Buffer.from(await file.arrayBuffer())
-    // );
+
+    // mobile image
+    await imagekit
+      .upload({
+        file: Buffer.from(await mobileImg.arrayBuffer()),
+        fileName: file.name,
+        // folder: "/newblog",
+        extensions: [
+          {
+            name: "google-auto-tagging",
+            maxTags: 5,
+            minConfidence: 95,
+          },
+        ],
+      })
+      .then((response) => {
+        mobURL = response.url;
+        console.log(response.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     //Save Db
     await collection.insertOne({
       title: title,
@@ -79,6 +99,7 @@ export const actions = {
       auth: auth,
       content: content,
       tags: tags,
+      mobImg: await mobURL,
       img: await URL,
     });
 
