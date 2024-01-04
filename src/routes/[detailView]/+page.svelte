@@ -1,11 +1,18 @@
 <script>
   import { goto } from "$app/navigation";
 
-  // import { blogForm } from "$lib/store/stores.js";
   export let data;
   let post = JSON.parse(data.newdata);
-  console.log(post);
+  // console.log(post);
 
+  let content = post.map((item) => {
+    // console.log(item.content, "content");
+    return item.content;
+  });
+
+  $: wordCount = content.join(" ").split(" ").length;
+  $: estimatedReadingTimeInMinutes = Math.floor(wordCount / 238);
+  $: estimatedReadingTimeInSeconds = Math.round((wordCount / 238) * 60) % 60;
   // const prev = () => {
   //   goto(/)
   // };
@@ -36,6 +43,17 @@
       </h2>
       <p class="text-center tracking-wide text-xl">
         {data.desc}
+      </p>
+      <p class="text-center opacity-80">
+        {#if !estimatedReadingTimeInMinutes}
+          <p>Estimated Reading Time: Less than a minute</p>
+        {:else}
+          {` Estimated Reading Time:
+        ${estimatedReadingTimeInMinutes}
+        minutes
+        ${estimatedReadingTimeInSeconds}
+        seconds`}
+        {/if}
       </p>
       <div class="mt-[2rem]">
         <img src={data.img} alt="" class="rounded-xl" />

@@ -8,7 +8,7 @@
   }
 </script>
 
-<section class="lg:ml-72 mx-auto">
+<section class="flex ml-[4rem]">
   <!-- <h2 class="text-center text-2xl font-bold">This is View Page</h2> -->
   <ViewPost />
 </section>

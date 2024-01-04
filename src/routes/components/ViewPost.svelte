@@ -17,7 +17,7 @@
 </Modal> -->
 
 <section>
-  <div class="w-full flex mx-auto flex-wrap gap-4 pt-20">
+  <div class="flex ml-[4rem] flex-wrap gap-4 pt-20">
     {#if $blogForm}
       {#each $blogForm as data}
         <!-- {data.img} -->

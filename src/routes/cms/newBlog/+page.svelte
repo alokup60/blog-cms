@@ -1,6 +1,4 @@
 <script>
-  import { parse } from "cookie";
-
   export let data;
   export let form;
   const formData = {
@@ -8,82 +6,65 @@
     desc: "",
     content: "",
     author: "",
-    // mobImg:
     tag: [],
   };
-  // console.log(data.tagData);
 
-  //image preview start from here
-  let mobInput;
-  let webInput;
-  let mobContainer;
-  let webContainer;
-  let mobImg;
-  let webImg;
-  let mobPlaceholder;
-  let webPlaceholder;
-  let mobImage = false;
-  let webImage = false;
-  let inpAuth;
-  let authContainer;
-  let authImg;
-  let authPlaceholder;
-  let authImage = false;
-  // let heading;
-  // let desc;
-  // let content;
-  // let author;
-  // let tag;
+  function addTags(e) {
+    let val = e.target.value;
+    formData.tag = [...formData.tag, val];
+    // console.log(e.target.value);
+  }
+
   function uploadWebImg() {
-    const file = webInput.files[0];
+    let file = document.getElementById("webInp").files[0];
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      let image_1 = document.createElement("img");
+      let image_2 = document.createElement("img");
 
-    if (file) {
-      webImage = true;
+      let val = e.target.result;
 
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        webImg.setAttribute("src", reader.result);
-      });
-      reader.readAsDataURL(file);
+      image_1.src = val;
+      image_2.src = val;
 
-      return;
-    }
-    webImage = false;
+      document.getElementById("webPrev").appendChild(image_1);
+      document.getElementById("webImg").appendChild(image_2);
+    };
+
+    reader.readAsDataURL(file);
   }
 
+  //mobile image
   function uploadMobImg() {
-    const file = mobInput.files[0];
+    let file = document.getElementById("mobInp").files[0];
+    let reader = new FileReader();
 
-    if (file) {
-      mobImage = true;
+    reader.onload = function (e) {
+      let image_3 = document.createElement("img");
+      let image_4 = document.createElement("img");
+      let val = e.target.result;
+      image_3.src = val;
+      image_4.src = val;
 
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        mobImg.setAttribute("src", reader.result);
-      });
-      reader.readAsDataURL(file);
-
-      return;
-    }
-    mobImage = false;
+      document.getElementById("mobPrev").appendChild(image_3);
+      document.getElementById("mobileImg").appendChild(image_4);
+    };
+    // you have to declare the file loading
+    reader.readAsDataURL(file);
   }
 
-  function uploadAuthImg() {
-    const file = inpAuth.files[0];
-
+  //image preview and generate url for link
+  let src;
+  function uploadAuthImg(e) {
+    const [file] = imgInp.files;
     if (file) {
-      authImage = true;
-
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        authImg.setAttribute("src", reader.result);
-      });
-      reader.readAsDataURL(file);
-
-      return;
+      let img = URL.createObjectURL(file);
+      src = img;
+      console.log(img);
+      console.log(typeof img);
     }
-    authImage = false;
   }
+
   // end here.......
 
   let tags = JSON.parse(data.tagData); //tags
@@ -107,7 +88,7 @@
   />
 </svelte:head>
 
-<div class="lg:ml-72 relative pt-5 min-w-full mx-auto">
+<div class=" flex flex-col pt-5 w-full justify-center ml-[4rem] mx-auto">
   <form
     class="py-4 bx px-4 rounded-md"
     method="POST"
@@ -119,6 +100,7 @@
       <!-- <a href="../preview">Preview</a> -->
       <button type="button" on:click={fun}>Preview</button>
     </div>
+
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>
       <input
@@ -154,28 +136,18 @@
       <label class="font-semibold text-md" for="authImg">Autor Image</label>
       <div class="flex flex-col w-full border bg-white rounded-md px-1">
         <div
-          bind:this={authContainer}
           class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
         >
-          {#if authImage}
-            <img
-              bind:this={authImg}
-              src=""
-              alt="Preview"
-              class="w-full h-full"
-            />
-          {:else}
-            <span bind:this={authPlaceholder}>Author image</span>
-          {/if}
-          <!-- <span></span> -->
+          <img {src} width="100px" />
         </div>
         <div
           class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
         >
           <input
+            id="imgInp"
             name="authorUpload"
             accept="image/*"
-            bind:this={inpAuth}
+            value=""
             on:change={uploadAuthImg}
             type="file"
           />
@@ -201,30 +173,22 @@
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <!-- //mobile preview  -->
+          <!-- <img {src} alt={mobImg} /> -->
           <div class="flex justify-between w-10/12 mx-auto">
             <div class="flex flex-col w-full justify-between mx-auto">
               <div
-                bind:this={mobContainer}
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
               >
-                {#if mobImage}
-                  <img
-                    bind:this={mobImg}
-                    src=""
-                    alt="Preview"
-                    class="w-full h-full"
-                  />
-                {:else}
-                  <span bind:this={mobPlaceholder}>Mobile Preview</span>
-                {/if}
+                <div id="mobPrev"></div>
               </div>
               <div
                 class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
               >
                 <input
+                  id="mobInp"
                   name="mobileUpload"
                   accept="image/*"
-                  bind:this={mobInput}
+                  value=""
                   on:change={uploadMobImg}
                   type="file"
                 />
@@ -232,29 +196,21 @@
             </div>
 
             <!-- web preview  -->
+
             <div class="flex flex-col w-full justify-between mx-auto">
               <div
-                bind:this={webContainer}
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
               >
-                {#if webImage}
-                  <img
-                    bind:this={webImg}
-                    src=""
-                    alt="Preview"
-                    class="w-full h-full"
-                  />
-                {:else}
-                  <span bind:this={webPlaceholder}>Web Preview</span>
-                {/if}
+                <div id="webPrev"></div>
               </div>
               <div
                 class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
               >
                 <input
+                  id="webInp"
                   name="fileUpload"
                   accept="image/*"
-                  bind:this={webInput}
+                  value=""
                   on:change={uploadWebImg}
                   type="file"
                 />
@@ -270,7 +226,8 @@
           {#each tags as tag}
             <div class="check">
               <input
-                bind:value={formData.tag}
+                on:change={addTags}
+                value={tag}
                 id={tag}
                 name="tags"
                 type="checkbox"
@@ -303,15 +260,34 @@
       </div>
       <div class="w-4/12 justify-center mx-auto px-4">
         <p class="px-4">{formData.desc}</p>
+
+        <div>
+          <!-- mobile image  -->
+          <div id="mobileImg"></div>
+          <!-- web image  -->
+          <div id="webImg"></div>
+        </div>
       </div>
       <div>
-        <p>By {formData.author}</p>
+        <img {src} />
       </div>
-      <div>
-        <p>{@html formData.content}</p>
-      </div>
-      <div>
-        {formData.tag}
+      <div class="flex justify-between w-full mx-auto">
+        <!-- left-side  -->
+        <div class="w-8/12">
+          <p>{@html formData.content}</p>
+        </div>
+        <!-- right-side  -->
+        <div class="w-4/12 flex flex-col gap-4">
+          {#if formData.author}
+            <p class="font-semibold">{`By ${formData.author}`}</p>
+          {/if}
+
+          <div class="flex flex-wrap gap-2">
+            {#each formData.tag as item}
+              <div class="px-3 py-1 border-2 rounded-md">{item}</div>
+            {/each}
+          </div>
+        </div>
       </div>
     </div>
   </div>

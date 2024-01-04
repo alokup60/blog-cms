@@ -20,52 +20,46 @@
       });
     });
   }
+  // let listItems = document.querySelectorAll("#list-items li");
+  // listItems.forEach(function (item) {
+  //   item.addEventListener("click", function () {
+  //     listItems.forEach(function (li) {
+  //       li.classList.remove("active");
+  //     });
+
+  //     item.classList.add("active");
+  //   });
+  // });
 </script>
 
-<!-- component -->
-<body class="bg-gray-100 bottom-0 top-0 h-full">
-  <!-- Headig -->
-  <nav
-    class="bg-gray-800 p-5 w-full fixed flex items-center justify-between z-10"
-  >
-    <div>
-      <h1 class="text-white text-xl font-semibold">CMS PANEL</h1>
+<!-- Nav -->
+<aside class="bg-gray-800 flex text-white w-64 h-screen overflow-hidden">
+  <nav class="flex flex-col gap-2 w-full">
+    <div class="px-2 py-4 bg-green-400">
+      <p class="font-bold">BLOG CMS</p>
     </div>
-  </nav>
+    <ul class="space-y-2 w-full" id="list-items">
+      <li class="flex items-center justify-between p-2 hover:bg-gray-700">
+        <a href="/cms/home" class="w-full">Home</a>
+      </li>
 
-  <!-- Nav -->
-  <aside class="bg-gray-800 fixed text-white w-64 mt-16 h-full p-4 z-10">
-    <nav>
-      <ul class="space-y-2">
-        <li class="opcion-con-desplegable">
-          <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-            <div class="flex items-center">
-              <a href="/cms/home">Home</a>
-            </div>
-          </div>
-        </li>
-        <li class="opcion-con-desplegable">
-          <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-            <div class="flex items-center">
-              <a href="/cms/newBlog">New Post</a>
-            </div>
-          </div>
-        </li>
-        <li class="opcion-con-desplegable">
-          <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-            <div class="flex items-center">
-              <a href="/cms/viewPost">View Post</a>
-            </div>
-          </div>
-        </li>
-        <li class="opcion-con-desplegable">
-          <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-            <div class="flex items-center">
-              <a href="/cms/allTags">All Tags</a>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-</body>
+      <li class="flex items-center justify-between p-2 hover:bg-gray-700">
+        <a href="/cms/newBlog" class="w-full">New Blog</a>
+      </li>
+
+      <li class="flex items-center justify-between p-2 hover:bg-gray-700">
+        <a href="/cms/viewPost" class="w-full">View Post</a>
+      </li>
+
+      <li class="flex items-center justify-between p-2 hover:bg-gray-700">
+        <a href="/cms/allTags" class="w-full">All Tags</a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  .active {
+    background-color: green;
+  }
+</style>
