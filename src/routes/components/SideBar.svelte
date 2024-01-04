@@ -33,7 +33,7 @@
 </script>
 
 <!-- Nav -->
-<aside class="bg-gray-800 flex text-white w-64 h-screen overflow-hidden">
+<aside class="bg-gray-800 w-60 text-white h-screen overflow-hidden">
   <nav class="flex flex-col gap-2 w-full">
     <div class="px-2 py-4 bg-green-400">
       <p class="font-bold">BLOG CMS</p>

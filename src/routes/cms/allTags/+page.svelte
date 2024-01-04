@@ -28,8 +28,10 @@
   }
 </script>
 
-<section class="lg:ml-72 pt-8 mx-auto">
-  <h2 class="text-center w-full mx-auto font-bold text-2xl">All Tags</h2>
+<section
+  class="flex flex-col justify-center items-center text-center w-full mx-auto py-8"
+>
+  <h2 class="text-center font-semibold text-2xl">All Tags</h2>
   <ul class="flex gap-2 mt-4 w-6/12 flex-wrap">
     {#each tagsAll as tag}
       <li
@@ -43,10 +45,6 @@
     {/each}
   </ul>
   <div class="flex w-6/12 gap-2">
-    <!-- <button
-      class="bg-orange-500 text-white px-3 py-1 hover:bg-orange-800 transition-all delay-100 rounded-md"
-      >Edit</button
-    > -->
     <form action="?/removeTag" method="post">
       <input
         type="text"
@@ -76,7 +74,7 @@
       name="newTag"
       value=""
       placeholder="Enter New Tag Name"
-      class="border px-2 py-1 outline-none rounded-md w-8/12"
+      class="border border-green-300 caret-green-400 px-2 py-1 outline-none rounded-md w-8/12"
     />
     <button
       type="submit"

@@ -3,13 +3,12 @@
   import SideBar from "../components/SideBar.svelte";
 </script>
 
-<div>
-  <!-- <ToastContainer /> -->
-  <!-- <Header /> -->
-  <SideBar />
+<div class="flex">
+  <div>
+    <SideBar />
+  </div>
+
   <main>
     <slot />
   </main>
-
-  <!-- <footer>This is a footer</footer> -->
 </div>
