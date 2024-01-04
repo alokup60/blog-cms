@@ -2,6 +2,7 @@ import { blog, tagColl } from "$lib/db/database";
 import { page } from "$app/stores";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 import { ObjectId } from "mongodb";
+
 let postId;
 
 export const load = async ({ params }) => {
@@ -12,7 +13,7 @@ export const load = async ({ params }) => {
     let tagData = await tagColl.find().toArray();
     let post = JSON.stringify(data);
     let alltags = JSON.stringify(tagData);
-
+    console.log(post, "from server");
     return {
       post,
       alltags,
@@ -37,6 +38,7 @@ export const actions = {
     console.log(title, desc, auth, content, tags, dt);
 
     let URL;
+    // if (!post.img) {
     await imagekit
       .upload({
         file: Buffer.from(await file.arrayBuffer()), //required
@@ -57,6 +59,7 @@ export const actions = {
       .catch((error) => {
         console.log(error);
       });
+    // }
 
     //Save Db
     await blog.updateOne(

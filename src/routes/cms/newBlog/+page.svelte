@@ -100,9 +100,9 @@
   />
 </svelte:head>
 
-<div class=" flex flex-col pt-5 w-8/12 justify-center ml-[4rem] mx-auto">
+<div class="lg:ml-[22%] absolute top-0 max-w-7xl pt-5 justify-center mx-auto">
   <form
-    class="py-4 bx px-4 rounded-md"
+    class="py-4 bx px-4 max-h-screen overflow-scroll rounded-md"
     method="POST"
     enctype="multipart/form-data"
   >

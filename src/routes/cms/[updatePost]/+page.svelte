@@ -13,23 +13,24 @@
   let placeholder;
   let showImage = false;
 
-  function uploadImg() {
-    const file = input.files[0];
+  // function uploadImg() {
+  //   const file = input.files[0];
 
-    if (file) {
-      showImage = true;
+  //   if (file) {
+  //     showImage = true;
 
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        image.setAttribute("src", reader.result);
-      });
-      reader.readAsDataURL(file);
+  //     const reader = new FileReader();
+  //     reader.addEventListener("load", function () {
+  //       image.setAttribute("src", reader.result);
+  //     });
+  //     reader.readAsDataURL(file);
 
-      return;
-    }
-    showImage = false;
-  }
+  //     return;
+  //   }
+  //   showImage = false;
+  // }
   //End here........
+
   onMount(async () => {
     if (form?.success) {
       alert("Updated Successfully!");
@@ -44,6 +45,12 @@
   let newtags;
   let selectedTags = [];
   let allTags = [];
+
+  let imgSrc = post.map((item) => {
+    console.log(item.img, "extract wala");
+    return item.img;
+  });
+  // imgSrc();
 
   //blogTags
   post.map((item) => {
@@ -105,6 +112,27 @@
     }
   };
   // $: console.log(blogTags);
+  let newsrc;
+  let newImg;
+  const uploadImg = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        newImg = e.target.result;
+        showImage = true;
+        // imgSrc = null;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  post.forEach((element) => {
+    newImg = element.img;
+  });
 </script>
 
 <svelte:head>
@@ -135,7 +163,9 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
-
+      <div>
+        {imgSrc}
+      </div>
       <div class="flex flex-col justify-between">
         <label for="desc" class="font-semibold text-md">Description</label>
         <input
@@ -208,23 +238,23 @@
           >Upload Image</label
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
-          <div>
+          <!-- <div>
             <img src={item.img} class="" />
-          </div>
+          </div> -->
           <div
-            bind:this={container}
             class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"
           >
-            {#if showImage}
-              <img
-                bind:this={image}
-                src=""
-                alt="Preview"
-                class="w-full h-full"
-              />
+            <!-- <img src={item.img} class="" /> -->
+            {#if newImg}
+              <img src={newImg} alt="Preview" class="w-full h-full" />
             {:else}
               <span bind:this={placeholder}>Image Preview</span>
             {/if}
+            <!-- {#if newsrc}
+              <img src={newsrc} alt="Preview" class="w-full h-full" />
+            {:else}
+              <span bind:this={placeholder}>Image Preview</span>
+            {/if} -->
           </div>
           <div
             class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 bg-green-200 px-2 my-2 rounded-md text-green-600"

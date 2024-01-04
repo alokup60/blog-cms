@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   import { page } from "$app/stores";
 </script>
 
@@ -18,4 +18,4 @@
       <a href="/contact">Contact</a>
     </li>
   </ul>
-</nav>
+</nav> -->
