@@ -3,6 +3,7 @@ import { page } from "$app/stores";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 import { ObjectId } from "mongodb";
 let postId;
+
 export const load = async ({ params }) => {
   const updatePost = params.updatePost;
   postId = new ObjectId(updatePost);
@@ -31,8 +32,9 @@ export const actions = {
     const auth = formData.get("auth");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
+    const dt = formData.getAll("dt");
     // const tagData = formData.getAll("tagData");
-    console.log(title, desc, auth, content, tags);
+    console.log(title, desc, auth, content, tags, dt);
 
     let URL;
     await imagekit
@@ -64,6 +66,7 @@ export const actions = {
           title: title,
           desc: desc,
           auth: auth,
+          dt: dt,
           content: content,
           tags: tags,
           img: await URL,

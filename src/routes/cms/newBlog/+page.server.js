@@ -43,7 +43,7 @@ export const actions = {
     const auth = formData.get("auth");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
-    // const
+    const date = formData.getAll("dt");
     // const tagData = formData.getAll("tagData");
     console.log(file);
 
@@ -122,6 +122,7 @@ export const actions = {
       title: title,
       desc: desc,
       auth: auth,
+      dt: date,
       content: content,
       tags: tags,
       mobImg: await mobURL,

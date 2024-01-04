@@ -1,6 +1,18 @@
 <script>
   export let data;
   export let form;
+
+  //display in form
+  let date = new Date().toISOString().split("T")[0];
+
+  //display in preview
+  // const dt = new Date();
+  // let day = dt.getDate();
+  // let formattedDay = day < 10 ? "0" + day : day;
+  // let monthName = dt.toLocaleString("default", { month: "long" });
+  // let year = dt.getFullYear();
+  // let currentDate = `${monthName} ${formattedDay}, ${year}`;
+
   const formData = {
     heading: "",
     desc: "",
@@ -88,7 +100,7 @@
   />
 </svelte:head>
 
-<div class=" flex flex-col pt-5 w-full justify-center ml-[4rem] mx-auto">
+<div class=" flex flex-col pt-5 w-8/12 justify-center ml-[4rem] mx-auto">
   <form
     class="py-4 bx px-4 rounded-md"
     method="POST"
@@ -97,10 +109,9 @@
     <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
     <div class="flex gap-4">
       <a href="">Edit</a>
-      <!-- <a href="../preview">Preview</a> -->
       <button type="button" on:click={fun}>Preview</button>
     </div>
-
+    <!-- title  -->
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>
       <input
@@ -111,23 +122,37 @@
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
+    <!-- Description  -->
     <div class="flex flex-col justify-between">
       <label for="desc" class="font-semibold text-md">Description</label>
       <input
         type="text"
         name="desc"
         bind:value={formData.desc}
-        placeholder="Enter title"
+        placeholder="Enter Description"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
+    <!-- Author Name  -->
     <div class="flex flex-col justify-between">
       <label for="auth" class="font-semibold text-md">Created By</label>
       <input
         type="text"
         name="auth"
         bind:value={formData.author}
-        placeholder="Enter title"
+        placeholder="Enter Author Name"
+        class="border w-full px-2 py-1 rounded-md outline-none"
+      />
+    </div>
+    <!-- Date  -->
+    <div class="flex flex-col justify-between">
+      <label for="dt" class="font-semibold text-md">Date</label>
+      <input
+        type="date"
+        id="dt"
+        name="dt"
+        bind:value={date}
+        placeholder="Enter Date"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
@@ -173,7 +198,6 @@
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <!-- //mobile preview  -->
-          <!-- <img {src} alt={mobImg} /> -->
           <div class="flex justify-between w-10/12 mx-auto">
             <div class="flex flex-col w-full justify-between mx-auto">
               <div
@@ -196,7 +220,6 @@
             </div>
 
             <!-- web preview  -->
-
             <div class="flex flex-col w-full justify-between mx-auto">
               <div
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
@@ -249,10 +272,7 @@
   </form>
 
   <!-- Preview  -->
-  <div
-    class="w-8/12 hidden justify-center items-center mx-auto bx py-4"
-    id="prev"
-  >
+  <div class="w-8/12 justify-center items-center mx-auto bx py-4" id="prev">
     <h1 class="text-center font-semibold text-2xl">Preview</h1>
     <div class="w-10/12 flex flex-col justify-center mx-auto">
       <div>
@@ -266,6 +286,7 @@
           <div id="mobileImg"></div>
           <!-- web image  -->
           <div id="webImg"></div>
+          <p>{date}</p>
         </div>
       </div>
       <div>

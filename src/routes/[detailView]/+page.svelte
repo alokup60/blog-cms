@@ -1,5 +1,5 @@
 <script>
-  import { goto } from "$app/navigation";
+  import { browser } from "$app/environment";
 
   export let data;
   let post = JSON.parse(data.newdata);
@@ -10,32 +10,50 @@
     return item.content;
   });
 
+  let tag = post.map((item) => {
+    return item.tags;
+  });
+
+  let postedDate = post.map((item) => {
+    const date = new Date(item.dt);
+    let day = date.getDate();
+    let formattedDay = day < 10 ? "0" + day : day;
+    let monthName = date.toLocaleString("default", { month: "long" });
+    let year = date.getFullYear();
+    let currentDate = `${monthName} ${formattedDay}, ${year}`;
+    return currentDate;
+  });
+
   $: wordCount = content.join(" ").split(" ").length;
   $: estimatedReadingTimeInMinutes = Math.floor(wordCount / 238);
   $: estimatedReadingTimeInSeconds = Math.round((wordCount / 238) * 60) % 60;
-  // const prev = () => {
-  //   goto(/)
-  // };
+
+  //previous page
+  function prev() {
+    if (browser) {
+      history.back();
+    }
+  }
 </script>
 
 <section class="bg-[#FBF9F4] w-full">
   <div class="flex w-8/12 justify-center mx-auto flex-col mt-4 gap-4 flex-wrap">
-    <div class="flex items-center justify-center gap-2">
-      <button type="button" on:click={prev}
-        ><svg
-          class="opacity-80"
-          xmlns="http://www.w3.org/2000/svg"
-          height="16"
-          width="14"
-          viewBox="0 0 448 512"
-          ><path
-            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
-          /></svg
-        >
-      </button>
-
-      <p class="text-center opacity-80">Back to Guides</p>
-    </div>
+    <button
+      type="button"
+      on:click={prev}
+      class="flex items-center justify-center gap-2 text-center opacity-80 hover:underline"
+      ><svg
+        class="opacity-80"
+        xmlns="http://www.w3.org/2000/svg"
+        height="16"
+        width="14"
+        viewBox="0 0 448 512"
+        ><path
+          d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+        /></svg
+      >
+      Back to Guides
+    </button>
 
     {#each post as data}
       <h2 class="font-bold text-4xl text-center">
@@ -55,6 +73,10 @@
         seconds`}
         {/if}
       </p>
+      {#if postedDate}
+        <p class="text-center opacity-80">{postedDate}</p>
+      {/if}
+
       <div class="mt-[2rem]">
         <img src={data.img} alt="" class="rounded-xl" />
       </div>
@@ -71,6 +93,7 @@
         </div>
       {/each}
     </div>
+
     <!-- link  -->
     <div class="w-3/12 flex flex-col gap-2">
       {#each post as data}
@@ -78,7 +101,25 @@
           <img src={data.authImg} alt="" class="rounded-full w-20 h-20" />
         </div>
         <div>
-          <h2 class="font-semibold">By {data.auth}</h2>
+          <h2 class="font-bold text-lg">By {data.auth}</h2>
+        </div>
+        <div class="mt-[4rem]">
+          Found in:
+          <div class="flex gap-2 mt-2 flex-wrap">
+            {#each tag as tg}
+              {#each tg as tt}
+                <div
+                  class="px-4 border-2 border-gray-300 rounded-md cursor-pointer hover:border-gray-400"
+                >
+                  <p>{tt}</p>
+                </div>
+              {/each}
+            {/each}
+          </div>
+        </div>
+        <div class="mt-[4rem]">
+          Share:
+          <div class="flex gap-2 mt-2"></div>
         </div>
       {/each}
     </div>

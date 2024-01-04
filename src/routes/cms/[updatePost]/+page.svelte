@@ -37,7 +37,8 @@
     }
   });
 
-  let post = JSON.parse(data.post); //tags
+  let post = JSON.parse(data.post);
+  console.log(post, "post");
   let tags = JSON.parse(data.alltags);
   let blogTags;
   let newtags;
@@ -61,8 +62,8 @@
       selectedTags = [...selectedTags, ...tags];
       blogTags = [...blogTags, ...selectedTags];
       selectedTags = selectedTags.filter((val) => !allTags.includes(val));
-      console.log(tags);
-      console.log(selectedTags, "selected");
+      // console.log(tags);
+      // console.log(selectedTags, "selected");
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
@@ -75,8 +76,8 @@
       allTags = [...allTags, ...tags];
       allTags = allTags.filter((val) => !selectedTags.includes(val));
 
-      console.log(tags);
-      console.log(allTags, "all");
+      // console.log(tags);
+      // console.log(allTags, "all");
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
@@ -103,7 +104,7 @@
       allTags = [...allTags, tag];
     }
   };
-  $: console.log(blogTags);
+  // $: console.log(blogTags);
 </script>
 
 <svelte:head>
@@ -152,6 +153,39 @@
           name="auth"
           bind:value={item.auth}
           placeholder="Enter title"
+          class="border w-full px-2 py-1 rounded-md outline-none"
+        />
+      </div>
+      <div>
+        <!-- <div class="flex flex-col w-full border bg-white rounded-md px-1">
+          <div
+            class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
+          >
+            <img {src} width="100px" />
+          </div>
+          <div
+            class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
+          >
+            <input
+              id="imgInp"
+              name="authorUpload"
+              accept="image/*"
+              value=""
+              on:change={uploadAuthImg}
+              type="file"
+            />
+          </div>
+        </div> -->
+      </div>
+      <!-- created by  -->
+      <div class="flex flex-col justify-between">
+        <label for="dt" class="font-semibold text-md">Posted On</label>
+        <input
+          type="date"
+          name="dt"
+          id="dt"
+          bind:value={item.dt}
+          placeholder="Created at"
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
