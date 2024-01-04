@@ -98,7 +98,7 @@
     <div class="w-3/12 flex flex-col gap-2">
       {#each post as data}
         <div>
-          <img src={data.authImg} alt="" class="rounded-full w-20 h-20" />
+          <img src={data.authImage} alt="" class="rounded-full w-20 h-20" />
         </div>
         <div>
           <h2 class="font-bold text-lg">By {data.auth}</h2>

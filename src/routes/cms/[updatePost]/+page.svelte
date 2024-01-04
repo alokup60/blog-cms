@@ -8,9 +8,11 @@
 
   // start form here for showing image (Preview)
   let input;
+  let input2;
   let container;
   let image;
   let placeholder;
+  let showImage2 = false;
   let showImage = false;
 
   // function uploadImg() {
@@ -45,12 +47,6 @@
   let newtags;
   let selectedTags = [];
   let allTags = [];
-
-  let imgSrc = post.map((item) => {
-    console.log(item.img, "extract wala");
-    return item.img;
-  });
-  // imgSrc();
 
   //blogTags
   post.map((item) => {
@@ -112,7 +108,25 @@
     }
   };
   // $: console.log(blogTags);
-  let newsrc;
+  let authImg;
+  const uploadAuthImg = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        authImg = e.target.result;
+        showImage2 = true;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+  post.forEach((element) => {
+    authImg = element.img;
+  });
+
   let newImg;
   const uploadImg = (event) => {
     const file = event.target.files[0];
@@ -123,7 +137,6 @@
       reader.onload = (e) => {
         newImg = e.target.result;
         showImage = true;
-        // imgSrc = null;
       };
 
       reader.readAsDataURL(file);
@@ -163,9 +176,7 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
-      <div>
-        {imgSrc}
-      </div>
+
       <div class="flex flex-col justify-between">
         <label for="desc" class="font-semibold text-md">Description</label>
         <input
@@ -187,26 +198,33 @@
         />
       </div>
       <div>
-        <!-- <div class="flex flex-col w-full border bg-white rounded-md px-1">
+        <label for="authorUpload" class="font-semibold text-md"
+          >Author Image</label
+        >
+        <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <div
             class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
           >
-            <img {src} width="100px" />
+            {#if authImg}
+              <img src={authImg} alt="Preview" class="w-full h-full" />
+            {:else}
+              <span>Image Preview</span>
+            {/if}
           </div>
           <div
             class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
           >
             <input
-              id="imgInp"
               name="authorUpload"
               accept="image/*"
-              value=""
+              bind:this={input2}
               on:change={uploadAuthImg}
               type="file"
             />
           </div>
-        </div> -->
+        </div>
       </div>
+
       <!-- created by  -->
       <div class="flex flex-col justify-between">
         <label for="dt" class="font-semibold text-md">Posted On</label>
@@ -238,23 +256,14 @@
           >Upload Image</label
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
-          <!-- <div>
-            <img src={item.img} class="" />
-          </div> -->
           <div
             class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-3/12 h-[15rem] rounded-md"
           >
-            <!-- <img src={item.img} class="" /> -->
             {#if newImg}
               <img src={newImg} alt="Preview" class="w-full h-full" />
             {:else}
-              <span bind:this={placeholder}>Image Preview</span>
+              <span>Image Preview</span>
             {/if}
-            <!-- {#if newsrc}
-              <img src={newsrc} alt="Preview" class="w-full h-full" />
-            {:else}
-              <span bind:this={placeholder}>Image Preview</span>
-            {/if} -->
           </div>
           <div
             class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 bg-green-200 px-2 my-2 rounded-md text-green-600"

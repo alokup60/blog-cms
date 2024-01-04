@@ -39,7 +39,7 @@
           <div class="flex">
             <div class="flex gap-4">
               <img
-                src={data.img}
+                src={data.authImage}
                 class="w-[45px] rounded-full object-cover h-[45px]"
               />
               <div>
