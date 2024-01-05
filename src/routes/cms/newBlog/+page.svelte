@@ -1,6 +1,17 @@
 <script>
+  // import Editor from "@tinymce/tinymce-svelte";
+  // import tinymce from "@tinymce/tinymce-svelte";
+  import Tiptap from "$lib/tipTap/Tiptap.svelte";
+
   export let data;
   export let form;
+  // let html = "";
+  // let arr_html = [
+  //   {
+  //     html: `{${formData.content}}`,
+  //     // klass: "p-2 text-3xl",
+  //   },
+  // ];
 
   //display in form
   let date = new Date().toISOString().split("T")[0];
@@ -88,6 +99,46 @@
     document.getElementById("prev").style.display = "block";
     // document.getElementById("prev").style.color = "red";
   }
+  // tinymce.init({
+  //   selector: "#myTextarea",
+  //   width: 600,
+  //   height: 300,
+  //   plugins: [
+  //     "advlist",
+  //     "autolink",
+  //     "link",
+  //     "image",
+  //     "lists",
+  //     "charmap",
+  //     "preview",
+  //     "anchor",
+  //     "pagebreak",
+  //     "searchreplace",
+  //     "wordcount",
+  //     "visualblocks",
+  //     "visualchars",
+  //     "code",
+  //     "fullscreen",
+  //     "insertdatetime",
+  //     "media",
+  //     "table",
+  //     "emoticons",
+  //     "template",
+  //     "help",
+  //   ],
+  //   toolbar:
+  //     "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | " +
+  //     "bullist numlist outdent indent | link image | print preview media fullscreen | " +
+  //     "forecolor backcolor emoticons | help",
+  //   menu: {
+  //     favs: {
+  //       title: "My Favorites",
+  //       items: "code visualaid | searchreplace | emoticons",
+  //     },
+  //   },
+  //   menubar: "favs file edit view insert format tools table help",
+  //   content_css: "css/content.css",
+  // });
 </script>
 
 <svelte:head>
@@ -186,6 +237,20 @@
       <div class="flex flex-col justify-between">
         <label for="content" class="font-semibold text-md">Content</label>
         <div class="w-full border rounded">
+          <Tiptap />
+          <!-- <Editor
+            bind:html
+            editable
+            name="content"
+            placeholder="Enter Content"
+            class="border w-full   px-2 py-1 rounded-md outline-none resize-none"
+          ></Editor> -->
+
+          <!-- <Editor
+            apiKey="agorhij0er7hbc41fxr3tsa2oe9r9s4zfb6opkhms3evh3wqxxx"
+            bind:value={formData.content}
+            name="content"
+          /> -->
           <textarea
             name="content"
             bind:value={formData.content}
@@ -299,7 +364,7 @@
       <div class="flex justify-between w-full mx-auto">
         <!-- left-side  -->
         <div class="w-8/12">
-          <p>{@html formData.content}</p>
+          <!-- <p>{@html formData.content}</p> -->
         </div>
         <!-- right-side  -->
         <div class="w-4/12 flex flex-col gap-4">
