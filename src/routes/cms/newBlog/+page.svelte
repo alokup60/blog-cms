@@ -238,26 +238,13 @@
         <label for="content" class="font-semibold text-md">Content</label>
         <div class="w-full border rounded">
           <Tiptap />
-          <!-- <Editor
-            bind:html
-            editable
-            name="content"
-            placeholder="Enter Content"
-            class="border w-full   px-2 py-1 rounded-md outline-none resize-none"
-          ></Editor> -->
-
-          <!-- <Editor
-            apiKey="agorhij0er7hbc41fxr3tsa2oe9r9s4zfb6opkhms3evh3wqxxx"
-            bind:value={formData.content}
-            name="content"
-          /> -->
-          <textarea
+          <!-- <textarea
             name="content"
             bind:value={formData.content}
             placeholder="Enter Content"
             rows="8"
             class="border w-full px-2 py-1 rounded-md outline-none resize-none"
-          ></textarea>
+          ></textarea> -->
         </div>
       </div>
       <!-- image for cover  -->
@@ -363,9 +350,9 @@
       </div>
       <div class="flex justify-between w-full mx-auto">
         <!-- left-side  -->
-        <div class="w-8/12">
-          <!-- <p>{@html formData.content}</p> -->
-        </div>
+        <!-- <div class="w-8/12">
+          <p>{@html formData.content}</p>
+        </div> -->
         <!-- right-side  -->
         <div class="w-4/12 flex flex-col gap-4">
           {#if formData.author}
