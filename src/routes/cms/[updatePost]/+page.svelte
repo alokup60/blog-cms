@@ -155,22 +155,21 @@
   onMount(async () => {
     await fetch(url).then(async (response) => {
       const fileInput = document.querySelector('input[type="file"]');
-      const contentType = await response.headers.get("content-type");
-      const blob = await response.blob();
-      const file = new File([blob], fileName, {
-        type: "image",
-      });
-      const dataTransfer = new DataTransfer();
-      dataTransfer.items.add(file);
+      if (fileInput) {
+        const blob = await response.blob();
+        const file = new File([blob], fileName, {
+          type: "image",
+        });
 
-      fileInput.files = dataTransfer.files;
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
 
-      if (fileInput.webkitEntries && fileInput.webkitEntries.length) {
-        fileInput.dataset.file = dataTransfer.files[0].name;
+        fileInput.files = dataTransfer.files;
+
+        if (fileInput.webkitEntries && fileInput.webkitEntries.length) {
+          fileInput.dataset.file = dataTransfer.files[0].name;
+        }
       }
-      // access file here
-      extraced = file.name;
-      // console.log(file);
     });
   });
 </script>
@@ -298,6 +297,7 @@
           >
             <input
               name="fileUpload"
+              id="fileName"
               accept="image/*"
               on:change={uploadImg}
               type="file"
