@@ -8,11 +8,11 @@
 
   // start form here for showing image (Preview)
   let input;
-  let input2;
+  // let input2;
   let container;
   let image;
   let placeholder;
-  let showImage2 = false;
+  // let showImage2 = false;
   let showImage = false;
 
   // function uploadImg() {
@@ -41,7 +41,7 @@
   });
 
   let post = JSON.parse(data.post);
-  console.log(post, "post");
+  // console.log(post, "post");
   let tags = JSON.parse(data.alltags);
   let blogTags;
   let newtags;
@@ -108,26 +108,30 @@
     }
   };
   // $: console.log(blogTags);
-  let authImg;
-  const uploadAuthImg = (event) => {
-    const file = event.target.files[0];
+  // let authImg;
+  // const uploadAuthImg = (event) => {
+  //   const file = event.target.files[0];
 
-    if (file) {
-      const reader = new FileReader();
+  //   if (file) {
+  //     const reader = new FileReader();
 
-      reader.onload = (e) => {
-        authImg = e.target.result;
-        showImage2 = true;
-      };
+  //     reader.onload = (e) => {
+  //       authImg = e.target.result;
+  //       showImage2 = true;
+  //     };
 
-      reader.readAsDataURL(file);
-    }
-  };
-  post.forEach((element) => {
-    authImg = element.img;
-  });
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  // post.forEach((element) => {
+  //   authImg = element.img;
+  // });
 
   let newImg;
+  post.forEach((element) => {
+    newImg = element.img;
+  });
+  // console.log(newImg);
   const uploadImg = (event) => {
     const file = event.target.files[0];
 
@@ -137,14 +141,37 @@
       reader.onload = (e) => {
         newImg = e.target.result;
         showImage = true;
+        input = newImg;
       };
 
       reader.readAsDataURL(file);
     }
   };
 
-  post.forEach((element) => {
-    newImg = element.img;
+  //show image in editing mode (selected by default) ****important*******
+  const url = newImg;
+  const fileName = "myFile.jpg";
+  let extraced;
+  onMount(async () => {
+    await fetch(url).then(async (response) => {
+      const fileInput = document.querySelector('input[type="file"]');
+      const contentType = await response.headers.get("content-type");
+      const blob = await response.blob();
+      const file = new File([blob], fileName, {
+        type: "image",
+      });
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+
+      fileInput.files = dataTransfer.files;
+
+      if (fileInput.webkitEntries && fileInput.webkitEntries.length) {
+        fileInput.dataset.file = dataTransfer.files[0].name;
+      }
+      // access file here
+      extraced = file.name;
+      // console.log(file);
+    });
   });
 </script>
 
@@ -157,6 +184,7 @@
     referrerpolicy="no-referrer"
   />
 </svelte:head>
+
 {#each post as item}
   <div class="lg:ml-72 relative pt-5 min-w-full mx-auto">
     <form
@@ -197,7 +225,7 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
-      <div>
+      <!-- <div>
         <label for="authorUpload" class="font-semibold text-md"
           >Author Image</label
         >
@@ -223,7 +251,7 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- created by  -->
       <div class="flex flex-col justify-between">
@@ -271,7 +299,6 @@
             <input
               name="fileUpload"
               accept="image/*"
-              bind:this={input}
               on:change={uploadImg}
               type="file"
             />

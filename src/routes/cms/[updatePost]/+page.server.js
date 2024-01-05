@@ -28,7 +28,7 @@ export const actions = {
   updatePost: async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
-    const authImg = formData.get("authorUpload");
+    // const authImg = formData.get("authorUpload");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -36,10 +36,11 @@ export const actions = {
     const tags = formData.getAll("tags");
     const dt = formData.getAll("dt");
     // const tagData = formData.getAll("tagData");
-    console.log(title, desc, auth, content, tags, dt, authImg);
+    console.log(title, desc, auth, content, tags, dt);
 
     //cover image
     let URL;
+
     await imagekit
       .upload({
         file: Buffer.from(await file.arrayBuffer()), //required
@@ -62,27 +63,27 @@ export const actions = {
       });
 
     //author image
-    let authImgURL;
-    await imagekit
-      .upload({
-        file: Buffer.from(await authImg.arrayBuffer()), //required
-        fileName: authImg.name, //required
-        // folder: "/newblog",
-        extensions: [
-          {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95,
-          },
-        ],
-      })
-      .then((response) => {
-        authImgURL = response.url;
-        console.log(response.url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // let authImgURL;
+    // await imagekit
+    //   .upload({
+    //     file: Buffer.from(await authImg.arrayBuffer()), //required
+    //     fileName: authImg.name, //required
+    //     // folder: "/newblog",
+    //     extensions: [
+    //       {
+    //         name: "google-auto-tagging",
+    //         maxTags: 5,
+    //         minConfidence: 95,
+    //       },
+    //     ],
+    //   })
+    //   .then((response) => {
+    //     authImgURL = response.url;
+    //     console.log(response.url);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     //Save Db
     await blog.updateOne(
@@ -95,7 +96,7 @@ export const actions = {
           dt: dt,
           content: content,
           tags: tags,
-          authImage: await authImgURL,
+
           img: await URL,
         },
       }
