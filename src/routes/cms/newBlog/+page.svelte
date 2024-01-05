@@ -100,13 +100,17 @@
   />
 </svelte:head>
 
-<div class="lg:ml-[22%] absolute top-0 max-w-7xl pt-5 justify-center mx-auto">
+<div class="md:ml-[18rem] absolute top-0 justify-center mx-auto">
+  <h2
+    class="text-center font-semibold text-2xl sticky py-2 bg-white headingShadow w-full top-0"
+  >
+    New Blog
+  </h2>
   <form
-    class="py-4 bx px-4 max-h-screen overflow-scroll rounded-md"
+    class=" bx px-4 max-h-screen overflow-scroll rounded-md"
     method="POST"
     enctype="multipart/form-data"
   >
-    <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
     <div class="flex gap-4">
       <a href="">Edit</a>
       <button type="button" on:click={fun}>Preview</button>
@@ -333,6 +337,10 @@
   /* //important to change bg color of label  */
   .check input:checked + label {
     background-color: green;
+  }
+
+  .headingShadow {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 
   /* .preview {

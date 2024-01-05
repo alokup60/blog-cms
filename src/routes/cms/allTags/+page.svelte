@@ -29,9 +29,14 @@
 </script>
 
 <section
-  class="flex flex-col justify-center items-center text-center w-full mx-auto py-8"
+  class="flex flex-col justify-center items-center text-center w-full mx-auto md:ml-[14rem]"
 >
-  <h2 class="text-center font-semibold text-2xl">All Tags</h2>
+  <h2
+    class="text-center font-semibold text-2xl sticky py-2 headingShadow w-full top-0 z-10"
+  >
+    All Tags
+  </h2>
+  <!-- <h2 class="text-center font-semibold text-2xl">All Tags</h2> -->
   <ul class="flex gap-2 mt-4 w-6/12 flex-wrap">
     {#each tagsAll as tag}
       <li

@@ -17,7 +17,12 @@
 </Modal> -->
 
 <section>
-  <div class="flex ml-[4rem] flex-wrap gap-4 pt-20">
+  <div class="flex md:ml-[14rem] flex-wrap gap-4">
+    <h2
+      class="text-center font-semibold text-2xl sticky py-2 bg-white headingShadow w-full top-0 z-10"
+    >
+      View Post
+    </h2>
     {#if $blogForm}
       {#each $blogForm as data}
         <!-- {data.img} -->
@@ -115,3 +120,9 @@
     {/if}
   </div>
 </section>
+
+<style>
+  .headingShadow {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+</style>

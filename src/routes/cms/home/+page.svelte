@@ -1,7 +1,7 @@
 <script></script>
 
 <section
-  class="flex flex-col justify-center mx-auto items-center text-center w-full"
+  class="flex flex-col flex-wrap justify-center items-center text-center w-[80%] mx-auto py-8 md:ml-[16rem]"
 >
   <h2 class="text-center font-semibold">This is homepage</h2>
   <p>
