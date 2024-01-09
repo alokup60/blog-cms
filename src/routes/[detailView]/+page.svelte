@@ -1,14 +1,17 @@
 <script>
   import { browser } from "$app/environment";
-
+  import "../../app.css";
   export let data;
   let post = JSON.parse(data.newdata);
-  // console.log(post);
+  let contentData = JSON.parse(data.body);
 
-  let content = post.map((item) => {
-    // console.log(item.content, "content");
-    return item.content;
-  });
+  // console.log(post);
+  console.log(data, "detailview");
+
+  // let content = post.map((item) => {
+  //   // console.log(item.content, "content");
+  //   return item.content;
+  // });
 
   let tag = post.map((item) => {
     return item.tags;
@@ -24,7 +27,7 @@
     return currentDate;
   });
 
-  $: wordCount = content.join(" ").split(" ").length;
+  $: wordCount = contentData.join(" ").split(" ").length;
   $: estimatedReadingTimeInMinutes = Math.floor(wordCount / 238);
   $: estimatedReadingTimeInSeconds = Math.round((wordCount / 238) * 60) % 60;
 
@@ -36,6 +39,7 @@
   }
 </script>
 
+<svelte:head></svelte:head>
 <section class="bg-[#FBF9F4] w-full">
   <div class="flex w-8/12 justify-center mx-auto flex-col mt-4 gap-4 flex-wrap">
     <button
@@ -87,10 +91,8 @@
   >
     <!-- content -->
     <div class="w-8/12">
-      {#each post as data}
-        <div class="tracking-wider">
-          {@html data.content}
-        </div>
+      {#each contentData as data}
+        {@html data}
       {/each}
     </div>
 

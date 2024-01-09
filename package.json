@@ -19,7 +19,7 @@
     "postcss": "^8.4.32",
     "svelte": "^4.2.7",
     "svelte-check": "^3.6.0",
-    "tailwindcss": "^3.3.6",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5.0.0",
     "vite": "^5.0.3"
   },
@@ -51,7 +51,7 @@
     "cropperjs": "^1.6.1",
     "dotenv": "^16.3.1",
     "fs": "^0.0.1-security",
-    "imagekit": "^4.1.4",
+    "imagekit": "^3.2.5",
     "mongodb": "^6.3.0",
     "svelte-toasts": "^1.1.2",
     "tailwind-editor": "^0.3.2",

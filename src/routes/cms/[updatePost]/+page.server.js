@@ -1,4 +1,5 @@
 import { blog, tagColl } from "$lib/db/database";
+import { Binary } from "mongodb";
 import { page } from "$app/stores";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 import { ObjectId } from "mongodb";
@@ -10,14 +11,35 @@ export const load = async ({ params }) => {
   postId = new ObjectId(updatePost);
   try {
     let data = await blog.find({ _id: postId }).toArray();
+    let newdata = JSON.stringify(data);
     let tagData = await tagColl.find().toArray();
-    let post = JSON.stringify(data);
     let alltags = JSON.stringify(tagData);
+    if (data) {
+      const promises = data.map((elem) => {
+        const bsonData = elem.content.content;
+        const content = bsonData ? bsonData.buffer.toString() : "";
+        return content;
+      });
+      const htmldata = await Promise.all(promises);
+      return {
+        status: 200,
+        body: JSON.stringify(htmldata),
+        newdata,
+        alltags,
+      };
+    }
+
     // console.log(post, "from server");
-    return {
-      post,
-      alltags,
-    };
+    // if (data) {
+    //   // const promises = data.map((elem) => {
+    //   const bsonData = data.content.content;
+    //   // console.log(bsonData);
+    //   const content = bsonData ? bsonData.buffer.toString() : "";
+    //   let newcontent = JSON.parse(content);
+    //   // console.log(newcontent);
+    //   // return content;
+    //   // });
+    // const htmldata = await Promise.all(promises);
   } catch (error) {
     console.error("Error loading data:", error);
     throw error;
@@ -85,6 +107,11 @@ export const actions = {
     //     console.log(error);
     //   });
 
+    const newData = {
+      content: new Binary(Buffer.from(content)),
+    };
+    console.log(newData, "converted");
+
     //Save Db
     await blog.updateOne(
       { _id: postId },
@@ -94,9 +121,8 @@ export const actions = {
           desc: desc,
           auth: auth,
           dt: dt,
-          content: content,
+          content: newData,
           tags: tags,
-
           img: await URL,
         },
       }

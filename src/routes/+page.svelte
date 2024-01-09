@@ -4,8 +4,12 @@
   import BlogCard from "./components/BlogCard.svelte";
 
   export let data;
+  console.log(data.body);
+  // console.log(data.htmldata, "hi");
+  // let content = JSON.parse(data.htmldata);
 
-  let allData = JSON.parse(data.allData);
+  let allData = JSON.parse(data.header);
+  // console.log(allData);
 
   $: {
     $blogForm = allData;

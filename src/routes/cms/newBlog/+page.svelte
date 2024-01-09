@@ -1,8 +1,12 @@
 <script>
-  import Tiptap from "$lib/tipTap/Tiptap.svelte";
-
+  // import Tiptap from "$lib/tipTap/Tiptap.svelte";
+  import { onMount, onDestroy } from "svelte";
+  import { writable } from "svelte/store";
   export let data;
   export let form;
+
+  // console.log(data.contData, "page waala");
+
   // let html = "";
   // let arr_html = [
   //   {
@@ -97,6 +101,51 @@
     document.getElementById("prev").style.display = "block";
     // document.getElementById("prev").style.color = "red";
   }
+  let element;
+  let editor;
+  let onTransaction;
+  let newdata = ""; // Assuming newdata is declared in the component
+  // let newdata;
+
+  // onMount(() => {
+  //   editor = new Tiptap({
+  //     element: element,
+  //     onTransaction: (transaction) => {
+  //       newdata = editor.getHTML();
+  //     },
+  //   });
+  // });
+
+  // onDestroy(() => {
+
+  //   if (editor) {
+  //     editor.destroy();
+  //   }
+  // });
+
+  // console.log("Editor:", editor);
+  // console.log("HTML Content:", editor?.getHTML?.());
+
+  //uploading content to DB
+
+  // const saveToDatabase = async () => {
+  //   const formData = new FormData();
+  //   formData.append("htmlContent", editor.getHTML());
+
+  //   const response = await fetch("/api/save", {
+  //     method: "POST",
+  //     body: formData,
+  //     headers: {
+  //       "Content-Type": "application/json", // Specify content type as JSON
+  //     },
+  //   });
+
+  //   if (response.ok) {
+  //     console.log("Data saved successfully.");
+  //   } else {
+  //     console.error("Failed to save data.");
+  //   }
+  // };
 </script>
 
 <svelte:head>
@@ -115,13 +164,14 @@
   >
     New Blog
   </h2>
+
   <form
     class=" bx px-4 max-h-screen overflow-scroll rounded-md"
     method="POST"
     enctype="multipart/form-data"
   >
     <div class="flex gap-4">
-      <a href="">Edit</a>
+      <a href="#">Edit</a>
       <button type="button" on:click={fun}>Preview</button>
     </div>
     <!-- title  -->
@@ -195,15 +245,15 @@
       <div class="flex flex-col justify-between">
         <label for="content" class="font-semibold text-md">Content</label>
         <div class="w-full border rounded">
-          <Tiptap />
-          <!-- <textarea
+          <textarea
+            class="w-full border outline-none px-2 resize-none"
+            rows="10"
             name="content"
             bind:value={formData.content}
-            placeholder="Enter Content"
-            rows="8"
-            class="border w-full px-2 py-1 rounded-md outline-none resize-none"
-          ></textarea> -->
+          ></textarea>
         </div>
+        <!-- <button type="button" on:click={saveToDatabase}>Save to Database</button
+        > -->
       </div>
       <!-- image for cover  -->
       <div class="flex flex-col justify-between">
@@ -212,7 +262,7 @@
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <!-- //mobile preview  -->
-          <div class="flex justify-between w-10/12 mx-auto">
+          <div class="hidden sm:flex justify-between w-10/12 mx-auto">
             <div class="flex flex-col w-full justify-between mx-auto">
               <div
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
@@ -234,7 +284,7 @@
             </div>
 
             <!-- web preview  -->
-            <div class="flex flex-col w-full justify-between mx-auto">
+            <div class="hidden md:flex flex-col w-full justify-between mx-auto">
               <div
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
               >
@@ -364,7 +414,7 @@
   /* .selected-button:hover {
     display: none;
   } */
-  #tss {
+  /* #tss {
     display: none;
-  }
+  } */
 </style>

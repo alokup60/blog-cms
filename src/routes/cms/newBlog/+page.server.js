@@ -1,5 +1,5 @@
 import { writeFile, writeFileSync } from "fs";
-import { MongoClient } from "mongodb";
+import { Binary, MongoClient } from "mongodb";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 async function connectToCluster() {
   let mongoClient;
@@ -23,11 +23,15 @@ const db = dbConn.db("newBlogDb");
 console.log("dataBase Created");
 const collection = db.collection("blog");
 const tagColl = db.collection("tagColl");
+
 export const load = async () => {
   let tags = await tagColl.findOne({ name: "Anshu" });
   let tagData = JSON.stringify(tags.newdata);
+  console.log(tagData);
   return {
     tagData,
+    // contData,
+    // blogData,
   };
 };
 
@@ -42,10 +46,12 @@ export const actions = {
     const desc = formData.get("desc");
     const auth = formData.get("auth");
     const content = formData.get("content");
+    // const htmlContent = formData.get("htmlContent");
     const tags = formData.getAll("tags");
     const date = formData.getAll("dt");
     // const tagData = formData.getAll("tagData");
-    console.log(file);
+    // console.log(file);
+    console.log(content);
 
     // Using Promises
     let URL;
@@ -117,19 +123,30 @@ export const actions = {
         console.log(error);
       });
 
+    const newData = {
+      content: new Binary(Buffer.from(content)),
+    };
+    console.log(newData, "converted");
+
     //Save Db
     await collection.insertOne({
       title: title,
       desc: desc,
       auth: auth,
       dt: date,
-      content: content,
+      content: newData,
+      // htmlContent: htmlContent,
       tags: tags,
       mobImg: await mobURL,
       img: await URL,
       authImg: await authURL,
     });
 
-    return { success: true };
+    return {
+      body: JSON.stringify({ success: true }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
   },
 };

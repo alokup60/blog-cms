@@ -1,11 +1,9 @@
 <script>
   import { goto } from "$app/navigation";
-  import imgUploader from "$lib/images/imgUploader.svg";
   import { onMount } from "svelte";
-  import BlogCard from "../../components/BlogCard.svelte";
   export let data;
   export let form;
-
+  // console.log(data.body);
   // start form here for showing image (Preview)
   let input;
   // let input2;
@@ -40,8 +38,9 @@
     }
   });
 
-  let post = JSON.parse(data.post);
-  // console.log(post, "post");
+  let post = JSON.parse(data.newdata);
+  let contentData = JSON.parse(data.body);
+  // console.log(contentData, "post");
   let tags = JSON.parse(data.alltags);
   let blogTags;
   let newtags;
@@ -268,9 +267,10 @@
       <div class="flex flex-col justify-between">
         <label for="content" class="font-semibold text-md">Content</label>
         <div class="w-full border rounded">
+          {@html contentData}
           <textarea
             name="content"
-            bind:value={item.content}
+            bind:value={contentData}
             placeholder="Enter Content"
             rows="8"
             class="border w-full px-2 py-1 rounded-md outline-none resize-none"
