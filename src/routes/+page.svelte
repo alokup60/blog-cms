@@ -5,11 +5,12 @@
 
   export let data;
   console.log(data.body);
+
   // console.log(data.htmldata, "hi");
   // let content = JSON.parse(data.htmldata);
 
   let allData = JSON.parse(data.header);
-  // console.log(allData);
+  console.log(allData);
 
   $: {
     $blogForm = allData;

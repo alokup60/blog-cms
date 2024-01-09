@@ -2,14 +2,21 @@
   import { goto } from "$app/navigation";
   import { blogForm } from "$lib/store/stores.js";
 
+  let currentDate;
+  let postedDates = $blogForm.map((item) => {
+    let date = new Date(item.dt);
+    let day = date.getDate();
+    let formattedDay = day < 10 ? "0" + day : day;
+    let monthName = date.toLocaleString("default", { month: "long" });
+    let year = date.getFullYear();
+    currentDate = `${monthName} ${formattedDay}, ${year}`;
+    // currentDate = ;
+
+    return currentDate;
+  });
+  console.log(currentDate);
   // let postedDate = $blogForm.map((item) => {
-  //   const date = new Date(item.dt);
-  //   let day = date.getDate();
-  //   let formattedDay = day < 10 ? "0" + day : day;
-  //   let monthName = date.toLocaleString("default", { month: "long" });
-  //   let year = date.getFullYear();
-  //   let currentDate = `${monthName} ${formattedDay}, ${year}`;
-  //   return currentDate;
+  //   console.log(item.dt);
   // });
 
   const detailView = (title) => {
@@ -29,7 +36,7 @@
       >
         <div class="flex justify-between flex-col">
           <div>
-            <img src={data.img} class="rounded-md" />
+            <img src={data.img} alt="cover_img" class="rounded-md" />
           </div>
           <hr class="mt-2" />
           <div>
@@ -40,11 +47,14 @@
             <div class="flex gap-4">
               <img
                 src={data.authImg}
+                alt="auth_img"
                 class="w-[45px] rounded-full object-cover h-[45px]"
               />
               <div>
                 <p>{data.auth}</p>
-                <p class="opacity-80">{data.dt}</p>
+                {#if postedDates}
+                  <p class="opacity-80">{data.dt}</p>
+                {/if}
               </div>
             </div>
           </div>

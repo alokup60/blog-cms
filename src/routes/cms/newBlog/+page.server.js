@@ -49,8 +49,15 @@ export const actions = {
     // const htmlContent = formData.get("htmlContent");
     const tags = formData.getAll("tags");
     const date = formData.getAll("dt");
-    // const tagData = formData.getAll("tagData");
-    // console.log(file);
+
+    const dt = new Date(date[0]);
+    let day = dt.getDate();
+    let formattedDay = day < 10 ? "0" + day : day;
+    let monthName = dt.toLocaleString("default", { month: "long" });
+    let year = dt.getFullYear();
+    let currentDate = `${monthName} ${formattedDay}, ${year}`;
+    const tagData = formData.getAll("tagData");
+    console.log(file);
     console.log(content);
 
     // Using Promises
@@ -133,7 +140,7 @@ export const actions = {
       title: title,
       desc: desc,
       auth: auth,
-      dt: date,
+      dt: currentDate,
       content: newData,
       // htmlContent: htmlContent,
       tags: tags,
