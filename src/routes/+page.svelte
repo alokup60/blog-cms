@@ -4,7 +4,7 @@
   import BlogCard from "./components/BlogCard.svelte";
 
   export let data;
-  console.log(data.body);
+  // console.log(data.body);
 
   // console.log(data.htmldata, "hi");
   // let content = JSON.parse(data.htmldata);

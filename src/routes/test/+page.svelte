@@ -1,75 +1,81 @@
 <script>
-  //   import Tiptap from "$lib/Tiptap.svelte";
-  // import { onMount, onDestroy } from "svelte";
-  import "../../app.css";
-  //   import { writable } from "svelte/store";
-
-  let prev = "";
-  export let form;
+  import { flip } from "svelte/animate";
+  // import { blogForm } from "$lib/store/stores";
   export let data;
+  let newdata = JSON.parse(data.header);
+  const dragDuration = 300;
+  // let arr = $blogForm;
+  let cards = [];
+  newdata.forEach((element, i) => {
+    cards.push(element);
+    console.log(i + 1);
+  });
 
-  //   let tiptapElement;
-  //   let editor;
-  //   let content = writable("<p>Hello World! 🌍️ </p>");
-  //   let newdata = "";
+  let draggingCard;
+  let animatingCards = new Set();
 
-  //   onMount(async () => {
-  //     // Initialize the editor after the component is mounted
-  //     editor = new Tiptap({
-  //       target: tiptapElement,
-  //       props: {
-  //         content: $content,
-  //       },
-  //     });
-
-  // Wait for the editor to be fully initialized
-  //     await editor.$on("ready");
-
-  //     // Now, the editor is ready to use, and you can call getHTML safely
-  //     newdata = editor.getHTML();
-  //   });
-
-  //   onDestroy(() => {
-  //     if (editor) {
-  //       editor.destroy();
-  //     }
-  //   });
-
-  //   const saveToDatabase = async () => {
-  //     const formData = new FormData();
-  //     formData.append("htmlContent", $content);
-
-  //     try {
-  //       const response = await fetch("/api/save", {
-  //         method: "POST",
-  //         body: formData,
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-
-  //       if (response.ok) {
-  //         console.log("Data saved successfully.");
-  //       } else {
-  //         console.error("Failed to save data.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     }
-  //   };
+  function swapWith(card) {
+    if (draggingCard === card || animatingCards.has(card)) return;
+    animatingCards.add(card);
+    setTimeout(() => animatingCards.delete(card), dragDuration);
+    const cardAIndex = cards.indexOf(draggingCard);
+    const cardBIndex = cards.indexOf(card);
+    console.log(cardAIndex, "A");
+    console.log(cardBIndex, "B");
+    cards[cardAIndex] = card;
+    cards[cardBIndex] = draggingCard;
+  }
 </script>
 
-{@html data.htmldata}
-<section>
-  <textarea
-    cols="60"
-    rows="20"
-    id="content"
-    bind:value={prev}
-    name="content"
-    class="border-2 border-black outline-none w-10/12 flex justify-center mx-auto"
-    contenteditable
-  ></textarea>
+<section class="w-11/12 flex mx-auto flex-wrap flex-col">
+  <h2 class="text-center font-semibold text-2xl">Home Page of Blogs</h2>
+  <div class="w-full flex mx-auto mt-4 flex-wrap gap-4">
+    {#each cards as card (card)}
+      <button
+        class="flex border px-4 py-2 rounded-md w-[30%] min-h-[20rem] hover:bg-gray-100 cursor-pointer"
+        key={data._id}
+        on:click={() => detailView(data.title)}
+        animate:flip={{ duration: dragDuration }}
+        draggable="true"
+        on:dragstart={() => (draggingCard = card)}
+        on:dragend={() => (draggingCard = undefined)}
+        on:dragenter={() => swapWith(card)}
+        on:dragover|preventDefault
+      >
+        <div class="flex justify-between flex-col">
+          <div>
+            <img src={card.img} alt="cover_img" class="rounded-md" />
+          </div>
+          <hr class="mt-2" />
+          <div>
+            <p class="font-semibold text-xl tracking-wider">{card.title}</p>
+          </div>
+
+          <div class="flex">
+            <div class="flex gap-4">
+              <img
+                src={card.authImg}
+                alt="auth_img"
+                class="w-[45px] rounded-full object-cover h-[45px]"
+              />
+              <div>
+                <p>{card.auth}</p>
+
+                <p class="opacity-80">{card.dt}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </button>
+    {/each}
+  </div>
 </section>
 
-{@html prev}
+<style>
+  .container {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+</style>

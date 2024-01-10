@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { flip } from "svelte/animate";
   import { goto } from "$app/navigation";
   import { blogForm } from "$lib/store/stores.js";
 
@@ -8,8 +9,10 @@
     console.log(str);
     goto(str);
   };
+  // const sortedBlogs = $blogForm;
+  $: sortedBlogs = $blogForm;
 
-  //sorted according to date
+  // sorted according to date
   const convertToDate = (dateString) => new Date(dateString);
   $: sortedBlogs = $blogForm.slice().sort((a, b) => {
     return convertToDate(b.dt) - convertToDate(a.dt);
@@ -19,9 +22,15 @@
 <section class="w-11/12 flex mx-auto flex-wrap flex-col">
   <h2 class="text-center font-semibold text-2xl">Home Page of Blogs</h2>
   <div class="w-full flex mx-auto mt-4 flex-wrap gap-4">
-    {#each sortedBlogs as data (data._id)}
-      <div
+    {#each sortedBlogs as data, index (data._id)}
+      <button
+        draggable="true"
         on:click={() => detailView(data.title)}
+        animate:flip={{ duration: dragDuration }}
+        on:dragstart={() => (draggingBlog = index + 1)}
+        on:dragend={() => (draggingBlog = undefined)}
+        on:dragenter={() => swapWith(data)}
+        on:dragover|preventDefault
         class="flex border px-4 py-2 rounded-md w-[30%] min-h-[20rem] hover:bg-gray-100 cursor-pointer"
         key={data._id}
       >
@@ -49,7 +58,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </button>
     {/each}
   </div>
 </section>
