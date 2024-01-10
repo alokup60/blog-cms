@@ -58,7 +58,7 @@ export const actions = {
     const tags = formData.getAll("tags");
     const dt = formData.getAll("dt");
     // const tagData = formData.getAll("tagData");
-    console.log(title, desc, auth, content, tags, dt);
+    // console.log(title, desc, auth, content, tags, dt);
 
     //cover image
     let URL;
@@ -110,7 +110,7 @@ export const actions = {
     const newData = {
       content: new Binary(Buffer.from(content)),
     };
-    console.log(newData, "converted");
+    // console.log(newData, "converted");
 
     //Save Db
     await blog.updateOne(

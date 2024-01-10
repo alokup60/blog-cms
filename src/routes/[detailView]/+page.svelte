@@ -6,7 +6,7 @@
   let contentData = JSON.parse(data.body);
 
   // console.log(post);
-  console.log(data, "detailview");
+  // console.log(data, "detailview");
 
   // let content = post.map((item) => {
   //   // console.log(item.content, "content");

@@ -12,7 +12,7 @@ export const load = async () => {
       return content;
     });
     const htmldata = await Promise.all(promises);
-    console.log(htmldata, "hiiiii");
+    // console.log(htmldata, "hiiiii");
     return {
       status: 200,
       header: allData,
