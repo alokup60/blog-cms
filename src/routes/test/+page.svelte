@@ -1,10 +1,9 @@
 <script>
   import { flip } from "svelte/animate";
-  // import { blogForm } from "$lib/store/stores";
+
   export let data;
   let newdata = JSON.parse(data.header);
   const dragDuration = 300;
-  // let arr = $blogForm;
   let cards = [];
   newdata.forEach((element, i) => {
     cards.push(element);
