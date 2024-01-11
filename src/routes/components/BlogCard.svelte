@@ -85,7 +85,7 @@
                     </p>
                   {/if}
 
-                  {#if dt.updatedDt instanceof Date && !isNaN(dt.updatedDt)}
+                  {#if dt.updatedDt}
                     <p class="opacity-80 text-sm">
                       <span class="font-semibold">Updated On:</span>
                       {dt.updatedDt}
