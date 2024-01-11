@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
 
   export let data;
-  // console.log(data, "from BlogCard");
+  console.log(data, "from BlogCard");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
@@ -42,6 +42,7 @@
   <h2 class="text-center font-semibold text-2xl">Home Page of Blogs</h2>
   <div class="w-full flex mx-auto mt-4 flex-wrap gap-4">
     {#each sortedBlogs as dt (dt._id)}
+      <!-- {dt.updatedDt} -->
       <div
         draggable="true"
         on:click={() => detailView(dt.title)}
