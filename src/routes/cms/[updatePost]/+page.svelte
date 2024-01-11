@@ -43,6 +43,9 @@
   let selectedTags = [];
   let allTags = [];
 
+  post.map((item) => {
+    console.log(item.dt);
+  });
   //blogTags
   post.map((item) => {
     blogTags = item.tags;
@@ -102,25 +105,6 @@
       allTags = [...allTags, tag];
     }
   };
-  // $: console.log(blogTags);
-  // let authImg;
-  // const uploadAuthImg = (event) => {
-  //   const file = event.target.files[0];
-
-  //   if (file) {
-  //     const reader = new FileReader();
-
-  //     reader.onload = (e) => {
-  //       authImg = e.target.result;
-  //       showImage2 = true;
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-  // post.forEach((element) => {
-  //   authImg = element.img;
-  // });
 
   let newImg;
   post.forEach((element) => {

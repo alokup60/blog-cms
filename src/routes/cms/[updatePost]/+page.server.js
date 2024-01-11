@@ -84,33 +84,9 @@ export const actions = {
         console.log(error);
       });
 
-    //author image
-    // let authImgURL;
-    // await imagekit
-    //   .upload({
-    //     file: Buffer.from(await authImg.arrayBuffer()), //required
-    //     fileName: authImg.name, //required
-    //     // folder: "/newblog",
-    //     extensions: [
-    //       {
-    //         name: "google-auto-tagging",
-    //         maxTags: 5,
-    //         minConfidence: 95,
-    //       },
-    //     ],
-    //   })
-    //   .then((response) => {
-    //     authImgURL = response.url;
-    //     console.log(response.url);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
     const newData = {
       content: new Binary(Buffer.from(content)),
     };
-    // console.log(newData, "converted");
 
     //Save Db
     await blog.updateOne(
