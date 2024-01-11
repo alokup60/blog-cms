@@ -47,6 +47,7 @@ export const actions = {
     const updatedDt = formData.getAll("updatedDt");
     // const tagData = formData.getAll("tagData");
     // console.log(title, desc, auth, content, tags, dt);
+    console.log(dt);
 
     //cover image
     let URL;

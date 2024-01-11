@@ -2,22 +2,6 @@ import { writeFile, writeFileSync } from "fs";
 import { blog, tagColl } from "$lib/db/database.js";
 import { Binary, MongoClient } from "mongodb";
 import { imagekit } from "$lib/imagekit/imagekit.js";
-async function connectToCluster() {
-  let mongoClient;
-  try {
-    mongoClient = new MongoClient("mongodb://127.0.0.1:27017");
-    console.log("Connecting to MongoDB Compass...");
-    await mongoClient.connect();
-    console.log("Successfully connected to MongoDB Compass!");
-    // const db = mongoClient.db("newBlogDb"); //for creating DB
-    console.log("Databse created successfully.");
-
-    return mongoClient;
-  } catch (error) {
-    console.error("Connection to MongoDB Atlas failed!", error);
-    process.exit();
-  }
-}
 
 export const load = async () => {
   let tags = await tagColl.findOne({ name: "Anshu" });
@@ -44,17 +28,17 @@ export const actions = {
     const date = formData.getAll("dt");
     const updatedDt = formData.getAll("updatedDt");
 
-    function formatDate(date) {
-      let dt = new Date(date[0]);
-      let day = dt.getDate();
-      let monthName = dt.toLocaleString("default", { month: "long" });
-      let year = dt.getFullYear();
-      let formattedDay = day < 10 ? "0" + day : day;
-      return `${monthName} ${formattedDay}, ${year}`;
-    }
-    let postedDate = formatDate(date);
+    // function formatDate(date) {
+    //   let dt = new Date(date[0]);
+    //   let day = dt.getDate();
+    //   let monthName = dt.toLocaleString("default", { month: "long" });
+    //   let year = dt.getFullYear();
+    //   let formattedDay = day < 10 ? "0" + day : day;
+    //   return `${monthName} ${formattedDay}, ${year}`;
+    // }
+    // let postedDate = formatDate(date);
     // let updatedDate = formatDate(updatedDt);
-    console.log(formatDate(date), "currentDate");
+    // console.log(formatDate(date), "currentDate");
     // console.log(formatDate(updatedDt), "updated date");
     // const updatedDt = new Date(date[0]);
     // let day = updatedDt.getDate();
@@ -146,8 +130,7 @@ export const actions = {
       title: title,
       desc: desc,
       auth: auth,
-      dt: postedDate,
-      // updatedDt: null,
+      dt: date,
       content: newData,
       tags: tags,
       mobImg: await mobURL,
