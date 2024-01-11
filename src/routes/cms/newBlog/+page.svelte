@@ -1,30 +1,10 @@
 <script>
-  // import Tiptap from "$lib/tipTap/Tiptap.svelte";
-  import { onMount, onDestroy } from "svelte";
-  import { writable } from "svelte/store";
   export let data;
   export let form;
 
-  // console.log(data.contData, "page waala");
-
-  // let html = "";
-  // let arr_html = [
-  //   {
-  //     html: `{${formData.content}}`,
-  //     // klass: "p-2 text-3xl",
-  //   },
-  // ];
-
   //display in form
   let date = new Date().toISOString().split("T")[0];
-
-  //display in preview
-  // const dt = new Date();
-  // let day = dt.getDate();
-  // let formattedDay = day < 10 ? "0" + day : day;
-  // let monthName = dt.toLocaleString("default", { month: "long" });
-  // let year = dt.getFullYear();
-  // let currentDate = `${monthName} ${formattedDay}, ${year}`;
+  let updatedDate = new Date().toISOString().split("T")[0];
 
   const formData = {
     heading: "",
@@ -101,51 +81,6 @@
     document.getElementById("prev").style.display = "block";
     // document.getElementById("prev").style.color = "red";
   }
-  let element;
-  let editor;
-  let onTransaction;
-  let newdata = ""; // Assuming newdata is declared in the component
-  // let newdata;
-
-  // onMount(() => {
-  //   editor = new Tiptap({
-  //     element: element,
-  //     onTransaction: (transaction) => {
-  //       newdata = editor.getHTML();
-  //     },
-  //   });
-  // });
-
-  // onDestroy(() => {
-
-  //   if (editor) {
-  //     editor.destroy();
-  //   }
-  // });
-
-  // console.log("Editor:", editor);
-  // console.log("HTML Content:", editor?.getHTML?.());
-
-  //uploading content to DB
-
-  // const saveToDatabase = async () => {
-  //   const formData = new FormData();
-  //   formData.append("htmlContent", editor.getHTML());
-
-  //   const response = await fetch("/api/save", {
-  //     method: "POST",
-  //     body: formData,
-  //     headers: {
-  //       "Content-Type": "application/json", // Specify content type as JSON
-  //     },
-  //   });
-
-  //   if (response.ok) {
-  //     console.log("Data saved successfully.");
-  //   } else {
-  //     console.error("Failed to save data.");
-  //   }
-  // };
 </script>
 
 <svelte:head>
@@ -207,7 +142,7 @@
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
-    <!-- Date  -->
+    <!-- ctreated Date  -->
     <div class="flex flex-col justify-between">
       <label for="dt" class="font-semibold text-md">Date</label>
       <input
@@ -219,6 +154,20 @@
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
+    <!-- updated Date  {Hidden}-->
+    {#if !updatedDate}
+      <div class="flex flex-col justify-between">
+        <label for="dt" class="font-semibold text-md">Updated At</label>
+        <input
+          type="date"
+          id="dt"
+          name="updatedDt"
+          bind:value={updatedDate}
+          placeholder="Enter Date"
+          class="border w-full px-2 py-1 rounded-md outline-none"
+        />
+      </div>
+    {/if}
     <!-- author image  -->
     <div>
       <label class="font-semibold text-md" for="authImg">Autor Image</label>
@@ -252,8 +201,6 @@
             bind:value={formData.content}
           ></textarea>
         </div>
-        <!-- <button type="button" on:click={saveToDatabase}>Save to Database</button
-        > -->
       </div>
       <!-- image for cover  -->
       <div class="flex flex-col justify-between">

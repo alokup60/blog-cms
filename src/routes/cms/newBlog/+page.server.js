@@ -48,17 +48,37 @@ export const actions = {
     const content = formData.get("content");
     // const htmlContent = formData.get("htmlContent");
     const tags = formData.getAll("tags");
-    const date = formData.getAll("dt");
-
-    const dt = new Date(date[0]);
-    let day = dt.getDate();
-    let formattedDay = day < 10 ? "0" + day : day;
-    let monthName = dt.toLocaleString("default", { month: "long" });
-    let year = dt.getFullYear();
-    let currentDate = `${monthName} ${formattedDay}, ${year}`;
     const tagData = formData.getAll("tagData");
-    console.log(file);
-    console.log(content);
+    const date = formData.getAll("dt");
+    const updatedDt = formData.getAll("updatedDt");
+
+    // const dt = new Date(date[0]);
+    // let day = dt.getDate();
+    // let formattedDay = day < 10 ? "0" + day : day;
+    // let monthName = dt.toLocaleString("default", { month: "long" });
+    // let year = dt.getFullYear();
+    // let currentDate = `${monthName} ${formattedDay}, ${year}`;
+    function formatDate(date) {
+      let dt = new Date(date[0]);
+      let day = dt.getDate();
+      let monthName = dt.toLocaleString("default", { month: "long" });
+      let year = dt.getFullYear();
+      let formattedDay = day < 10 ? "0" + day : day;
+      return `${monthName} ${formattedDay}, ${year}`;
+    }
+    let postedDate = formatDate(date);
+    let updatedDate = formatDate(updatedDt);
+    console.log(formatDate(date), "currentDate");
+    console.log(formatDate(updatedDt), "updated date");
+    // const updatedDt = new Date(date[0]);
+    // let day = updatedDt.getDate();
+    // let formattedDay = day < 10 ? "0" + day : day;
+    // let monthName = updatedDt.toLocaleString("default", { month: "long" });
+    // let year = updatedDt.getFullYear();
+    // let updatedDate = `${monthName} ${formattedDay}, ${year}`;
+
+    // console.log(file);
+    // console.log(content);
 
     // Using Promises
     let URL;
@@ -140,7 +160,8 @@ export const actions = {
       title: title,
       desc: desc,
       auth: auth,
-      dt: currentDate,
+      dt: postedDate,
+      updatedDt: null,
       content: newData,
       // htmlContent: htmlContent,
       tags: tags,

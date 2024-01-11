@@ -6,11 +6,7 @@
   // console.log(data.body);
   // start form here for showing image (Preview)
   let input;
-  // let input2;
-  let container;
-  let image;
-  let placeholder;
-  // let showImage2 = false;
+  let updatedDate = new Date().toISOString().split("T")[0];
   let showImage = false;
 
   // function uploadImg() {
@@ -251,7 +247,7 @@
         </div>
       </div> -->
 
-      <!-- created by  -->
+      <!-- created At  -->
       <div class="flex flex-col justify-between">
         <label for="dt" class="font-semibold text-md">Posted On</label>
         <input
@@ -263,6 +259,20 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
+      <!-- updated Date  -->
+
+      <div class="flex flex-col justify-between">
+        <label for="dt" class="font-semibold text-md">Updated At</label>
+        <input
+          type="date"
+          id="dt"
+          name="updatedDt"
+          bind:value={item.updatedDt}
+          placeholder="Enter Date"
+          class="border w-full px-2 py-1 rounded-md outline-none"
+        />
+      </div>
+
       <!-- create textbox -->
       <div class="flex flex-col justify-between">
         <label for="content" class="font-semibold text-md">Content</label>

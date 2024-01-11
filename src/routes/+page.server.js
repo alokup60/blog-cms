@@ -18,19 +18,6 @@ export const load = async () => {
       header: allData,
       body: JSON.stringify(htmldata),
     };
-    // try {
-    //
-    //
-    //   // console.log(allData);
-
-    //   return {
-    //     htmldata,
-    //     allData,
-    //   };
-    // } catch (error) {
-    //   console.error("Error loading data:", error);
-    //   throw error;
-    // }
   }
 
   // If there's no blogDataCursor, you can return an empty array or handle it as needed.

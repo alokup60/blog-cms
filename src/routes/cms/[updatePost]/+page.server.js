@@ -28,18 +28,6 @@ export const load = async ({ params }) => {
         alltags,
       };
     }
-
-    // console.log(post, "from server");
-    // if (data) {
-    //   // const promises = data.map((elem) => {
-    //   const bsonData = data.content.content;
-    //   // console.log(bsonData);
-    //   const content = bsonData ? bsonData.buffer.toString() : "";
-    //   let newcontent = JSON.parse(content);
-    //   // console.log(newcontent);
-    //   // return content;
-    //   // });
-    // const htmldata = await Promise.all(promises);
   } catch (error) {
     console.error("Error loading data:", error);
     throw error;
@@ -57,8 +45,20 @@ export const actions = {
     const content = formData.get("content");
     const tags = formData.getAll("tags");
     const dt = formData.getAll("dt");
+    const updatedDt = formData.getAll("updatedDt");
     // const tagData = formData.getAll("tagData");
     // console.log(title, desc, auth, content, tags, dt);
+
+    // function formatDate(date) {
+    //   let dt = new Date(date[0]);
+    //   let day = dt.getDate();
+    //   let monthName = dt.toLocaleString("default", { month: "long" });
+    //   let year = dt.getFullYear();
+    //   let formattedDay = day < 10 ? "0" + day : day;
+    //   return `${monthName} ${formattedDay}, ${year}`;
+    // }
+    // let updatedDate = formatDate(updatedDt);
+    // console.log(updatedDate, "updated Date");
 
     //cover image
     let URL;
@@ -121,6 +121,7 @@ export const actions = {
           desc: desc,
           auth: auth,
           dt: dt,
+          updatedDt: updatedDt,
           content: newData,
           tags: tags,
           img: await URL,
