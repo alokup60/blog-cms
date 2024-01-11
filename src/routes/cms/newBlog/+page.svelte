@@ -149,6 +149,7 @@
         type="date"
         id="dt"
         name="dt"
+        min={date}
         bind:value={date}
         placeholder="Enter Date"
         class="border w-full px-2 py-1 rounded-md outline-none"

@@ -46,6 +46,12 @@
   post.map((item) => {
     console.log(item.dt);
   });
+
+  // post.map((item) => {
+  //   if (item.updatedDt) {
+  //     console.log(item.updatedDt);
+  //   }
+  // });
   //blogTags
   post.map((item) => {
     blogTags = item.tags;
@@ -211,20 +217,21 @@
           type="date"
           name="dt"
           id="dt"
+          min={item.dt}
           bind:value={item.dt}
           placeholder="Created at"
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
       <!-- updated Date  -->
-
       <div class="flex flex-col justify-between">
         <label for="dt" class="font-semibold text-md">Updated At</label>
         <input
           type="date"
           id="dt"
           name="updatedDt"
-          bind:value={item.updatedDt}
+          min={item.dt}
+          bind:value={updatedDate}
           placeholder="Enter Date"
           class="border w-full px-2 py-1 rounded-md outline-none"
         />

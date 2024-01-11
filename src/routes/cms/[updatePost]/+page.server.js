@@ -37,7 +37,6 @@ export const actions = {
   updatePost: async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
-    // const authImg = formData.get("authorUpload");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -86,7 +85,7 @@ export const actions = {
           desc: desc,
           auth: auth,
           dt: dt,
-          updatedDt: updatedDt,
+          // updatedDt: updatedDt,
           content: newData,
           tags: tags,
           img: await URL,
