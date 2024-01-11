@@ -203,33 +203,6 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
-      <!-- <div>
-        <label for="authorUpload" class="font-semibold text-md"
-          >Author Image</label
-        >
-        <div class="flex flex-col w-full border bg-white rounded-md px-1">
-          <div
-            class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
-          >
-            {#if authImg}
-              <img src={authImg} alt="Preview" class="w-full h-full" />
-            {:else}
-              <span>Image Preview</span>
-            {/if}
-          </div>
-          <div
-            class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
-          >
-            <input
-              name="authorUpload"
-              accept="image/*"
-              bind:this={input2}
-              on:change={uploadAuthImg}
-              type="file"
-            />
-          </div>
-        </div>
-      </div> -->
 
       <!-- created At  -->
       <div class="flex flex-col justify-between">

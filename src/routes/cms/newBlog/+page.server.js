@@ -1,4 +1,5 @@
 import { writeFile, writeFileSync } from "fs";
+import { blog, tagColl } from "$lib/db/database.js";
 import { Binary, MongoClient } from "mongodb";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 async function connectToCluster() {
@@ -17,12 +18,6 @@ async function connectToCluster() {
     process.exit();
   }
 }
-//DB created & collection created
-let dbConn = await connectToCluster();
-const db = dbConn.db("newBlogDb");
-console.log("dataBase Created");
-const collection = db.collection("blog");
-const tagColl = db.collection("tagColl");
 
 export const load = async () => {
   let tags = await tagColl.findOne({ name: "Anshu" });
@@ -30,8 +25,6 @@ export const load = async () => {
   console.log(tagData);
   return {
     tagData,
-    // contData,
-    // blogData,
   };
 };
 
@@ -46,18 +39,11 @@ export const actions = {
     const desc = formData.get("desc");
     const auth = formData.get("auth");
     const content = formData.get("content");
-    // const htmlContent = formData.get("htmlContent");
     const tags = formData.getAll("tags");
     const tagData = formData.getAll("tagData");
     const date = formData.getAll("dt");
     const updatedDt = formData.getAll("updatedDt");
 
-    // const dt = new Date(date[0]);
-    // let day = dt.getDate();
-    // let formattedDay = day < 10 ? "0" + day : day;
-    // let monthName = dt.toLocaleString("default", { month: "long" });
-    // let year = dt.getFullYear();
-    // let currentDate = `${monthName} ${formattedDay}, ${year}`;
     function formatDate(date) {
       let dt = new Date(date[0]);
       let day = dt.getDate();
@@ -67,9 +53,9 @@ export const actions = {
       return `${monthName} ${formattedDay}, ${year}`;
     }
     let postedDate = formatDate(date);
-    let updatedDate = formatDate(updatedDt);
+    // let updatedDate = formatDate(updatedDt);
     console.log(formatDate(date), "currentDate");
-    console.log(formatDate(updatedDt), "updated date");
+    // console.log(formatDate(updatedDt), "updated date");
     // const updatedDt = new Date(date[0]);
     // let day = updatedDt.getDate();
     // let formattedDay = day < 10 ? "0" + day : day;
@@ -156,14 +142,13 @@ export const actions = {
     console.log(newData, "converted");
 
     //Save Db
-    await collection.insertOne({
+    await blog.insertOne({
       title: title,
       desc: desc,
       auth: auth,
       dt: postedDate,
-      updatedDt: null,
+      // updatedDt: null,
       content: newData,
-      // htmlContent: htmlContent,
       tags: tags,
       mobImg: await mobURL,
       img: await URL,

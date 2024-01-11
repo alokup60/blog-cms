@@ -1,6 +1,5 @@
 import { blog, tagColl } from "$lib/db/database";
 import { Binary } from "mongodb";
-import { page } from "$app/stores";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 import { ObjectId } from "mongodb";
 
@@ -48,17 +47,6 @@ export const actions = {
     const updatedDt = formData.getAll("updatedDt");
     // const tagData = formData.getAll("tagData");
     // console.log(title, desc, auth, content, tags, dt);
-
-    // function formatDate(date) {
-    //   let dt = new Date(date[0]);
-    //   let day = dt.getDate();
-    //   let monthName = dt.toLocaleString("default", { month: "long" });
-    //   let year = dt.getFullYear();
-    //   let formattedDay = day < 10 ? "0" + day : day;
-    //   return `${monthName} ${formattedDay}, ${year}`;
-    // }
-    // let updatedDate = formatDate(updatedDt);
-    // console.log(updatedDate, "updated Date");
 
     //cover image
     let URL;

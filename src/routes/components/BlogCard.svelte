@@ -6,7 +6,7 @@
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
-    console.log(str);
+    // console.log(str);
     goto(str);
   };
 
