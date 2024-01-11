@@ -6,7 +6,7 @@
   // console.log(data.body);
   // start form here for showing image (Preview)
   let input;
-  let updatedDate = new Date().toISOString().split("T")[0];
+  // let updatedDate = new Date().toISOString().split("T")[0];
   let showImage = false;
 
   // function uploadImg() {
@@ -231,7 +231,7 @@
           id="dt"
           name="updatedDt"
           min={item.dt}
-          bind:value={updatedDate}
+          bind:value={item.updatedDt}
           placeholder="Enter Date"
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
