@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
 
   export let data;
-  console.log(data, "from BlogCard");
+  // console.log(data, "from BlogCard");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
@@ -16,24 +16,24 @@
     return convertToDate(b.dt) - convertToDate(a.dt);
   });
 
+  function formatDate(date) {
+    let dt = new Date(date[0]);
+    let day = dt.getDate();
+    let monthName = dt.toLocaleString("default", { month: "long" });
+    let year = dt.getFullYear();
+    let formattedDay = day < 10 ? "0" + day : day;
+    return `${monthName} ${formattedDay}, ${year}`;
+  }
   //display the date
   // let postedDate;
   // let postAt;
   // data.map((item) => {
   //   postedDate = item.dt;
+  //   console.log(postedDate);
   //   postAt = formatDate(postedDate);
   //   console.log(postAt, "extracted date");
   // });
   // postedDate = new Date().toISOString().split("T")[0];
-
-  // function formatDate(date) {
-  //   let dt = new Date(date[0]);
-  //   let day = dt.getDate();
-  //   let monthName = dt.toLocaleString("default", { month: "long" });
-  //   let year = dt.getFullYear();
-  //   let formattedDay = day < 10 ? "0" + day : day;
-  //   return `${monthName} ${formattedDay}, ${year}`;
-  // }
 
   // console.log(postAt, "formatted data");
 </script>
@@ -81,14 +81,14 @@
                   {#if dt.dt}
                     <p class="opacity-80 text-sm">
                       <span class="font-semibold">Posted On:</span>
-                      {dt.dt}
+                      {formatDate(dt.dt)}
                     </p>
                   {/if}
 
                   {#if dt.updatedDt}
                     <p class="opacity-80 text-sm">
                       <span class="font-semibold">Updated On:</span>
-                      {dt.updatedDt}
+                      {formatDate(dt.updatedDt)}
                     </p>
                   {/if}
                 </div>

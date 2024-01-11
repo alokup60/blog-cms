@@ -85,7 +85,7 @@ export const actions = {
           desc: desc,
           auth: auth,
           dt: dt,
-          updatedDt: updatedDt,
+          ...(updatedDt && { updatedDt: updatedDt }),
           content: newData,
           tags: tags,
           img: await URL,
