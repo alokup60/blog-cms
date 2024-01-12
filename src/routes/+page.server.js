@@ -12,17 +12,10 @@ export const load = async () => {
       return content;
     });
     const htmldata = await Promise.all(promises);
-    // console.log(htmldata, "hiiiii");
     return {
       status: 200,
       header: allData,
       body: JSON.stringify(htmldata),
     };
   }
-
-  // If there's no blogDataCursor, you can return an empty array or handle it as needed.
-  // return {
-  //   htmldata: [],
-  //   allData: null,
-  // };
 };

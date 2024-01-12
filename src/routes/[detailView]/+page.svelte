@@ -5,14 +5,6 @@
   let post = JSON.parse(data.newdata);
   let contentData = JSON.parse(data.body);
 
-  // console.log(post);
-  // console.log(data, "detailview");
-
-  // let content = post.map((item) => {
-  //   // console.log(item.content, "content");
-  //   return item.content;
-  // });
-
   let tag = post.map((item) => {
     return item.tags;
   });
@@ -124,6 +116,9 @@
           <div class="flex gap-2 mt-2"></div>
         </div>
       {/each}
+    </div>
+    <div>
+      <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
     </div>
   </div>
 </section>
