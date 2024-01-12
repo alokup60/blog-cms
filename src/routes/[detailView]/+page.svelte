@@ -1,7 +1,14 @@
 <script>
   import { browser } from "$app/environment";
+  import { blogData } from "$lib/store/stores";
+  import { onMount } from "svelte";
   import "../../app.css";
+  import BlogCard from "../components/BlogCard.svelte";
   export let data;
+  let allpost = JSON.parse(data.allPost);
+  // let related = allpost.filter((ele.tags == '')=>{
+
+  // })
   let post = JSON.parse(data.newdata);
   let contentData = JSON.parse(data.body);
 
@@ -119,6 +126,9 @@
     </div>
     <div>
       <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
+    </div>
+    <div>
+      <BlogCard data={allpost} />
     </div>
   </div>
 </section>

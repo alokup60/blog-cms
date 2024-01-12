@@ -24,25 +24,12 @@
     let formattedDay = day < 10 ? "0" + day : day;
     return `${monthName} ${formattedDay}, ${year}`;
   }
-  //display the date
-  // let postedDate;
-  // let postAt;
-  // data.map((item) => {
-  //   postedDate = item.dt;
-  //   console.log(postedDate);
-  //   postAt = formatDate(postedDate);
-  //   console.log(postAt, "extracted date");
-  // });
-  // postedDate = new Date().toISOString().split("T")[0];
-
-  // console.log(postAt, "formatted data");
 </script>
 
 <section class="w-11/12 flex mx-auto flex-wrap flex-col">
   <h2 class="text-center font-semibold text-2xl">Home Page of Blogs</h2>
   <div class="w-full flex mx-auto mt-4 flex-wrap gap-4">
     {#each sortedBlogs as dt (dt._id)}
-      <!-- {dt.updatedDt} -->
       <div
         draggable="true"
         on:click={() => detailView(dt.title)}
