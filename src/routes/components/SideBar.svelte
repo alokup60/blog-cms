@@ -39,7 +39,7 @@
     </div>
     <ul class="space-y-2 w-full" id="list-items">
       {#if openSideBar}
-        {#each [{ icon: "fa-house", href: "/cms/home", text: "Home" }, { icon: "fa-pen", href: "/cms/newBlog", text: "New Blog" }, { icon: "fa-newspaper", href: "/cms/viewPost", text: "View Post" }, { icon: "fa-tag", href: "/cms/allTags", text: "All Tags" }] as { icon, href, text }}
+        {#each [{ icon: "fa-house", href: "/cms/home", text: "Home" }, { icon: "fa-pen", href: "/cms/newBlog", text: "New Blog" }, { icon: "fa-newspaper", href: "/cms/viewPost", text: "View Post" }, { icon: "fa-tag", href: "/cms/allTags", text: "All Tags" }, { icon: "fa-comment", href: "/cms/faq", text: "FAQ" }] as { icon, href, text }}
           <li
             class="flex items-center gap-4 cursor-pointer justify-between p-2 hover:bg-gray-700 hover:text-green-400"
           >
