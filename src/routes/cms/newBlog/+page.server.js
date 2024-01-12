@@ -1,8 +1,8 @@
-import { writeFile, writeFileSync } from "fs";
 import { blog, tagColl } from "$lib/db/database.js";
-import { Binary, MongoClient } from "mongodb";
+import { Binary } from "mongodb";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 
+//find the tagColl
 export const load = async () => {
   let tags = await tagColl.findOne({ name: "Anshu" });
   let tagData = JSON.stringify(tags.newdata);
@@ -27,28 +27,6 @@ export const actions = {
     const tagData = formData.getAll("tagData");
     const date = formData.getAll("dt");
     const updatedDt = formData.getAll("updatedDt");
-
-    // function formatDate(date) {
-    //   let dt = new Date(date[0]);
-    //   let day = dt.getDate();
-    //   let monthName = dt.toLocaleString("default", { month: "long" });
-    //   let year = dt.getFullYear();
-    //   let formattedDay = day < 10 ? "0" + day : day;
-    //   return `${monthName} ${formattedDay}, ${year}`;
-    // }
-    // let postedDate = formatDate(date);
-    // let updatedDate = formatDate(updatedDt);
-    // console.log(formatDate(date), "currentDate");
-    // console.log(formatDate(updatedDt), "updated date");
-    // const updatedDt = new Date(date[0]);
-    // let day = updatedDt.getDate();
-    // let formattedDay = day < 10 ? "0" + day : day;
-    // let monthName = updatedDt.toLocaleString("default", { month: "long" });
-    // let year = updatedDt.getFullYear();
-    // let updatedDate = `${monthName} ${formattedDay}, ${year}`;
-
-    // console.log(file);
-    // console.log(content);
 
     // Using Promises
     let URL;

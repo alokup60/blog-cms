@@ -22,4 +22,5 @@ let mongoClient = await connectToCluster();
 export const blogDB = mongoClient.db("newBlogDb");
 export const blog = blogDB.collection("blog");
 export const tagColl = blogDB.collection("tagColl");
-export const testColl = blogDB.collection("testColl");
+export const faqColl = blogDB.collection("faqColl");
+// export const testColl = blogDB.collection("testColl");

@@ -79,7 +79,6 @@
   }
   function fun() {
     document.getElementById("prev").style.display = "block";
-    // document.getElementById("prev").style.color = "red";
   }
 </script>
 
