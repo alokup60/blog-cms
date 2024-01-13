@@ -8,6 +8,7 @@
   // start form here for showing image (Preview)
   let input;
   let updatedDate = new Date().toISOString().split("T")[0];
+
   let showImage = false;
 
   const showToast = () => {
@@ -27,24 +28,6 @@
     });
   };
 
-  // function uploadImg() {
-  //   const file = input.files[0];
-
-  //   if (file) {
-  //     showImage = true;
-
-  //     const reader = new FileReader();
-  //     reader.addEventListener("load", function () {
-  //       image.setAttribute("src", reader.result);
-  //     });
-  //     reader.readAsDataURL(file);
-
-  //     return;
-  //   }
-  //   showImage = false;
-  // }
-  //End here........
-
   onMount(async () => {
     if (form?.success) {
       showToast();
@@ -54,7 +37,6 @@
 
   let post = JSON.parse(data.newdata);
   let contentData = JSON.parse(data.body);
-  // console.log(contentData, "post");
   let tags = JSON.parse(data.alltags);
   let blogTags;
   let newtags;
@@ -64,12 +46,12 @@
   post.map((item) => {
     console.log(item.dt);
   });
+  let upDate;
+  post.map((item) => {
+    upDate = item.updatedDt;
+    console.log(upDate);
+  });
 
-  // post.map((item) => {
-  //   if (item.updatedDt) {
-  //     console.log(item.updatedDt);
-  //   }
-  // });
   //blogTags
   post.map((item) => {
     blogTags = item.tags;
@@ -87,8 +69,6 @@
       selectedTags = [...selectedTags, ...tags];
       blogTags = [...blogTags, ...selectedTags];
       selectedTags = selectedTags.filter((val) => !allTags.includes(val));
-      // console.log(tags);
-      // console.log(selectedTags, "selected");
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
@@ -100,9 +80,6 @@
       const tags = await newtags;
       allTags = [...allTags, ...tags];
       allTags = allTags.filter((val) => !selectedTags.includes(val));
-
-      // console.log(tags);
-      // console.log(allTags, "all");
     } catch (error) {
       console.error("Error fetching tags:", error);
     }
@@ -112,7 +89,6 @@
   const selectedFn = (tg) => {
     const index = selectedTags.indexOf(tg);
     if (index === -1) {
-      // Tag is not selected, so add it to the selectedTags array
       selectedTags = [...selectedTags, tg];
     } else {
       selectedTags = selectedTags.filter((tag) => tag !== tg);
@@ -175,6 +151,23 @@
       }
     });
   });
+  // let updatedDt = post[0]?.updatedDt || "";
+  // const handleSubmit = () => {
+  //   if (!upDate) {
+  //     alert("Please select the Updated At date.");
+  //     event.preventDefault();
+  //   } else {
+  //     showToast();
+  //   }
+  // };
+  function handleSubmit() {
+    if (!upDate) {
+      document.querySelector('form[action="?/updatePost"]');
+      event.preventDefault();
+    } else {
+      showToast();
+    }
+  }
 </script>
 
 <svelte:head>
@@ -194,6 +187,7 @@
       method="POST"
       action="?/updatePost"
       enctype="multipart/form-data"
+      on:submit={handleSubmit}
     >
       <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
       <div class="flex flex-col justify-between">
