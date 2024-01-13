@@ -1,8 +1,6 @@
 <script>
   import { allTags } from "$lib/store/stores.js";
-
   export let data;
-  // console.log(data);
 
   let tagsAll = JSON.parse(data.tagData);
 
@@ -24,6 +22,17 @@
       // Tag is selected, so remove it from the selectedTags array
       selectedTags = selectedTags.filter((t) => t !== tag);
       console.log(selectedTags);
+    }
+  }
+
+  function confirmDelete() {
+    if (selectedTags.length === 0) {
+      alert("Please select at least one tag before deleting.");
+      event.preventDefault();
+    } else if (confirm("Are you sure you want to delete this Tag?")) {
+      document.querySelector('form[action="?/deletePost"]').submit();
+    } else {
+      event.preventDefault();
     }
   }
 </script>
@@ -50,7 +59,7 @@
     {/each}
   </ul>
   <div class="flex w-6/12 gap-2">
-    <form action="?/removeTag" method="post">
+    <form action="?/removeTag" method="post" on:submit={confirmDelete}>
       <input
         type="text"
         class="opacity-0"
