@@ -1,6 +1,7 @@
 <script>
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
+  import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   export let data;
   export let form;
   // console.log(data.body);
@@ -8,6 +9,23 @@
   let input;
   let updatedDate = new Date().toISOString().split("T")[0];
   let showImage = false;
+
+  const showToast = () => {
+    const toast = toasts.add({
+      title: "Success",
+      description: "Form Updated Successfully!",
+      duration: 3000,
+      placement: "top-right",
+      type: "info",
+      theme: "dark",
+      placement: "top-right",
+      showProgress: true,
+      type: "success",
+      theme: "dark",
+      onClick: () => {},
+      onRemove: () => {},
+    });
+  };
 
   // function uploadImg() {
   //   const file = input.files[0];
@@ -29,7 +47,7 @@
 
   onMount(async () => {
     if (form?.success) {
-      alert("Updated Successfully!");
+      showToast();
       goto("./viewPost");
     }
   });
@@ -333,6 +351,9 @@
         class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
         >Update</button
       >
+      <ToastContainer let:data>
+        <FlatToast {data} />
+      </ToastContainer>
     </form>
   </div>
 {/each}

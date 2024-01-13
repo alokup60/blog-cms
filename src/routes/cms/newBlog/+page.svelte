@@ -1,6 +1,26 @@
 <script>
+  import { onMount } from "svelte";
+  import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   export let data;
   export let form;
+
+  //toast
+  const showToast = () => {
+    const toast = toasts.add({
+      title: "Success",
+      description: "Form submitted successfully",
+      duration: 3000,
+      placement: "top-right",
+      type: "info",
+      theme: "dark",
+      placement: "top-right",
+      showProgress: true,
+      type: "success",
+      theme: "dark",
+      onClick: () => {},
+      onRemove: () => {},
+    });
+  };
 
   //display in form
   let date = new Date().toISOString().split("T")[0];
@@ -80,8 +100,19 @@
   function fun() {
     document.getElementById("prev").style.display = "block";
   }
+  let err = "";
+  const submitHandler = () => {
+    if (formData.heading.trim() === "") {
+      err = "please fill this field";
+    }
+  };
 
-  const submitHandler = () => {};
+  //
+  onMount(async () => {
+    if (form?.success) {
+      showToast();
+    }
+  });
 </script>
 
 <svelte:head>
@@ -121,6 +152,9 @@
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
+      {#if err}
+        <span>{err}</span>
+      {/if}
     </div>
     <!-- Description  -->
     <div class="flex flex-col justify-between">
@@ -282,6 +316,9 @@
           >Submit</button
         >
       </div>
+      <ToastContainer let:data>
+        <FlatToast {data} />
+      </ToastContainer>
     </div>
   </form>
 

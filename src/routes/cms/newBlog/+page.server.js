@@ -116,11 +116,6 @@ export const actions = {
       authImg: await authURL,
     });
 
-    return {
-      body: JSON.stringify({ success: true }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    return { success: true };
   },
 };

@@ -2,20 +2,6 @@
   import { blogForm } from "$lib/store/stores.js";
 </script>
 
-<!-- <Modal bind:showModal>
-  <h2 slot="header" class="text-xl">
-    Are you really want to delete this post?
-  </h2>
-  <form action="?/deletePost" method="post">
-    <input type="text" class="hidden" name="removepost" bind:value={blogId} />
-    {blogId}
-    <button
-      type="submit"
-      class="absolute bg-green-500 text-white px-3 py-1 rounded-md">Yes</button
-    >
-  </form>
-</Modal> -->
-
 <section>
   <div class="flex md:ml-[14rem] flex-wrap gap-4">
     <h2
