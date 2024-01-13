@@ -1,5 +1,14 @@
 <script>
   import { blogForm } from "$lib/store/stores.js";
+
+  function confirmDelete() {
+    if (confirm("Are you sure you want to delete this post?")) {
+      // If confirmed, submit the form
+      document.querySelector('form[action="?/deletePost"]').submit();
+    } else {
+      event.preventDefault();
+    }
+  }
 </script>
 
 <section>
@@ -52,7 +61,11 @@
                 </form>
 
                 <!-- //delete btn  -->
-                <form method="POST" action="?/deletePost">
+                <form
+                  method="POST"
+                  action="?/deletePost"
+                  on:submit={confirmDelete}
+                >
                   <input
                     type="text"
                     bind:value={data._id}

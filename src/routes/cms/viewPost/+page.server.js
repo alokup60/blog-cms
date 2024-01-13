@@ -41,10 +41,6 @@ export const actions = {
     const blogData = await request.formData();
     const removePostId = blogData.get("postId");
     const postId = new ObjectId(removePostId);
-    // console.log(typeof removePostId);
-    // console.log("tapped");
-
-    // const deletedPost = await blog.deleteOne({ id: postId });
 
     try {
       const deletedPost = await blog.deleteOne({ _id: postId });
