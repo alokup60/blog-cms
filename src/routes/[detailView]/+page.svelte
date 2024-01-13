@@ -1,20 +1,28 @@
 <script>
   import { browser } from "$app/environment";
-  import { blogData } from "$lib/store/stores";
-  import { onMount } from "svelte";
   import "../../app.css";
-  import BlogCard from "../components/BlogCard.svelte";
-  export let data;
-  let allpost = JSON.parse(data.allPost);
-  // let related = allpost.filter((ele.tags == '')=>{
+  import RelatedBlog from "../components/RelatedBlog.svelte";
+  import { goto } from "$app/navigation";
 
-  // })
-  let post = JSON.parse(data.newdata);
+  export let data;
+
+  let post = JSON.parse(data.newdata); //single post
   let contentData = JSON.parse(data.body);
+  let allpost = JSON.parse(data.allPost); //all post
+  // console.log(allpost);
 
   let tag = post.map((item) => {
+    console.log(item.tags, "tag");
     return item.tags;
   });
+
+  let flattenedTags = tag.flat();
+  let relatedPosts = allpost.filter(
+    (elem) =>
+      elem._id !== post[0]._id && // Exclude current post
+      elem.tags &&
+      elem.tags.some((tag) => flattenedTags.includes(tag))
+  );
 
   let postedDate = post.map((item) => {
     const date = new Date(item.dt);
@@ -25,6 +33,11 @@
     let currentDate = `${monthName} ${formattedDay}, ${year}`;
     return currentDate;
   });
+
+  // const detailView = (id) => {
+  //   console.log(id);
+  //   goto(id);
+  // };
 
   $: wordCount = contentData.join(" ").split(" ").length;
   $: estimatedReadingTimeInMinutes = Math.floor(wordCount / 238);
@@ -128,7 +141,9 @@
       <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
     </div>
     <div>
-      <BlogCard data={allpost} />
+      {#each relatedPosts as rp (rp._id)}
+        <RelatedBlog data={relatedPosts} />
+      {/each}
     </div>
   </div>
 </section>

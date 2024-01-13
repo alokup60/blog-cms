@@ -2,19 +2,12 @@
   import { goto } from "$app/navigation";
 
   export let data;
-  // console.log(data, "from BlogCard");
+  console.log(data, "from relatedblog");
 
-  const detailView = (title) => {
-    let str = title.replace(/\s/g, "-");
-    // console.log(str);
-    goto(str);
-  };
-
-  // sorted according to date
-  const convertToDate = (dateString) => new Date(dateString);
-  let sortedBlogs = data.slice().sort((a, b) => {
-    return convertToDate(b.dt) - convertToDate(a.dt);
-  });
+  //   const detailView = (title) => {
+  //     let str = title.replace(/\s+/g, "-").toLowerCase();
+  //     goto("../[detailView]");
+  //   };
 
   function formatDate(date) {
     let dt = new Date(date[0]);
@@ -27,16 +20,12 @@
 </script>
 
 <section class="w-11/12 justify-center mx-auto flex flex-wrap">
-  <h2 class="text-center font-semibold text-2xl mt-4 mb-8 w-full">
-    Home Page of Blogs
-  </h2>
   <div
+    id="tss"
     class="w-full flex flex-wrap justify-center gap-2 mx-auto space-x-4 space-y-4"
   >
-    {#each sortedBlogs as dt (dt._id)}
+    {#each data as dt (dt._id)}
       <div
-        draggable="true"
-        on:click={() => detailView(dt.title)}
         class="flex flex-wrap border px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[20rem] hover:bg-gray-100 cursor-pointer"
         key={dt._id}
       >
