@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
 
   export let data;
-  // console.log(data, "from BlogCard");
+  console.log(data, "from BlogCard");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
@@ -37,7 +37,7 @@
       <div
         draggable="true"
         on:click={() => detailView(dt.title)}
-        class="flex flex-wrap border px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[20rem] hover:bg-gray-100 cursor-pointer"
+        class="flex flex-wrap border px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[20rem] hover:shadow-md hover:bg-gray-100 cursor-pointer"
         key={dt._id}
       >
         <div class="flex flex-col w-full">

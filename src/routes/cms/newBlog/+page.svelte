@@ -80,6 +80,8 @@
   function fun() {
     document.getElementById("prev").style.display = "block";
   }
+
+  const submitHandler = () => {};
 </script>
 
 <svelte:head>
@@ -103,6 +105,7 @@
     class=" bx px-4 max-h-screen overflow-scroll rounded-md"
     method="POST"
     enctype="multipart/form-data"
+    on:submit={submitHandler}
   >
     <div class="flex gap-4">
       <a href="#">Edit</a>

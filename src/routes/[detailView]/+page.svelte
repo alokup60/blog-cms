@@ -140,10 +140,10 @@
     <div>
       <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
     </div>
-    <div>
+    <!-- <div>
       {#each relatedPosts as rp (rp._id)}
-        <RelatedBlog data={relatedPosts} />
+        <RelatedBlog rb={relatedPosts} />
       {/each}
-    </div>
+    </div> -->
   </div>
 </section>
