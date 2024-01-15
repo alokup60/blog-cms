@@ -15,7 +15,6 @@
     const index = selectedTags.indexOf(tag);
 
     if (index === -1) {
-      // Tag is not selected, so add it to the selectedTags array
       selectedTags = [...selectedTags, tag];
       console.log(selectedTags);
     } else {

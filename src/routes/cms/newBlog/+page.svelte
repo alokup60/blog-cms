@@ -98,6 +98,8 @@
   // function fun() {
   //   document.getElementById("prev").style.display = "block";
   // }
+
+  //form validation
   let errors = {
     heading: "",
     desc: "",
@@ -152,6 +154,7 @@
     //   errors.tag = "";
     // }
   };
+  //end here
 
   onMount(async () => {
     if (form?.success) {
@@ -293,7 +296,7 @@
         >
         <div class="flex flex-col w-full border bg-white rounded-md px-1">
           <!-- //mobile preview  -->
-          <div class="hidden sm:flex justify-between w-10/12 mx-auto">
+          <div class=" md:hidden sm:flex justify-between w-10/12 mx-auto">
             <div class="flex flex-col w-full justify-between mx-auto">
               <div
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
@@ -313,26 +316,26 @@
                 />
               </div>
             </div>
+          </div>
 
-            <!-- web preview  -->
-            <div class="hidden md:flex flex-col w-full justify-between mx-auto">
-              <div
-                class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
-              >
-                <div id="webPrev"></div>
-              </div>
-              <div
-                class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
-              >
-                <input
-                  id="webInp"
-                  name="fileUpload"
-                  accept="image/*"
-                  value=""
-                  on:change={uploadWebImg}
-                  type="file"
-                />
-              </div>
+          <!-- web preview  -->
+          <div class="hidden md:flex flex-col w-full justify-between mx-auto">
+            <div
+              class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
+            >
+              <div id="webPrev"></div>
+            </div>
+            <div
+              class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
+            >
+              <input
+                id="webInp"
+                name="fileUpload"
+                accept="image/*"
+                value=""
+                on:change={uploadWebImg}
+                type="file"
+              />
             </div>
           </div>
         </div>

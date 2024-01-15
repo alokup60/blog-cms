@@ -48,13 +48,15 @@ export const actions = {
   removeTag: async ({ request }) => {
     const formData = await request.formData();
     const removeTags = formData.get("removetag");
-    console.log(removeTags);
+    let removeTag = removeTags?.toString();
+    let newtag = removeTag?.split(",");
+    // console.log(newtag);
 
     let user = await tagColl.updateOne(
       {
         name: "Anshu",
       },
-      { $pull: { newdata: removeTags } }
+      { $pullAll: { newdata: newtag } }
     );
     return { success: true };
   },
