@@ -90,8 +90,6 @@
     }
   }
 
-  // end here.......
-
   let tags = JSON.parse(data.tagData); //tags
   let files;
   $: if (files) {

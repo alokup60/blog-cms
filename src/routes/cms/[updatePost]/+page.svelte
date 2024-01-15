@@ -229,7 +229,7 @@
           type="date"
           name="dt"
           id="dt"
-          min={updatedDate}
+          min={item.dt}
           bind:value={item.dt}
           placeholder="Created at"
           class="border w-full px-2 py-1 rounded-md outline-none"

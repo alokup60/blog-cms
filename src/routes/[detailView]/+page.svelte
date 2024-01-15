@@ -5,35 +5,45 @@
   import { goto } from "$app/navigation";
 
   export let data;
-
-  let post = JSON.parse(data.newdata); //single post
-  let contentData = JSON.parse(data.body);
-  let allpost = JSON.parse(data.allPost); //all post
+  export const prerender = true;
+  let post;
+  $: post = JSON.parse(data.newdata); //single post
+  let contentData;
+  $: contentData = JSON.parse(data.body);
+  let allpost;
+  $: allpost = JSON.parse(data.allPost); //all post
   // console.log(allpost);
 
-  let tag = post.map((item) => {
-    console.log(item.tags, "tag");
-    return item.tags;
-  });
+  let tag;
+  $: {
+    tag = post.map((item) => {
+      console.log(item.tags, "tag");
+      return item.tags;
+    });
+  }
 
-  let flattenedTags = tag.flat();
-  let relatedPosts = allpost.filter(
+  let flattenedTags;
+  $: flattenedTags = tag.flat();
+  let relatedPosts;
+  $: relatedPosts = allpost.filter(
     (elem) =>
       elem._id !== post[0]._id && // Exclude current post
       elem.tags &&
       elem.tags.some((tag) => flattenedTags.includes(tag))
   );
 
-  let postedDate = post.map((item) => {
-    const date = new Date(item.dt);
-    let day = date.getDate();
-    let formattedDay = day < 10 ? "0" + day : day;
-    let monthName = date.toLocaleString("default", { month: "long" });
-    let year = date.getFullYear();
-    let currentDate = `${monthName} ${formattedDay}, ${year}`;
-    return currentDate;
-  });
-
+  let postedDate;
+  $: {
+    postedDate = post.map((item) => {
+      const date = new Date(item.dt);
+      let day = date.getDate();
+      let formattedDay = day < 10 ? "0" + day : day;
+      let monthName = date.toLocaleString("default", { month: "long" });
+      let year = date.getFullYear();
+      let currentDate = `${monthName} ${formattedDay}, ${year}`;
+      return currentDate;
+    });
+  }
   // const detailView = (id) => {
   //   console.log(id);
   //   goto(id);
@@ -140,10 +150,10 @@
     <div>
       <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
     </div>
-    <!-- <div>
+    <div>
       {#each relatedPosts as rp (rp._id)}
         <RelatedBlog rb={relatedPosts} />
       {/each}
-    </div> -->
+    </div>
   </div>
 </section>

@@ -79,7 +79,7 @@
                   </p>
                 {/if}
 
-                {#if dt.updatedDt}
+                {#if dt.updatedDt == null && dt.updatedDt == undefined && dt.updatedDt == ""}
                   <p class="opacity-80 text-xs">
                     <span class="font-semibold">Updated On:</span>
                     {formatDate(dt.updatedDt)}
