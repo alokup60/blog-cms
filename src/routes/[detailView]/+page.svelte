@@ -2,10 +2,9 @@
   import { browser } from "$app/environment";
   import "../../app.css";
   import RelatedBlog from "../components/RelatedBlog.svelte";
-  import { goto } from "$app/navigation";
 
   export let data;
-  export const prerender = true;
+
   let post;
   $: post = JSON.parse(data.newdata); //single post
   let contentData;
@@ -44,10 +43,6 @@
       return currentDate;
     });
   }
-  // const detailView = (id) => {
-  //   console.log(id);
-  //   goto(id);
-  // };
 
   $: wordCount = contentData.join(" ").split(" ").length;
   $: estimatedReadingTimeInMinutes = Math.floor(wordCount / 238);

@@ -2,23 +2,13 @@
   import { goto } from "$app/navigation";
 
   export let rb;
-  //   console.trace(data);
-  console.log(rb, "relatedBlog");
 
-  //   const detailView = (postId) => {
-  //     goto(`/[detailView]/${postId}`);
-  //   };
+  // console.log(rb, "relatedBlog");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
-    // console.log(str);
     goto(str);
   };
-  //   const detailView = (title) => {
-  //     const slug = title.toLowerCase().replace(/\s+/g, "-");
-  //     const encodedSlug = encodeURIComponent(slug);
-  //     goto(`/detailView/${encodedSlug}`);
-  //   };
 
   function formatDate(date) {
     let dt = new Date(date[0]);
@@ -72,7 +62,7 @@
                     {formatDate(dt.dt)}
                   </p>
                 {/if}
-                {#if dt.updatedDt}
+                {#if dt.updatedDt == null && dt.updatedDt == undefined && dt.updatedDt == ""}
                   <p class="opacity-80 text-xs">
                     <span class="font-semibold">Updated On:</span>
                     {formatDate(dt.updatedDt)}

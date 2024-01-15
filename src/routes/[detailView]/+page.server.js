@@ -21,15 +21,3 @@ export async function load({ params }) {
     };
   }
 }
-export const actions = {
-  reload: async ({ cookies, request }) => {
-    const data = await request.formData();
-    const email = data.get("email");
-    const password = data.get("password");
-
-    return { success: true };
-  },
-  register: async (event) => {
-    // TODO register the user
-  },
-};
