@@ -4,9 +4,9 @@
   import RelatedBlog from "../components/RelatedBlog.svelte";
 
   export let data;
-
   let post;
   $: post = JSON.parse(data.newdata); //single post
+
   let contentData;
   $: contentData = JSON.parse(data.body);
   let allpost;
@@ -56,7 +56,20 @@
   }
 </script>
 
-<svelte:head></svelte:head>
+<svelte:head>
+  {#each post as item}
+    <meta name="title" content={item.seo_title || item.title} />
+    <meta name="description" content={item.desc_seo || item.desc} />
+    <meta
+      name="city"
+      content={item.location_seo ||
+        "New Delhi, Noida, Gurgaon, Pune, Banglore, Mumbai, Ghaziabad, Faridabad, Greater Noida, Gautam Buddha Nagar, Delhi NCR"}
+    />
+    <meta name="keywords" content={item.keywords_seo || item.tags} />
+    <meta name="author" content="Finserve.club" />
+  {/each}
+</svelte:head>
+
 <section class="bg-[#FBF9F4] w-full">
   <div class="flex w-8/12 justify-center mx-auto flex-col mt-4 gap-4 flex-wrap">
     <button

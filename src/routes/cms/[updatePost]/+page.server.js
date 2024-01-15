@@ -44,6 +44,11 @@ export const actions = {
     const tags = formData.getAll("tags");
     const dt = formData.getAll("dt");
     const updatedDt = formData.getAll("updatedDt");
+    const seo_title = formData.get("title_seo");
+    const desc_seo = formData.get("desc_seo");
+    const author_seo = formData.get("author_seo");
+    const location_seo = formData.get("location_seo");
+    const keywords_seo = formData.get("keywords_seo");
     // const tagData = formData.getAll("tagData");
     // console.log(title, desc, auth, content, tags, dt);
     console.log(dt);
@@ -89,6 +94,11 @@ export const actions = {
           content: newData,
           tags: tags,
           img: await URL,
+          seo_title,
+          desc_seo,
+          author_seo,
+          location_seo,
+          keywords_seo,
         },
       }
     );

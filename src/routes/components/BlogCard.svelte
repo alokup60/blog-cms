@@ -26,63 +26,72 @@
   }
 </script>
 
-<section class="w-11/12 justify-center mx-auto flex flex-wrap">
-  <h2 class="text-center font-semibold text-2xl mt-4 mb-8 w-full">
+<section class="w-11/12 mx-auto">
+  <h2 class="text-center font-semibold text-2xl mt-4 mb-8">
     Home Page of Blogs
   </h2>
-  <div class="w-full flex gap-4 justify-between flex-wrap mx-auto">
+
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-10 md:px-20"
+  >
     {#each sortedBlogs as dt (dt._id)}
       <div
+        class="bg-white rounded-xl shadow-md overflow-hidden"
         on:click={() => detailView(dt.title)}
-        class="flex flex-wrap border px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[20rem] hover:shadow-md hover:bg-gray-100 cursor-pointer mb-4"
         key={dt._id}
       >
-        <div class="flex flex-col w-full">
+        <div class="relative">
           {#if dt.img}
-            <div>
-              <img
-                src={dt.img}
-                alt="cover_img"
-                class="rounded-md w-full mb-4"
-              />
-            </div>
-          {/if}
-          <hr class="w-full mt-2 mb-4" />
-          {#if dt.title}
-            <div>
-              <p class="font-semibold text-xl tracking-wider mb-2">
-                {dt.title}
-              </p>
-            </div>
+            <img
+              class="w-full h-48 object-cover"
+              src={dt.img}
+              alt="cover_img"
+            />
           {/if}
 
-          <div class="flex items-center gap-2">
-            {#if dt.authImg}
-              <img
-                src={dt.authImg}
-                alt="auth_img"
-                class="w-8 h-8 rounded-full object-cover"
-              />
+          <div
+            class="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md"
+          >
+            New
+          </div>
+          <div
+            class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"
+          >
+            3 min read
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="text-lg font-medium text-gray-800 mb-2">
+            Title
+            {#if dt.title}
+              {dt.title}
             {/if}
-            <div>
-              {#if dt.auth}
-                <p class="font-semibold text-sm">{dt.auth}</p>
+          </div>
+          {#if dt.authImg}
+            <img
+              src={dt.authImg}
+              alt="auth_img"
+              class="w-8 h-8 rounded-full object-cover"
+            />
+          {/if}
+          <div>
+            {#if dt.auth}
+              <p class="font-semibold text-sm">{dt.auth}</p>
+            {/if}
+            <div class="">
+              {#if dt.dt}
+                <p class="opacity-80 text-xs">
+                  <span class="font-semibold">Posted On:</span>
+                  {formatDate(dt.dt)}
+                </p>
               {/if}
-              <div class="flex flex-col">
-                {#if dt.dt}
-                  <p class="opacity-80 text-xs">
-                    <span class="font-semibold">Posted On:</span>
-                    {formatDate(dt.dt)}
-                  </p>
-                {/if}
 
-                {#if dt.updatedDt == null && dt.updatedDt == undefined && dt.updatedDt == ""}
-                  <p class="opacity-80 text-xs">
-                    <span class="font-semibold">Updated On:</span>
-                    {formatDate(dt.updatedDt)}
-                  </p>
-                {/if}
-              </div>
+              {#if dt.updatedDt == null && dt.updatedDt == undefined && dt.updatedDt == ""}
+                <p class="opacity-80 text-xs">
+                  <span class="font-semibold">Updated On:</span>
+                  {formatDate(dt.updatedDt)}
+                </p>
+              {/if}
             </div>
           </div>
         </div>

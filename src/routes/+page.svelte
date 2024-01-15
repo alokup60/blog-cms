@@ -17,6 +17,4 @@
   // console.log(allData);
 </script>
 
-<section class="w-11/12 flex mx-auto">
-  <BlogCard data={allData} />
-</section>
+<BlogCard data={allData} />

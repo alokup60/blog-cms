@@ -1,5 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
+  import Seo from "../../components/Seo.svelte";
   import { onMount } from "svelte";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   export let data;
@@ -339,6 +340,8 @@
           {/if}
         </div>
       </div>
+
+      <Seo />
 
       <button
         type="submit"

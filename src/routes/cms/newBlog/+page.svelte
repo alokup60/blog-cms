@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
+  import Seo from "../../components/Seo.svelte";
   export let data;
   export let form;
 
@@ -195,7 +196,6 @@
     class=" bx px-4 max-h-screen overflow-scroll rounded-md"
     method="POST"
     enctype="multipart/form-data"
-    on:submit|preventDefault={submitHandler}
   >
     <!-- <div class="flex gap-4">
       <a href="#">Edit</a>
@@ -370,8 +370,10 @@
             </div>
           {/each}
         </div>
-
+        <!-- SEO purpose only  -->
+        <Seo />
         <button
+          on:click={submitHandler}
           type="submit"
           class="bg-blue-400 py-2 mt-8 px-4 text-white rounded-md flex justify-center items-center mx-auto hover:bg-blue-500 transition-all duration-200"
           >Submit</button

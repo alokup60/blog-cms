@@ -27,6 +27,11 @@ export const actions = {
     const tagData = formData.getAll("tagData");
     const date = formData.getAll("dt");
     const updatedDt = formData.getAll("updatedDt");
+    const seo_title = formData.get("title_seo");
+    const desc_seo = formData.get("desc_seo");
+    const author_seo = formData.get("author_seo");
+    const location_seo = formData.get("location_seo");
+    const keywords_seo = formData.get("keywords_seo");
 
     // Using Promises
     let URL;
@@ -114,6 +119,11 @@ export const actions = {
       mobImg: await mobURL,
       img: await URL,
       authImg: await authURL,
+      seo_title,
+      desc_seo,
+      author_seo,
+      location_seo,
+      keywords_seo,
     });
 
     return { success: true };
