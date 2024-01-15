@@ -4,7 +4,9 @@ import { blog } from "$lib/db/database";
 export const load = async () => {
   let blogDataCursor = await blog.find().toArray();
   let data = await blog.find().toArray();
-  let allData = JSON.stringify(data);
+  let publish = await data.filter((elem) => elem.publish_confirmation === "on");
+  let allData = JSON.stringify(publish);
+
   if (blogDataCursor) {
     const promises = blogDataCursor.map((elem) => {
       const bsonData = elem.content.content;

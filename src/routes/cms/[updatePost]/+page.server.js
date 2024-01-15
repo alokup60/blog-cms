@@ -49,6 +49,7 @@ export const actions = {
     const author_seo = formData.get("author_seo");
     const location_seo = formData.get("location_seo");
     const keywords_seo = formData.get("keywords_seo");
+    const publish_confirmation = formData.get("publish_confirmation");
     // const tagData = formData.getAll("tagData");
     // console.log(title, desc, auth, content, tags, dt);
     console.log(dt);
@@ -99,6 +100,7 @@ export const actions = {
           author_seo,
           location_seo,
           keywords_seo,
+          publish_confirmation,
         },
       }
     );

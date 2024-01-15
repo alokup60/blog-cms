@@ -44,14 +44,16 @@
   let selectedTags = [];
   let allTags = [];
 
-  post.map((item) => {
-    console.log(item.dt);
-  });
-  let upDate;
-  post.map((item) => {
-    upDate = item.updatedDt;
-    console.log(upDate);
-  });
+  // post.map((item) => {
+  //   console.log(item.dt);
+  // });
+  // let upDate;
+  // if (post) {
+  //   post.map(async (item) => {
+  //     upDate = await item.updatedDt;
+  //     console.log(upDate);
+  //   });
+  // }
 
   //blogTags
   post.map((item) => {
@@ -306,7 +308,7 @@
                 name="tags"
                 type="checkbox"
                 checked
-                class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none ${
+                class={`tag-check bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none ${
                   blogTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
                 } 
           }`}
@@ -331,7 +333,7 @@
                   id={tg}
                   name="tags"
                   type="checkbox"
-                  class={`bg-gray-400  flex px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none   
+                  class={`tag-check bg-gray-400  flex px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none   
           }`}
                 />
                 <label for={tg} on:click={() => selectedFn(tg)}>{tg}</label>
@@ -341,7 +343,12 @@
         </div>
       </div>
 
-      <Seo />
+      <Seo {post} />
+
+      <div class="mt-[2rem]">
+        <input type="checkbox" name="publish_confirmation" checked={false} />
+        <label for="publish_confirmation">Publish Confirmation</label>
+      </div>
 
       <button
         type="submit"
@@ -359,7 +366,10 @@
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
-  input[type="checkbox"] {
+  /* input[type="checkbox"] {
+    display: none;
+  } */
+  .tag-check {
     display: none;
   }
 

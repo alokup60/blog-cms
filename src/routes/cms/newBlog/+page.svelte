@@ -363,7 +363,7 @@
                 id={tag}
                 name="tags"
                 type="checkbox"
-                class={`bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
+                class={`tag-check bg-gray-400 px-3 py-1 rounded-md text-white text-center cursor-pointer outline-none 
           }`}
               />
               <label for={tag}>{tag}</label>
@@ -372,6 +372,12 @@
         </div>
         <!-- SEO purpose only  -->
         <Seo />
+
+        <div>
+          <input type="checkbox" name="publish_confirmation" checked={false} />
+          <label for="publish_confirmation">Publish Confirmation</label>
+        </div>
+
         <button
           on:click={submitHandler}
           type="submit"
@@ -432,7 +438,10 @@
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
-  input[type="checkbox"] {
+  /* input[type="checkbox"] {
+    display: none;
+  } */
+  .tag-check {
     display: none;
   }
 

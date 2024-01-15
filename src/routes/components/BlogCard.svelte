@@ -62,7 +62,6 @@
         </div>
         <div class="p-4">
           <div class="text-lg font-medium text-gray-800 mb-2">
-            Title
             {#if dt.title}
               {dt.title}
             {/if}
