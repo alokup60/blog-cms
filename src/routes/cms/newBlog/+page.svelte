@@ -41,26 +41,32 @@
   }
 
   function uploadWebImg() {
-    let file = document.getElementById("webInp").files[0];
+    let previewContainer = document.getElementById("webPrev");
+    let fileInput = document.getElementById("webInp");
+    let file = fileInput.files[0];
     let reader = new FileReader();
     reader.onload = function (e) {
       let image_1 = document.createElement("img");
       let image_2 = document.createElement("img");
 
       let val = e.target.result;
-
       image_1.src = val;
       image_2.src = val;
-
+      previewContainer.innerHTML = "";
       document.getElementById("webPrev").appendChild(image_1);
       document.getElementById("webImg").appendChild(image_2);
     };
 
-    reader.readAsDataURL(file);
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      previewContainer.innerHTML = "No image selected";
+    }
   }
 
   //mobile image
   function uploadMobImg() {
+    let previewContainer = document.getElementById("mobPrev");
     let file = document.getElementById("mobInp").files[0];
     let reader = new FileReader();
 
@@ -71,11 +77,16 @@
       image_3.src = val;
       image_4.src = val;
 
+      previewContainer.innerHTML = "";
+
       document.getElementById("mobPrev").appendChild(image_3);
       document.getElementById("mobileImg").appendChild(image_4);
     };
-    // you have to declare the file loading
-    reader.readAsDataURL(file);
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      previewContainer.innerHTML = "No image selected";
+    }
   }
 
   //image preview and generate url for link
@@ -226,7 +237,7 @@
       />
       <span class="text-red-500 tracking-wider">{errors.author}</span>
     </div>
-    <!-- ctreated Date  -->
+    <!-- created Date  -->
     <div class="flex flex-col justify-between">
       <label for="dt" class="font-semibold text-md">Date</label>
       <input
