@@ -3,7 +3,7 @@
 
   export let rb;
 
-  // console.log(rb, "relatedBlog");
+  console.log(rb, "relatedBlog");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");

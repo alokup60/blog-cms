@@ -45,19 +45,24 @@
   >
     All Tags
   </h2>
-  <!-- <h2 class="text-center font-semibold text-2xl">All Tags</h2> -->
+
   <ul class="flex gap-2 mt-4 w-6/12 flex-wrap">
-    {#each tagsAll as tag}
-      <li
-        class={`bg-gray-400 text-white px-3 py-1 rounded-md cursor-pointer ${
-          selectedTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
-        }`}
-        on:click={() => selectFn(tag)}
-      >
-        {tag}
-      </li>
-    {/each}
+    {#if tagsAll.length === 0}
+      <p class="ml-[4rem] font-semibold">No Tags are available</p>
+    {:else}
+      {#each tagsAll as tag}
+        <li
+          class={`bg-gray-400 text-white px-3 py-1 rounded-md cursor-pointer ${
+            selectedTags.includes(tag) ? "bg-green-500" : "bg-gray-400"
+          }`}
+          on:click={() => selectFn(tag)}
+        >
+          {tag}
+        </li>
+      {/each}
+    {/if}
   </ul>
+  <!-- Delete tag  -->
   <div class="flex w-6/12 gap-2">
     <form action="?/removeTag" method="post" on:submit={confirmDelete}>
       <input
@@ -78,6 +83,7 @@
       </button>
     </form>
   </div>
+  <!-- Add tag  -->
   <form
     class="flex justify-between mt-4 w-6/12 items-center"
     action="?/addTag"

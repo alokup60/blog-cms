@@ -16,7 +16,7 @@
   let tag;
   $: {
     tag = post.map((item) => {
-      console.log(item.tags, "tag");
+      // console.log(item.tags, "tag");
       return item.tags;
     });
   }
@@ -143,12 +143,11 @@
       {/each}
     </div>
     <div>
-      <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
-    </div>
-    <div>
-      {#each relatedPosts as rp (rp._id)}
-        <RelatedBlog rb={relatedPosts} />
-      {/each}
+      <div>
+        <p class="font-semibold text-2xl mt-[4rem]">Related Blogs:</p>
+      </div>
+
+      <RelatedBlog rb={relatedPosts} />
     </div>
   </div>
 </section>

@@ -30,14 +30,11 @@
   <h2 class="text-center font-semibold text-2xl mt-4 mb-8 w-full">
     Home Page of Blogs
   </h2>
-  <div
-    class="w-full flex flex-wrap justify-center gap-2 mx-auto space-x-4 space-y-4"
-  >
+  <div class="w-full flex gap-4 justify-between flex-wrap mx-auto">
     {#each sortedBlogs as dt (dt._id)}
       <div
-        draggable="true"
         on:click={() => detailView(dt.title)}
-        class="flex flex-wrap border px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[20rem] hover:shadow-md hover:bg-gray-100 cursor-pointer"
+        class="flex flex-wrap border px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4 min-h-[20rem] hover:shadow-md hover:bg-gray-100 cursor-pointer mb-4"
         key={dt._id}
       >
         <div class="flex flex-col w-full">

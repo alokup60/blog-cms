@@ -24,7 +24,7 @@
 
   //display in form
   let date = new Date().toISOString().split("T")[0];
-  let updatedDate = new Date().toISOString().split("T")[0];
+  // let updatedDate = new Date().toISOString().split("T")[0];
 
   const formData = {
     heading: "",
@@ -95,17 +95,64 @@
   $: if (files) {
     console.log(files);
   }
-  function fun() {
-    document.getElementById("prev").style.display = "block";
-  }
-  let err = "";
+  // function fun() {
+  //   document.getElementById("prev").style.display = "block";
+  // }
+  let errors = {
+    heading: "",
+    desc: "",
+    content: "",
+    author: "",
+    tag: [],
+  };
+  let valid = false;
+
   const submitHandler = () => {
+    valid = true;
     if (formData.heading.trim() === "") {
-      err = "please fill this field";
+      valid = false;
+      errors.heading = "Heading Can't be empty!";
+    } else if (formData.heading.trim().length < 4) {
+      errors.heading = "Heading must be atleast 4 character long";
+    } else {
+      errors.heading = "";
     }
+
+    if (formData.desc.trim() === "") {
+      valid = false;
+      errors.desc = "Description can't be empty.";
+    } else if (formData.desc.trim().length < 5) {
+      errors.desc = "Description must be atleast 5 character long.";
+    } else {
+      errors.desc = "";
+    }
+
+    if (formData.content === "") {
+      valid = false;
+      errors.content = "Content can't be empty.";
+    } else if (formData.content.trim().length < 10) {
+      errors.content = "Content must be atleast 10 character long.";
+    } else {
+      errors.content = "";
+    }
+
+    if (formData.author === "") {
+      valid = false;
+      errors.author = "Author can't be empty.";
+    } else if (formData.author.trim().length < 4) {
+      errors.author = "Author must be atleast 4 character long.";
+    } else {
+      errors.author = "";
+    }
+
+    // if (formData.tag.trim().length === 0) {
+    //   valid = false;
+    //   errors.tag = "Tag can't be empty.";
+    // } else {
+    //   errors.tag = "";
+    // }
   };
 
-  //
   onMount(async () => {
     if (form?.success) {
       showToast();
@@ -134,12 +181,12 @@
     class=" bx px-4 max-h-screen overflow-scroll rounded-md"
     method="POST"
     enctype="multipart/form-data"
-    on:submit={submitHandler}
+    on:submit|preventDefault={submitHandler}
   >
-    <div class="flex gap-4">
+    <!-- <div class="flex gap-4">
       <a href="#">Edit</a>
       <button type="button" on:click={fun}>Preview</button>
-    </div>
+    </div> -->
     <!-- title  -->
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>
@@ -150,9 +197,7 @@
         placeholder="Enter title"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
-      {#if err}
-        <span>{err}</span>
-      {/if}
+      <span class="text-red-500 tracking-wider">{errors.heading} </span>
     </div>
     <!-- Description  -->
     <div class="flex flex-col justify-between">
@@ -164,6 +209,7 @@
         placeholder="Enter Description"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
+      <span class="text-red-500 tracking-wider">{errors.desc}</span>
     </div>
     <!-- Author Name  -->
     <div class="flex flex-col justify-between">
@@ -175,6 +221,7 @@
         placeholder="Enter Author Name"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
+      <span class="text-red-500 tracking-wider">{errors.author}</span>
     </div>
     <!-- ctreated Date  -->
     <div class="flex flex-col justify-between">
@@ -190,7 +237,7 @@
       />
     </div>
     <!-- updated Date  {Hidden}-->
-    {#if !updatedDate}
+    <!-- {#if !updatedDate}
       <div class="flex flex-col justify-between">
         <label for="dt" class="font-semibold text-md">Updated At</label>
         <input
@@ -202,7 +249,7 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
-    {/if}
+    {/if} -->
     <!-- author image  -->
     <div>
       <label class="font-semibold text-md" for="authImg">Autor Image</label>
@@ -235,6 +282,8 @@
             name="content"
             bind:value={formData.content}
           ></textarea>
+
+          <span class="text-red-500 tracking-wider">{errors.content}</span>
         </div>
       </div>
       <!-- image for cover  -->
