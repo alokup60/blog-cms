@@ -2,20 +2,18 @@ import { faqColl } from "$lib/db/database";
 import { Binary } from "mongodb";
 
 export async function load({ params }) {
-  let faqData = await faqColl.find({}).toArray();
-  let newFaq = JSON.stringify(faqData);
+  let faqData = await faqColl.find().toArray();
 
   if (faqData) {
     const promises = faqData.map((elem) => {
+      const question = elem.question;
       const bsonData = elem.answer.answer;
       const answer = bsonData ? bsonData.buffer.toString() : "";
-      return answer;
+      return { question, answer };
     });
     const htmldata = await Promise.all(promises);
     return {
-      status: 200,
-      body: JSON.stringify(htmldata),
-      newFaq,
+      htmldata,
     };
   }
 }
@@ -29,7 +27,6 @@ export const actions = {
     const newAnswer = {
       answer: new Binary(Buffer.from(answer)),
     };
-    console.log(newAnswer, "converted into Binary(BSON)");
 
     //insert into DB
     await faqColl.insertOne({

@@ -1,11 +1,9 @@
 <script>
   import Accordian from "../../components/Accordian.svelte";
   export let data;
-  let parseData = JSON.parse(data.newFaq);
-  let answers = JSON.parse(data.body);
 
   let question = "";
-  let answer;
+  let answer = "";
 </script>
 
 <section class="flex flex-col mt-[4rem] ml-[5rem] w-full">
@@ -63,13 +61,9 @@
 </section>
 <section class="flex flex-col mt-[4rem] ml-[5rem] w-full">
   <div>
-    {#each parseData as data}
-      <p class="ml-[20rem]">Question: {data.question}</p>
-    {/each}
-  </div>
-  <div>
-    {#each answers as data}
-      <p class="ml-[20rem]">Answer: {@html data}</p>
+    {#each data.htmldata as item}
+      <p class="ml-[20rem]">Question: {item.question}</p>
+      <p class="ml-[20rem]">Answer: {@html item.answer}</p>
     {/each}
   </div>
 </section>
