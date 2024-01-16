@@ -67,10 +67,7 @@
     />
     <meta name="keywords" content={item.keywords_seo || item.tags} />
     <meta name="author" content="Finserve.club" />
-    <link
-      rel="canonical"
-      href="http://smallbiztrends.com/2010/06/9-things-to-do-before-entering-social-media.html"
-    />
+    <link rel="canonical" href={item.title.replace(/\s/g, "-")} />
   {/each}
 </svelte:head>
 
