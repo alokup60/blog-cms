@@ -235,8 +235,10 @@
         placeholder="Enter Author Name"
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
+
       <span class="text-red-500 tracking-wider">{errors.author}</span>
     </div>
+    <div></div>
     <!-- created Date  -->
     <div class="flex flex-col justify-between">
       <label for="dt" class="font-semibold text-md">Date</label>

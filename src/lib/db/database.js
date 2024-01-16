@@ -23,4 +23,5 @@ export const blogDB = mongoClient.db("newBlogDb");
 export const blog = blogDB.collection("blog");
 export const tagColl = blogDB.collection("tagColl");
 export const faqColl = blogDB.collection("faqColl");
+export const authorColl = blogDB.collection("authorColl");
 // export const testColl = blogDB.collection("testColl");
