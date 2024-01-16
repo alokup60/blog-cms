@@ -5,6 +5,23 @@
   export let data;
   export let form;
 
+  let parseAuth = JSON.parse(data.authorData);
+  let authImg;
+  let authName;
+  let authAlt;
+  parseAuth.map((item) => {
+    authAlt = item.authAlt;
+    authName = item.authName;
+    authImg = item.authImg;
+  });
+  let authorName = "";
+
+  // let authorData = {
+  //   authorName: authName,
+  //   authorAlt: authAlt,
+  //   authorImage: authImg,
+  // };
+  // console.log(authorData);
   //toast
   const showToast = () => {
     const toast = toasts.add({
@@ -42,25 +59,19 @@
   }
 
   function uploadWebImg() {
-    let file = document.getElementById("webInp").files[0];
+    let previewContainer = document.getElementById("webPrev");
+    let fileInput = document.getElementById("webInp");
+    let file = fileInput.files[0];
     let reader = new FileReader();
     reader.onload = function (e) {
       let image_1 = document.createElement("img");
       let image_2 = document.createElement("img");
 
       let val = e.target.result;
-
       image_1.src = val;
       image_2.src = val;
-
-      let webPrev = document.getElementById("webPrev");
-      if (!webPrev) {
-        webPrev = document.createElement("div");
-        webPrev.id = "webPrev";
-        webPrev.innerHTML = "Web Preview";
-        document.body.appendChild(webPrev);
-      }
-
+      previewContainer.innerHTML = "";
+      document.getElementById("webPrev").appendChild(image_1);
       document.getElementById("webImg").appendChild(image_2);
     };
 
@@ -69,6 +80,7 @@
 
   //mobile image
   function uploadMobImg() {
+    let previewContainer = document.getElementById("mobPrev");
     let file = document.getElementById("mobInp").files[0];
     let reader = new FileReader();
 
@@ -78,29 +90,27 @@
       let val = e.target.result;
       image_3.src = val;
       image_4.src = val;
-      let mobPrev = document.getElementById("mobPrev");
-      if (mobPrev == "") {
-        mobPrev.innerHTML = "Web Preview";
-      } else {
-        mobPrev.appendChild(image_3);
-      }
+
+      previewContainer.innerHTML = "";
+
+      document.getElementById("mobPrev").appendChild(image_3);
       document.getElementById("mobileImg").appendChild(image_4);
     };
-    // you have to declare the file loading
+
     reader.readAsDataURL(file);
   }
 
   //image preview and generate url for link
-  let src;
-  function uploadAuthImg(e) {
-    const [file] = imgInp.files;
-    if (file) {
-      let img = URL.createObjectURL(file);
-      src = img;
-      console.log(img);
-      console.log(typeof img);
-    }
-  }
+  // let src;
+  // function uploadAuthImg(e) {
+  //   const [file] = imgInp.files;
+  //   if (file) {
+  //     let img = URL.createObjectURL(file);
+  //     src = img;
+  //     console.log(img);
+  //     console.log(typeof img);
+  //   }
+  // }
 
   let tags = JSON.parse(data.tagData); //tags
   let files;
@@ -228,13 +238,23 @@
     <!-- Author Name  -->
     <div class="flex flex-col justify-between">
       <label for="auth" class="font-semibold text-md">Created By</label>
-      <input
+      <!-- <input
         type="text"
         name="auth"
         bind:value={formData.author}
         placeholder="Enter Author Name"
         class="border w-full px-2 py-1 rounded-md outline-none"
-      />
+      /> -->
+      <select
+        class="border w-full px-2 py-1 rounded-md outline-none"
+        name="authorName"
+      >
+        {#each parseAuth as auth}
+          <option value={auth.authName} class="h-[10rem]">
+            {auth.authName}
+          </option>
+        {/each}
+      </select>
 
       <span class="text-red-500 tracking-wider">{errors.author}</span>
     </div>
@@ -268,7 +288,7 @@
     {/if} -->
     <!-- author image  -->
     <div>
-      <label class="font-semibold text-md" for="authImg">Autor Image</label>
+      <!-- <label class="font-semibold text-md" for="authImg">Autor Image</label>
       <div class="flex flex-col w-full border bg-white rounded-md px-1">
         <div
           class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
@@ -287,7 +307,7 @@
             type="file"
           />
         </div>
-      </div>
+      </div> -->
       <!-- create textbox -->
       <div class="flex flex-col justify-between">
         <label for="content" class="font-semibold text-md">Content</label>
@@ -429,9 +449,9 @@
           <p>{date}</p>
         </div>
       </div>
-      <div>
+      <!-- <div>
         <img {src} />
-      </div>
+      </div> -->
       <div class="flex justify-between w-full mx-auto">
         <!-- left-side  -->
         <!-- <div class="w-8/12">

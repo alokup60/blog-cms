@@ -1,4 +1,4 @@
-import { blog, tagColl } from "$lib/db/database.js";
+import { blog, tagColl, authorColl } from "$lib/db/database.js";
 import { Binary } from "mongodb";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 
@@ -7,8 +7,12 @@ export const load = async () => {
   let tags = await tagColl.findOne({ name: "Anshu" });
   let tagData = JSON.stringify(tags.newdata);
   console.log(tagData);
+  let author = await authorColl.find().toArray();
+  let authorData = JSON.stringify(author);
+
   return {
     tagData,
+    authorData,
   };
 };
 
@@ -20,6 +24,8 @@ export const actions = {
     const altForWebPrev = formData.get("altForWebPrev");
     const mobileImg = formData.get("mobileUpload");
     const authImg = formData.get("authorUpload");
+    const authorName = formData.get("authorName");
+    console.log(authorName);
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -70,18 +76,18 @@ export const actions = {
       });
 
     // author image
-    await imagekit
-      .upload({
-        file: Buffer.from(await authImg.arrayBuffer()),
-        fileName: file.name,
-      })
-      .then((response) => {
-        authURL = response.url;
-        console.log(response.url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // await imagekit
+    //   .upload({
+    //     file: Buffer.from(await authImg.arrayBuffer()),
+    //     fileName: file.name,
+    //   })
+    //   .then((response) => {
+    //     authURL = response.url;
+    //     console.log(response.url);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     const newData = {
       content: new Binary(Buffer.from(content)),
@@ -96,6 +102,7 @@ export const actions = {
       dt: date,
       content: newData,
       tags: tags,
+      authorName,
       mobImg: await mobURL,
       img: await URL,
       altForWebPrev,
