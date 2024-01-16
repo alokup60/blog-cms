@@ -19,7 +19,7 @@
   }
 </script>
 
-<section class="container mx-auto w-full mt-[4rem]">
+<section class="container mx-auto w-full mt-[4rem] space-y-2">
   <div class="flex items-center justify-between mx-auto flex-wrap gap-2">
     <label for="title_seo">SEO Title </label>
     <input

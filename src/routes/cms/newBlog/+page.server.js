@@ -44,13 +44,6 @@ export const actions = {
         file: Buffer.from(await file.arrayBuffer()), //required
         fileName: file.name, //required
         // folder: "/newblog",
-        extensions: [
-          {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95,
-          },
-        ],
       })
       .then((response) => {
         URL = response.url;
@@ -66,13 +59,6 @@ export const actions = {
         file: Buffer.from(await mobileImg.arrayBuffer()),
         fileName: file.name,
         // folder: "/newblog",
-        extensions: [
-          {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95,
-          },
-        ],
       })
       .then((response) => {
         mobURL = response.url;
@@ -87,14 +73,6 @@ export const actions = {
       .upload({
         file: Buffer.from(await authImg.arrayBuffer()),
         fileName: file.name,
-        // folder: "/newblog",
-        extensions: [
-          {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95,
-          },
-        ],
       })
       .then((response) => {
         authURL = response.url;

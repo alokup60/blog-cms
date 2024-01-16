@@ -42,32 +42,26 @@
   }
 
   function uploadWebImg() {
-    let previewContainer = document.getElementById("webPrev");
-    let fileInput = document.getElementById("webInp");
-    let file = fileInput.files[0];
+    let file = document.getElementById("webInp").files[0];
     let reader = new FileReader();
     reader.onload = function (e) {
       let image_1 = document.createElement("img");
       let image_2 = document.createElement("img");
 
       let val = e.target.result;
+
       image_1.src = val;
       image_2.src = val;
-      previewContainer.innerHTML = "";
+
       document.getElementById("webPrev").appendChild(image_1);
       document.getElementById("webImg").appendChild(image_2);
     };
 
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      previewContainer.innerHTML = "No image selected";
-    }
+    reader.readAsDataURL(file);
   }
 
   //mobile image
   function uploadMobImg() {
-    let previewContainer = document.getElementById("mobPrev");
     let file = document.getElementById("mobInp").files[0];
     let reader = new FileReader();
 
@@ -78,16 +72,11 @@
       image_3.src = val;
       image_4.src = val;
 
-      previewContainer.innerHTML = "";
-
       document.getElementById("mobPrev").appendChild(image_3);
       document.getElementById("mobileImg").appendChild(image_4);
     };
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      previewContainer.innerHTML = "No image selected";
-    }
+    // you have to declare the file loading
+    reader.readAsDataURL(file);
   }
 
   //image preview and generate url for link
@@ -312,7 +301,7 @@
               <div
                 class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
               >
-                <div id="mobPrev"></div>
+                <div id="mobPrev">Mobile Preview</div>
               </div>
               <div
                 class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
@@ -334,7 +323,7 @@
             <div
               class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
             >
-              <div id="webPrev"></div>
+              <div id="webPrev">Web Preview</div>
             </div>
             <div
               class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
@@ -373,7 +362,7 @@
         <!-- SEO purpose only  -->
         <Seo />
 
-        <div>
+        <div class="mt-[2rem]">
           <input type="checkbox" name="publish_confirmation" checked={false} />
           <label for="publish_confirmation">Publish Confirmation</label>
         </div>

@@ -62,13 +62,6 @@ export const actions = {
         file: Buffer.from(await file.arrayBuffer()), //required
         fileName: file.name, //required
         // folder: "/newblog",
-        extensions: [
-          {
-            name: "google-auto-tagging",
-            maxTags: 5,
-            minConfidence: 95,
-          },
-        ],
       })
       .then((response) => {
         URL = response.url;

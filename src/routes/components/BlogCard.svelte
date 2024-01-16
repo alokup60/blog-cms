@@ -6,7 +6,6 @@
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
-    // console.log(str);
     goto(str);
   };
 
@@ -49,7 +48,7 @@
             />
           {/if}
 
-          <div
+          <!-- <div
             class="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md"
           >
             New
@@ -58,7 +57,7 @@
             class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"
           >
             3 min read
-          </div>
+          </div> -->
         </div>
         <div class="p-4">
           <div class="text-lg font-medium text-gray-800 mb-2">

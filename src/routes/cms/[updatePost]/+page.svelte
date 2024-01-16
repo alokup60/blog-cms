@@ -112,6 +112,7 @@
   let newImg;
   post.forEach((element) => {
     newImg = element.img;
+    console.log(newImg);
   });
   // console.log(newImg);
   const uploadImg = (event) => {
