@@ -53,7 +53,14 @@
       image_1.src = val;
       image_2.src = val;
 
-      document.getElementById("webPrev").appendChild(image_1);
+      let webPrev = document.getElementById("webPrev");
+      if (!webPrev) {
+        webPrev = document.createElement("div");
+        webPrev.id = "webPrev";
+        webPrev.innerHTML = "Web Preview";
+        document.body.appendChild(webPrev);
+      }
+
       document.getElementById("webImg").appendChild(image_2);
     };
 
@@ -71,8 +78,12 @@
       let val = e.target.result;
       image_3.src = val;
       image_4.src = val;
-
-      document.getElementById("mobPrev").appendChild(image_3);
+      let mobPrev = document.getElementById("mobPrev");
+      if (mobPrev == "") {
+        mobPrev.innerHTML = "Web Preview";
+      } else {
+        mobPrev.appendChild(image_3);
+      }
       document.getElementById("mobileImg").appendChild(image_4);
     };
     // you have to declare the file loading
@@ -316,6 +327,15 @@
                 />
               </div>
             </div>
+
+            <div class="justify-center flex mx-auto w-full mb-2">
+              <input
+                type="text"
+                placeholder="Enter Alt Tag"
+                name="altForMobPrev"
+                class="w-6/12 border border-green-300 outline-none rounded-md px-2 py-1 caret-green-300"
+              />
+            </div>
           </div>
 
           <!-- web preview  -->
@@ -323,7 +343,7 @@
             <div
               class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-7/12 h-[15rem] rounded-md"
             >
-              <div id="webPrev">Web Preview</div>
+              <div id="webPrev"></div>
             </div>
             <div
               class="flex flex-col justify-center mx-auto items-center w-7/12 gap-2 py-2 my-2 bg-green-200 rounded-md text-green-600"
@@ -337,6 +357,15 @@
                 type="file"
               />
             </div>
+          </div>
+
+          <div class="justify-center flex mx-auto w-full mb-2">
+            <input
+              type="text"
+              placeholder="Enter Alt Tag"
+              name="altForWebPrev"
+              class="w-6/12 border border-green-300 outline-none rounded-md px-2 py-1 caret-green-300"
+            />
           </div>
         </div>
 

@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
 
   export let data;
-  console.log(data, "from BlogCard");
+  // console.log(data, "from BlogCard");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");

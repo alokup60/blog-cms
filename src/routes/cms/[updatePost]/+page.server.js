@@ -37,6 +37,7 @@ export const actions = {
   updatePost: async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
+    const altForWebPrev = formData.get("altForWebPrev");
     const title = formData.get("title");
     const desc = formData.get("desc");
     const auth = formData.get("auth");
@@ -65,7 +66,7 @@ export const actions = {
       })
       .then((response) => {
         URL = response.url;
-        console.log(response.url);
+        // console.log(response.url);
       })
       .catch((error) => {
         console.log(error);
@@ -88,6 +89,7 @@ export const actions = {
           content: newData,
           tags: tags,
           img: await URL,
+          altForWebPrev,
           seo_title,
           desc_seo,
           author_seo,

@@ -112,7 +112,7 @@
   let newImg;
   post.forEach((element) => {
     newImg = element.img;
-    console.log(newImg);
+    // console.log(newImg);
   });
   // console.log(newImg);
   const uploadImg = (event) => {
@@ -293,6 +293,16 @@
               type="file"
             />
           </div>
+        </div>
+
+        <div class="justify-center flex mx-auto w-full mb-2">
+          <input
+            type="text"
+            placeholder="Enter Alt Tag"
+            name="altForWebPrev"
+            bind:value={item.altForWebPrev}
+            class="w-6/12 border border-green-300 outline-none rounded-md px-2 py-1 caret-green-300"
+          />
         </div>
       </div>
 

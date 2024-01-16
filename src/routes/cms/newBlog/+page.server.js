@@ -17,6 +17,7 @@ export const actions = {
   default: async ({ request }) => {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
+    const altForWebPrev = formData.get("altForWebPrev");
     const mobileImg = formData.get("mobileUpload");
     const authImg = formData.get("authorUpload");
     const title = formData.get("title");
@@ -97,6 +98,7 @@ export const actions = {
       tags: tags,
       mobImg: await mobURL,
       img: await URL,
+      altForWebPrev,
       authImg: await authURL,
       seo_title,
       desc_seo,
