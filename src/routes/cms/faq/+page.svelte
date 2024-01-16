@@ -7,19 +7,6 @@
 </script>
 
 <section class="flex flex-col mt-[4rem] ml-[5rem] w-full">
-  <!-- <Accordian>
-    <span slot="head"
-      >Question 1: Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      Fugiat, amet.
-    </span>
-    <div slot="details">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit id
-        obcaecati ex nesciunt eum, accusamus ducimus doloremque officiis
-        necessitatibus fuga.
-      </p>
-    </div>
-  </Accordian> -->
   <h1 class="ml-[40rem] font-semibold text-2xl text-green-500 tracking-widest">
     FAQ
   </h1>
@@ -59,11 +46,23 @@
     </div>
   </form>
 </section>
-<section class="flex flex-col mt-[4rem] ml-[5rem] w-full">
+<!-- <section class="flex flex-col mt-[4rem] ml-[5rem] w-full">
   <div>
     {#each data.htmldata as item}
       <p class="ml-[20rem]">Question: {item.question}</p>
       <p class="ml-[20rem]">Answer: {@html item.answer}</p>
+    {/each}
+  </div>
+</section> -->
+<section>
+  <div>
+    {#each data.htmldata as item}
+      <Accordian>
+        <span slot="head"> {item.question} </span>
+        <div slot="details">
+          {@html item.answer}
+        </div>
+      </Accordian>
     {/each}
   </div>
 </section>

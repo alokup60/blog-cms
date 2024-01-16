@@ -26,7 +26,7 @@
   <!-- this is header  -->
   <button on:click={clickHandler}>
     <div class={` ml-[4rem] py-4`} id="header">
-      <div class="text">
+      <div>
         <slot name="head" />
         {#if !open}
           <i class="fa-solid fa-arrow-down"></i>
