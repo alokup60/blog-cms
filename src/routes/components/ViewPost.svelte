@@ -1,6 +1,9 @@
 <script>
   import { blogForm } from "$lib/store/stores.js";
 
+  export let data;
+  console.log(data);
+
   function confirmDelete() {
     if (confirm("Are you sure you want to delete this post?")) {
       // If confirmed, submit the form
@@ -18,30 +21,30 @@
     >
       View Post
     </h2>
-    {#if $blogForm}
-      {#each $blogForm as data}
+    {#if data}
+      {#each data as dt}
         <!-- {data.img} -->
         <div
           class="flex-col-1 border-2 px-4 py-2 rounded-md w-[30%] min-h-[20rem] flex-wrap"
         >
           <div class="flex justify-between flex-col mx-auto">
-            {#if data.img}
+            {#if dt.img}
               <div>
-                <img src={data.img} alt="No image" class="rounded-md" />
+                <img src={dt.img} alt="No image" class="rounded-md" />
               </div>
             {/if}
             <hr class="my-2" />
             <!-- <hr /> -->
             <div class="flex justify-between">
               <p class="font-semibold text-xl tracking-wider">
-                {data.title}
+                {dt.title}
               </p>
               <div class="flex flex-col gap-2">
                 <!-- <edit btn  -->
                 <form method="POST" action="?/editPost">
-                  <!-- <input type="text" bind:value={data._id} name="postId" /> -->
+                  <!-- <input type="text" bind:value={dt._id} name="postId" /> -->
                   <a
-                    href={`${data._id}`}
+                    href={`${dt._id}`}
                     class="editBtn text-orange-400 hover:text-orange-700 transition-all duration-200"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +71,7 @@
                 >
                   <input
                     type="text"
-                    bind:value={data._id}
+                    bind:value={dt._id}
                     name="postId"
                     class="hidden"
                   />
@@ -94,20 +97,20 @@
               </div>
             </div>
 
-            <div><p class="opacity-80">{data.desc}</p></div>
+            <div><p class="opacity-80">{dt.desc}</p></div>
             <div class="flex justify-between">
               <form method="POST" action="?/readMore">
-                <a href={`${data._id}`} class="cursor-pointer tracking-wider"
+                <a href={`${dt._id}`} class="cursor-pointer tracking-wider"
                   >Read More...</a
                 >
               </form>
 
-              <p class="font-semibold tracking-wider">by {data.auth}</p>
+              <p class="font-semibold tracking-wider">by {dt.authName}</p>
             </div>
           </div>
           <div class="flex">
             <ul class="flex gap-2 flex-wrap">
-              {#each data.tags as tag}
+              {#each dt.tags as tag}
                 <li class="bg-gray-500 text-white px-2 py-1 rounded-md mt-4">
                   {tag}
                 </li>

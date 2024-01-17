@@ -6,10 +6,12 @@
   export let form;
 
   let parseAuth = JSON.parse(data.authorData);
+  // console.log(parseAuth[0]._id);
   let authImg;
   let authName;
   let authAlt;
   parseAuth.map((item) => {
+    // console.log(typeof item);
     authAlt = item.authAlt;
     authName = item.authName;
     authImg = item.authImg;
@@ -100,6 +102,8 @@
     reader.readAsDataURL(file);
   }
 
+  // ----------Dropdown with image
+
   //image preview and generate url for link
   // let src;
   // function uploadAuthImg(e) {
@@ -183,6 +187,13 @@
       showToast();
     }
   });
+  let authVal;
+  function selectHandler(e) {
+    let a = document.getElementById("auth");
+    a = a.value;
+    authVal = parseAuth[a];
+    // console.log(authVal.authName);
+  }
 </script>
 
 <svelte:head>
@@ -246,16 +257,25 @@
         class="border w-full px-2 py-1 rounded-md outline-none"
       /> -->
       <select
+        on:change={() => selectHandler()}
         class="border w-full px-2 py-1 rounded-md outline-none"
         name="authorName"
+        id="auth"
       >
-        {#each parseAuth as auth}
-          <option value={auth.authName} class="h-[10rem]">
+        <option selected> Choose Author </option>
+        {#each parseAuth as auth, i}
+          <option value={i}>
             {auth.authName}
           </option>
         {/each}
       </select>
-
+      <div class="hidden">
+        {#if authVal}
+          <input type="text" name="authName" bind:value={authVal.authName} />
+          <input type="text" name="authImg" bind:value={authVal.authImg} />
+          <input type="text" name="authAlt" bind:value={authVal.authAlt} />
+        {/if}
+      </div>
       <span class="text-red-500 tracking-wider">{errors.author}</span>
     </div>
     <div></div>

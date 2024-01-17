@@ -23,12 +23,15 @@ export const actions = {
     const file = formData.get("fileUpload");
     const altForWebPrev = formData.get("altForWebPrev");
     const mobileImg = formData.get("mobileUpload");
-    const authImg = formData.get("authorUpload");
-    const authorName = formData.get("authorName");
-    console.log(authorName);
+    // const authImg = formData.get("authImg");
+    // const authorName = formData.get("authorName");
+    // console.log(authImg);
+    const authName = formData.get("authName");
+    const authAlt = formData.get("authAlt");
+    const authImg = formData.get("authImg");
     const title = formData.get("title");
     const desc = formData.get("desc");
-    const auth = formData.get("auth");
+    // const auth = formData.get("auth");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
     const tagData = formData.getAll("tagData");
@@ -75,11 +78,12 @@ export const actions = {
         console.log(error);
       });
 
-    // author image
+    //author image
     // await imagekit
     //   .upload({
     //     file: Buffer.from(await authImg.arrayBuffer()),
-    //     fileName: file.name,
+    //     fileName: authImg.name,
+    //     // folder: "/newblog",
     //   })
     //   .then((response) => {
     //     authURL = response.url;
@@ -98,15 +102,16 @@ export const actions = {
     await blog.insertOne({
       title: title,
       desc: desc,
-      auth: auth,
+      // auth: auth,
       dt: date,
       content: newData,
       tags: tags,
-      authorName,
+      authName,
+      authAlt,
       mobImg: await mobURL,
       img: await URL,
       altForWebPrev,
-      authImg: await authURL,
+      authImg,
       seo_title,
       desc_seo,
       author_seo,

@@ -3,6 +3,7 @@
   import ViewPost from "../../components/ViewPost.svelte";
   export let data;
   let allData = JSON.parse(data.allData);
+  // console.log(allData);
   $: {
     $blogForm = allData;
   }
@@ -10,5 +11,5 @@
 
 <section class="flex ml-[4rem]">
   <!-- <h2 class="text-center text-2xl font-bold">This is View Page</h2> -->
-  <ViewPost />
+  <ViewPost data={allData} />
 </section>
