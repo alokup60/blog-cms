@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
 
   export let data;
-  // console.log(data, "from BlogCard");
+  console.log(data, "from BlogCard");
 
   const detailView = (title) => {
     let str = title.replace(/\s/g, "-");
@@ -86,7 +86,7 @@
                 </p>
               {/if}
 
-              {#if dt.updatedDt == null && dt.updatedDt == undefined && dt.updatedDt == ""}
+              {#if dt.updatedDt !== null && dt.updatedDt !== undefined && dt.updatedDt !== ""}
                 <p class="opacity-80 text-xs">
                   <span class="font-semibold">Updated On:</span>
                   {formatDate(dt.updatedDt)}

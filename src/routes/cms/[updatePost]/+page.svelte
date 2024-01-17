@@ -5,7 +5,8 @@
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   export let data;
   export let form;
-  // console.log(data.body);
+  // console.log(JSON.parse(data.newdata));
+  // console.log(JSON.parse(data.authorData));
   // start form here for showing image (Preview)
   let input;
   let updatedDate = new Date().toISOString().split("T")[0];
@@ -37,8 +38,10 @@
   });
 
   let post = JSON.parse(data.newdata);
+  console.log(post);
   let contentData = JSON.parse(data.body);
   let tags = JSON.parse(data.alltags);
+  let authorData = JSON.parse(data.authorData);
   let blogTags;
   let newtags;
   let selectedTags = [];
@@ -164,14 +167,23 @@
   //     showToast();
   //   }
   // };
-  function handleSubmit() {
-    if (!upDate) {
-      document.querySelector('form[action="?/updatePost"]');
-      event.preventDefault();
-    } else {
-      showToast();
-    }
+  // function handleSubmit() {
+  //   if (!upDate) {
+  //     document.querySelector('form[action="?/updatePost"]');
+  //     event.preventDefault();
+  //   } else {
+  //     showToast();
+  //   }
+  // }
+
+  let authVal;
+  function selectHandler(e) {
+    let a = document.getElementById("auth");
+    a = a.value;
+    authVal = authorData[a];
+    console.log(authVal);
   }
+  // selectHandler();
 </script>
 
 <svelte:head>
@@ -191,7 +203,6 @@
       method="POST"
       action="?/updatePost"
       enctype="multipart/form-data"
-      on:submit={handleSubmit}
     >
       <h2 class="text-center font-semibold text-2xl">CMS for Blog</h2>
       <div class="flex flex-col justify-between">
@@ -215,15 +226,29 @@
           class="border w-full px-2 py-1 rounded-md outline-none"
         />
       </div>
+      <!-- author-details  -->
       <div class="flex flex-col justify-between">
         <label for="auth" class="font-semibold text-md">Created By</label>
-        <input
-          type="text"
-          name="auth"
-          bind:value={item.auth}
-          placeholder="Enter title"
+        <select
           class="border w-full px-2 py-1 rounded-md outline-none"
-        />
+          name="authorName"
+          id="auth"
+          on:change={() => selectHandler()}
+        >
+          <option selected> choose Auth</option>
+          {#each authorData as auth, i}
+            <option value={i}>
+              {auth.authName}
+            </option>
+          {/each}
+        </select>
+        <div class="hidden">
+          {#if authVal}
+            <input type="text" name="authName" bind:value={authVal.authName} />
+            <input type="text" name="authImg" bind:value={authVal.authImg} />
+            <input type="text" name="authAlt" bind:value={authVal.authAlt} />
+          {/if}
+        </div>
       </div>
 
       <!-- created At  -->
@@ -242,6 +267,7 @@
       <!-- updated Date  -->
       <div class="flex flex-col justify-between">
         <label for="dt" class="font-semibold text-md">Updated At</label>
+
         <input
           type="date"
           id="dt"

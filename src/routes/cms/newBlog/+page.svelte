@@ -16,14 +16,7 @@
     authName = item.authName;
     authImg = item.authImg;
   });
-  let authorName = "";
 
-  // let authorData = {
-  //   authorName: authName,
-  //   authorAlt: authAlt,
-  //   authorImage: authImg,
-  // };
-  // console.log(authorData);
   //toast
   const showToast = () => {
     const toast = toasts.add({
@@ -256,7 +249,7 @@
       </div>
       <span class="text-red-500 tracking-wider">{errors.author}</span>
     </div>
-    <div></div>
+
     <!-- created Date  -->
     <div class="flex flex-col justify-between">
       <label for="dt" class="font-semibold text-md">Date</label>
@@ -271,7 +264,6 @@
       />
     </div>
 
-    <!-- author image  -->
     <div>
       <!-- create textbox -->
       <div class="flex flex-col justify-between">

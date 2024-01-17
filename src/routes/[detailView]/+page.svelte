@@ -134,7 +134,7 @@
           <img src={data.authImg} alt="" class="rounded-full w-20 h-20" />
         </div>
         <div>
-          <h2 class="font-bold text-lg">By {data.auth}</h2>
+          <h2 class="font-bold text-lg">By {data.authName}</h2>
         </div>
         <div class="mt-[4rem]">
           Found in:

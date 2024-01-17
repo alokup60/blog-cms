@@ -1,4 +1,4 @@
-import { blog, tagColl } from "$lib/db/database";
+import { blog, tagColl, authorColl } from "$lib/db/database";
 import { Binary } from "mongodb";
 import { imagekit } from "$lib/imagekit/imagekit.js";
 import { ObjectId } from "mongodb";
@@ -13,6 +13,8 @@ export const load = async ({ params }) => {
     let newdata = JSON.stringify(data);
     let tagData = await tagColl.find().toArray();
     let alltags = JSON.stringify(tagData);
+    let author = await authorColl.find().toArray();
+    let authorData = JSON.stringify(author);
     if (data) {
       const promises = data.map((elem) => {
         const bsonData = elem.content.content;
@@ -25,6 +27,7 @@ export const load = async ({ params }) => {
         body: JSON.stringify(htmldata),
         newdata,
         alltags,
+        authorData,
       };
     }
   } catch (error) {
@@ -40,7 +43,9 @@ export const actions = {
     const altForWebPrev = formData.get("altForWebPrev");
     const title = formData.get("title");
     const desc = formData.get("desc");
-    const auth = formData.get("auth");
+    const authN = formData.get("authName");
+    const authIm = formData.get("authImg");
+    const authAl = formData.get("authAlt");
     const content = formData.get("content");
     const tags = formData.getAll("tags");
     const dt = formData.getAll("dt");
@@ -54,6 +59,20 @@ export const actions = {
     // const tagData = formData.getAll("tagData");
     // console.log(title, desc, auth, content, tags, dt);
     console.log(dt);
+
+    let authName = authN;
+    let authImg = authIm;
+    let authAlt = authAl;
+
+    if (authName == null && authImg == null && authAlt == null) {
+      let authorData = await authorColl.find().toArray();
+      // let author = JSON.stringify(authorData);
+      authorData.map((item) => {
+        authName = item.authName;
+        authAlt = item.authAl;
+        authImg = item.authImg;
+      });
+    }
 
     //cover image
     let URL;
@@ -83,9 +102,11 @@ export const actions = {
         $set: {
           title: title,
           desc: desc,
-          auth: auth,
+          authName,
+          authAlt,
+          authImg,
           dt: dt,
-          ...(updatedDt && { updatedDt: updatedDt }),
+          updatedDt,
           content: newData,
           tags: tags,
           img: await URL,
