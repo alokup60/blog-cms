@@ -78,7 +78,7 @@
             {/if}
           </div>
           <div>
-            <div>
+            <div class="">
               {#if dt.dt}
                 <p class="opacity-80 text-xs">
                   <span class="font-semibold">Posted On:</span>

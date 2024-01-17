@@ -276,6 +276,7 @@
           bind:value={item.updatedDt}
           placeholder="Enter Date"
           class="border w-full px-2 py-1 rounded-md outline-none"
+          required
         />
       </div>
 

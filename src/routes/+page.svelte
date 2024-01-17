@@ -4,7 +4,7 @@
   export let data;
 
   let allData = JSON.parse(data.header);
-  console.log(allData);
+  console.log(allData, "main-header");
 </script>
 
 <BlogCard data={allData} />
