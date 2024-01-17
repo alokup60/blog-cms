@@ -6,12 +6,10 @@
   export let form;
 
   let parseAuth = JSON.parse(data.authorData);
-  // console.log(parseAuth[0]._id);
   let authImg;
   let authName;
   let authAlt;
   parseAuth.map((item) => {
-    // console.log(typeof item);
     authAlt = item.authAlt;
     authName = item.authName;
     authImg = item.authImg;
@@ -37,7 +35,6 @@
 
   //display in form
   let date = new Date().toISOString().split("T")[0];
-  // let updatedDate = new Date().toISOString().split("T")[0];
 
   const formData = {
     heading: "",
@@ -50,7 +47,6 @@
   function addTags(e) {
     let val = e.target.value;
     formData.tag = [...formData.tag, val];
-    // console.log(e.target.value);
   }
 
   function uploadWebImg() {
@@ -166,6 +162,7 @@
       showToast();
     }
   });
+  //author selection
   let authVal;
   function selectHandler(e) {
     let a = document.getElementById("auth");
@@ -349,7 +346,7 @@
         </div>
 
         <!-- option -->
-        <div class="flex gap-2 relative flex-wrap py-4">
+        <div class="flex gap-2 flex-wrap py-4">
           <label for="tags" class="font-semibold text-md">Tags</label>
 
           {#each tags as tag}

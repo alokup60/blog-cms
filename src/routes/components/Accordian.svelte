@@ -22,7 +22,7 @@
   }
 </script>
 
-<div class="flex flex-col w-full ml-[4rem]">
+<div class="flex flex-col w-full ml-[14rem]">
   <!-- this is header  -->
   <button on:click={clickHandler}>
     <div class={` ml-[4rem] py-4`} id="header">
