@@ -1,8 +1,5 @@
 <script>
-  import { blogForm } from "$lib/store/stores.js";
-
   export let data;
-  console.log(data);
 
   function confirmDelete() {
     if (confirm("Are you sure you want to delete this post?")) {
