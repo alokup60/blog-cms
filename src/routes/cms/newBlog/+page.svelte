@@ -102,20 +102,6 @@
     reader.readAsDataURL(file);
   }
 
-  // ----------Dropdown with image
-
-  //image preview and generate url for link
-  // let src;
-  // function uploadAuthImg(e) {
-  //   const [file] = imgInp.files;
-  //   if (file) {
-  //     let img = URL.createObjectURL(file);
-  //     src = img;
-  //     console.log(img);
-  //     console.log(typeof img);
-  //   }
-  // }
-
   let tags = JSON.parse(data.tagData); //tags
   let files;
   $: if (files) {
@@ -192,7 +178,6 @@
     let a = document.getElementById("auth");
     a = a.value;
     authVal = parseAuth[a];
-    // console.log(authVal.authName);
   }
 </script>
 
@@ -249,13 +234,6 @@
     <!-- Author Name  -->
     <div class="flex flex-col justify-between">
       <label for="auth" class="font-semibold text-md">Created By</label>
-      <!-- <input
-        type="text"
-        name="auth"
-        bind:value={formData.author}
-        placeholder="Enter Author Name"
-        class="border w-full px-2 py-1 rounded-md outline-none"
-      /> -->
       <select
         on:change={() => selectHandler()}
         class="border w-full px-2 py-1 rounded-md outline-none"
@@ -292,42 +270,9 @@
         class="border w-full px-2 py-1 rounded-md outline-none"
       />
     </div>
-    <!-- updated Date  {Hidden}-->
-    <!-- {#if !updatedDate}
-      <div class="flex flex-col justify-between">
-        <label for="dt" class="font-semibold text-md">Updated At</label>
-        <input
-          type="date"
-          id="dt"
-          name="updatedDt"
-          bind:value={updatedDate}
-          placeholder="Enter Date"
-          class="border w-full px-2 py-1 rounded-md outline-none"
-        />
-      </div>
-    {/if} -->
+
     <!-- author image  -->
     <div>
-      <!-- <label class="font-semibold text-md" for="authImg">Autor Image</label>
-      <div class="flex flex-col w-full border bg-white rounded-md px-1">
-        <div
-          class="border-2 border-dashed flex justify-center mx-auto my-4 items-center w-2/12 h-[10rem] rounded-md"
-        >
-          <img {src} width="100px" />
-        </div>
-        <div
-          class="flex flex-col justify-center mx-auto items-center w-3/12 gap-2 py-2 px-2 my-2 bg-green-200 rounded-md text-green-600"
-        >
-          <input
-            id="imgInp"
-            name="authorUpload"
-            accept="image/*"
-            value=""
-            on:change={uploadAuthImg}
-            type="file"
-          />
-        </div>
-      </div> -->
       <!-- create textbox -->
       <div class="flex flex-col justify-between">
         <label for="content" class="font-semibold text-md">Content</label>
@@ -498,9 +443,7 @@
   .bx {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
-  /* input[type="checkbox"] {
-    display: none;
-  } */
+
   .tag-check {
     display: none;
   }

@@ -65,18 +65,20 @@
               {dt.title}
             {/if}
           </div>
-          {#if dt.authImg}
-            <img
-              src={dt.authImg}
-              alt="auth_img"
-              class="w-8 h-8 rounded-full object-cover"
-            />
-          {/if}
-          <div>
-            {#if dt.auth}
-              <p class="font-semibold text-sm">{dt.auth}</p>
+          <div class="flex items-center gap-4">
+            {#if dt.authImg}
+              <img
+                src={dt.authImg}
+                alt="auth_img"
+                class="w-8 h-8 rounded-full object-cover"
+              />
             {/if}
-            <div class="">
+            {#if dt.authName}
+              <p class="font-semibold text-sm">{dt.authName}</p>
+            {/if}
+          </div>
+          <div>
+            <div>
               {#if dt.dt}
                 <p class="opacity-80 text-xs">
                   <span class="font-semibold">Posted On:</span>

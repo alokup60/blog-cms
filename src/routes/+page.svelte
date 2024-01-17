@@ -6,15 +6,7 @@
   // console.log(data.body);
 
   let allData = JSON.parse(data.header);
-  // console.log(allData);
-
-  $: {
-    $blogData = allData;
-  }
-  // $: {
-  //   console.log($blogData);
-  // }
-  // console.log(allData);
+  console.log(allData);
 </script>
 
 <BlogCard data={allData} />
