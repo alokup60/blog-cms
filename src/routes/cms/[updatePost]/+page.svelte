@@ -156,23 +156,6 @@
       }
     });
   });
-  // let updatedDt = post[0]?.updatedDt || "";
-  // const handleSubmit = () => {
-  //   if (!upDate) {
-  //     alert("Please select the Updated At date.");
-  //     event.preventDefault();
-  //   } else {
-  //     showToast();
-  //   }
-  // };
-  // function handleSubmit() {
-  //   if (!upDate) {
-  //     document.querySelector('form[action="?/updatePost"]');
-  //     event.preventDefault();
-  //   } else {
-  //     showToast();
-  //   }
-  // }
 
   let authVal;
   function selectHandler(e) {
@@ -264,14 +247,14 @@
       </div>
       <!-- updated Date  -->
       <div class="flex flex-col justify-between">
-        <label for="dt" class="font-semibold text-md">Updated At</label>
+        <label for="upDt" class="font-semibold text-md">Updated At</label>
 
         <input
           type="date"
-          id="dt"
+          id="upDt"
           name="updatedDt"
-          min={updatedDate}
           bind:value={item.updatedDt}
+          min={updatedDate}
           placeholder="Enter Date"
           class="border w-full px-2 py-1 rounded-md outline-none"
         />

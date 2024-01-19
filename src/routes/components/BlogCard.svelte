@@ -1,5 +1,5 @@
 <script>
-  import { goto } from "$app/navigation";
+  import { goto, invalidate } from "$app/navigation";
 
   export let data;
   console.log(data, "from BlogCard");
@@ -16,7 +16,7 @@
   });
 
   function formatDate(date) {
-    let dt = new Date(date[0]);
+    let dt = new Date(date);
     let day = dt.getDate();
     let monthName = dt.toLocaleString("default", { month: "long" });
     let year = dt.getFullYear();
@@ -47,17 +47,6 @@
               alt="cover_img"
             />
           {/if}
-
-          <!-- <div
-            class="absolute top-0 right-0 bg-indigo-500 text-white font-bold px-2 py-1 m-2 rounded-md"
-          >
-            New
-          </div>
-          <div
-            class="absolute bottom-0 right-0 bg-gray-800 text-white px-2 py-1 m-2 rounded-md text-xs"
-          >
-            3 min read
-          </div> -->
         </div>
         <div class="p-4">
           <div class="text-lg font-medium text-gray-800 mb-2">
@@ -78,21 +67,20 @@
             {/if}
           </div>
           <div>
-            <div class="">
+            <div>
               {#if dt.dt}
                 <p class="opacity-80 text-xs">
                   <span class="font-semibold">Posted On:</span>
                   {formatDate(dt.dt)}
                 </p>
               {/if}
-
-              {#if dt.updatedDt !== null && dt.updatedDt !== undefined && dt.updatedDt !== ""}
-                <p class="opacity-80 text-xs">
-                  <span class="font-semibold">Updated On:</span>
-                  {formatDate(dt.updatedDt)}
-                </p>
-              {/if}
             </div>
+            {#if dt.updatedDt != ""}
+              <p class="opacity-80 text-xs">
+                <span class="font-semibold">Updated On:</span>
+                {formatDate(dt.updatedDt)}
+              </p>
+            {/if}
           </div>
         </div>
       </div>
