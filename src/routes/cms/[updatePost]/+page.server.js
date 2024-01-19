@@ -105,7 +105,7 @@ export const actions = {
           authAlt,
           authImg,
           dt: dt,
-          updatedDt,
+          ...(updatedDt && updatedDt),
           content: newData,
           tags: tags,
           img: await URL,

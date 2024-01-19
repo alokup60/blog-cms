@@ -232,7 +232,7 @@
       >
         <option selected> Choose Author </option>
         {#each parseAuth as auth, i}
-          <option value={i}>
+          <option value={auth.authName}>
             {auth.authName}
           </option>
         {/each}
