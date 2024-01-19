@@ -5,9 +5,7 @@
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
   export let data;
   export let form;
-  // console.log(JSON.parse(data.newdata));
-  // console.log(JSON.parse(data.authorData));
-  // start form here for showing image (Preview)
+
   let input;
   let updatedDate = new Date().toISOString().split("T")[0];
 

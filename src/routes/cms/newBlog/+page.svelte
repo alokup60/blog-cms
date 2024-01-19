@@ -227,7 +227,7 @@
       <select
         on:change={() => selectHandler()}
         class="border w-full px-2 py-1 rounded-md outline-none"
-        name="authorName"
+        name="authName"
         id="auth"
       >
         <option selected> Choose Author </option>

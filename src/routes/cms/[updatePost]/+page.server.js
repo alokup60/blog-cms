@@ -37,7 +37,7 @@ export const load = async ({ params }) => {
 };
 
 export const actions = {
-  updatePost: async ({ request }) => {
+  updatePost: async ({ request, params }) => {
     const formData = await request.formData();
     const file = formData.get("fileUpload");
     const altForWebPrev = formData.get("altForWebPrev");
@@ -56,18 +56,17 @@ export const actions = {
     const location_seo = formData.get("location_seo");
     const keywords_seo = formData.get("keywords_seo");
     const publish_confirmation = formData.get("publish_confirmation");
-    // const tagData = formData.getAll("tagData");
-    // console.log(title, desc, auth, content, tags, dt);
-    console.log(dt);
 
     let authName = authN;
     let authImg = authIm;
     let authAlt = authAl;
 
     if (authName == null && authImg == null && authAlt == null) {
-      let authorData = await authorColl.find().toArray();
-      // let author = JSON.stringify(authorData);
-      authorData.map((item) => {
+      const updatedPost = params.updatePost;
+      let authorId = new ObjectId(updatedPost);
+      let data = await blog.find({ _id: authorId }).toArray();
+
+      data.map((item) => {
         authName = item.authName;
         authAlt = item.authAl;
         authImg = item.authImg;
