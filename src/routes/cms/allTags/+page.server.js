@@ -35,7 +35,6 @@ export const actions = {
   addTag: async ({ request }) => {
     const formData = await request.formData();
     const newTags = formData.get("newTag");
-    // console.log(newTags);
 
     let user = await tagColl.updateOne(
       {

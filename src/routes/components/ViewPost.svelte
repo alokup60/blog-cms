@@ -3,7 +3,6 @@
 
   function confirmDelete() {
     if (confirm("Are you sure you want to delete this post?")) {
-      // If confirmed, submit the form
       document.querySelector('form[action="?/deletePost"]').submit();
     } else {
       event.preventDefault();
@@ -39,7 +38,6 @@
               <div class="flex flex-col gap-2">
                 <!-- <edit btn  -->
                 <form method="POST" action="?/editPost">
-                  <!-- <input type="text" bind:value={dt._id} name="postId" /> -->
                   <a
                     href={`${dt._id}`}
                     class="editBtn text-orange-400 hover:text-orange-700 transition-all duration-200"

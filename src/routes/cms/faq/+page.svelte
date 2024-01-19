@@ -4,10 +4,8 @@
   import Accordian from "../../components/Accordian.svelte";
   export let data;
   export let form;
-
-  // console.log(data.htmldata);
+  let faq = JSON.parse(data.htmldata);
   let tags = JSON.parse(data.tagData);
-  // console.log(tags);
 
   //toast
   const showToast = () => {
@@ -35,6 +33,13 @@
     let val = e.target.value;
     tag = [...tag, val];
   }
+  function confirmDelete() {
+    if (confirm("Are you sure you want to delete this post?")) {
+      document.querySelector('form[action="?/deleteFaq"]').submit();
+    } else {
+      event.preventDefault();
+    }
+  }
   onMount(async () => {
     if (form?.success) {
       showToast();
@@ -46,7 +51,7 @@
   <h1 class="ml-[40rem] font-semibold text-2xl text-green-500 tracking-widest">
     FAQ
   </h1>
-  <form method="POST">
+  <form method="POST" action="?/createdFaq">
     <div class="w-full ml-[12rem]">
       <div class="ml-[6rem] flex flex-col justify-between mx-auto w-full">
         <label for="question" class="text-green-500 font-semibold text-md"
@@ -110,8 +115,7 @@
 
 <section>
   <div>
-    {#each data.htmldata as item}
-      <!-- {JSON.stringify(item.tags)} -->
+    {#each faq as item}
       <Accordian>
         <span slot="head"> {item.question} </span>
         <div slot="details">
@@ -121,8 +125,34 @@
               {ite}
             {/each}
           {/if}
+
+          <form method="POST" action="?/deleteFaq" on:submit={confirmDelete}>
+            <input
+              type="text"
+              bind:value={item.id}
+              name="faqId"
+              class="hidden"
+            />
+            <button
+              type="submit"
+              class="deleteBtn text-red-500 hover:text-red-800 transition-all duration-200"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                />
+              </svg>
+            </button>
+          </form>
         </div>
-        <div class=""></div>
       </Accordian>
     {/each}
   </div>
