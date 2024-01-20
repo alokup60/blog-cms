@@ -56,6 +56,7 @@
   }
 </script>
 
+<!-- //SEO -added  -->
 <svelte:head>
   {#each post as item}
     <meta name="title" content={item.seo_title || item.title} />
