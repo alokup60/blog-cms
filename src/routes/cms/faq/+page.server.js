@@ -23,48 +23,6 @@ export async function load() {
   }
 }
 
-// export const actions = {
-//   createdFaq: async ({ request }) => {
-//     const formData = await request.formData();
-//     const question = formData.get("question");
-//     const answer = formData.get("answer");
-//     const tags = formData.getAll("tags");
-
-//     const newAnswer = {
-//       answer: new Binary(Buffer.from(answer)),
-//     };
-
-//     await faqColl.insertOne({
-//       question: question,
-//       answer: newAnswer,
-//       tags: tags,
-//     });
-
-//     return {
-//       body: JSON.stringify({ success: true }),
-//       headers: {
-//         "Conetnt-type": "application/json",
-//       },
-//     };
-//   },
-
-//   deleteFaq: async ({ request }) => {
-//     const faqData = await request.formData();
-//     const removeFaqId = faqData.get("faqId");
-//     const faqId = new ObjectId(removeFaqId);
-
-//     try {
-//       const deletedFaq = await faqColl.deleteOne({ _id: faqId });
-//       console.log("Post deleted successfully:", deletedFaq);
-//     } catch (error) {
-//       console.error("Error deleting post:", error);
-//       return { success: false, error: "Error deleting post" };
-//     }
-
-//     return { success: true };
-//   },
-// };
-
 export const actions = {
   createdFaq: async ({ request }) => {
     const formData = await request.formData();
@@ -86,7 +44,7 @@ export const actions = {
     return {
       body: JSON.stringify({ success: true }),
       headers: {
-        "Content-Type": "application/json", // Fix the typo here
+        "Content-Type": "application/json",
       },
     };
   },

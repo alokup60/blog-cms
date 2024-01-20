@@ -1,10 +1,11 @@
 <script>
+  import Header from "./Header.svelte";
   import "../app.css";
 </script>
 
 <div>
   <!-- <ToastContainer /> -->
-  <!-- <Header /> -->
+  <Header />
   <!-- <SideBar /> -->
   <main>
     <slot />
