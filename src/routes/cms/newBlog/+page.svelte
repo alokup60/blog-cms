@@ -193,10 +193,6 @@
     method="POST"
     enctype="multipart/form-data"
   >
-    <!-- <div class="flex gap-4">
-      <a href="#">Edit</a>
-      <button type="button" on:click={fun}>Preview</button>
-    </div> -->
     <!-- title  -->
     <div class="flex flex-col justify-between">
       <label for="title" class="font-semibold text-md">Title</label>

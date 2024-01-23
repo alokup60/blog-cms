@@ -1,6 +1,5 @@
 import { blog } from "$lib/db/database";
 
-// 3-> load function to find
 export const load = async () => {
   let blogDataCursor = await blog.find().toArray();
   let data = await blog.find().toArray();
